@@ -11,8 +11,7 @@ export class ClientService {
     clientsSubj = new BehaviorSubject<Array<Client>>([]);
     addEditClientSubj = new BehaviorSubject<Client>(null);
 
-    addClient(): void {
-        var client = this.addEditClientSubj.getValue();
+    addClient(client: Client): void {
         if (this.editing) {
             this._dataService.Update("Clients", client.clientId , client)
                 .subscribe(client => { },
@@ -56,6 +55,7 @@ export class ClientService {
     }
 
     constructor(private _dataService: DataService) {
+        this.newClient();
         this.getClientList(); 
     }
 }

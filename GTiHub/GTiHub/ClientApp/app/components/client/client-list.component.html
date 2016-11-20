@@ -1,13 +1,14 @@
-﻿<div class="panel panel-default">
+﻿<div *ngIf="clients.length > 0" class="panel panel-default">
     <div class="panel-heading">Existing Clients</div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-2">Name</div>
             <div class="col-sm-2">Industry</div>
             <div class="col-sm-2">Created By</div>
-            <div class="col-sm-2">Creation Date</div>
+            <div class="col-sm-1">Creation Date</div>
             <div class="col-sm-2">Last Modified By</div>
-            <div class="col-sm-2">Modified Date</div>
+            <div class="col-sm-1">Modified Date</div>
+            <div class="col-sm-2"></div>
         </div>
         <div class="row" *ngFor="let client  of clients | paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
             <div class="col-sm-2">{{client.name}}</div>

@@ -1,6 +1,6 @@
 ﻿export class Client {
     clientId?: number;
     constructor(
-        name: string,
-        industry: string) { }
+        public name: string,
+        public industry: string) { }
 }
