@@ -1,0 +1,25 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">Existing Clients</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-2">Name</div>
+            <div class="col-sm-2">Industry</div>
+            <div class="col-sm-2">Created By</div>
+            <div class="col-sm-2">Creation Date</div>
+            <div class="col-sm-2">Last Modified By</div>
+            <div class="col-sm-2">Modified Date</div>
+        </div>
+        <div class="row" *ngFor="let client  of clients | paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
+            <div class="col-sm-2">{{client.name}}</div>
+            <div class="col-sm-2">{{client.industry}}</div>
+            <div class="col-sm-2">{{client.created_By}}</div>
+            <div class="col-sm-1">{{client.creation_Date | date: 'dd/MM/yyyy'}}</div>
+            <div class="col-sm-2">{{client.modified_By}}</div>
+            <div class="col-sm-1">{{client.date_Modified | date: 'dd/MM/yyyy'}}</div>
+            <div class="col-sm-2">
+                <button class="btn btn-default" (click)="editClient(client)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                <button class="btn btn-default" (click)="deleteClient(client)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            </div>
+        </div>
+    </div>
+</div>      
