@@ -1,6 +1,10 @@
-﻿export class Client {
+﻿export interface Client {
     clientId?: number;
-    constructor(
-        public name: string,
-        public industry: string) { }
+    name: string;
+    industry: string;
+    created_By?: string;
+    creation_Date?: Date;
+    modified_By?: string;
+    date_Modified?: string;
+    projects?: Array<Object>;
 }

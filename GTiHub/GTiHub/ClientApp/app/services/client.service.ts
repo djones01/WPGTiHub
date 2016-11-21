@@ -11,30 +11,34 @@ export class ClientService {
     clientsSubj = new BehaviorSubject<Array<Client>>([]);
     addEditClientSubj = new BehaviorSubject<Client>(null);
 
-    addClient(client: Client): void {
+    addClient(client: Client, editId?: number): void {
         if (this.editing) {
-            this._dataService.Update("Clients", client.clientId , client)
-                .subscribe(client => { },
+            this._dataService.Update('Clients', editId , client)
+                .subscribe(client => { this.getClientsList() },
                 error => console.log(error));
         } else {
-            this._dataService.Add("Clients", client)
-                .subscribe(client => { this.clientsSubj.next(this.clientsSubj.getValue().concat(client)) },
+            this._dataService.Add('Clients', client)
+                .subscribe(client => { this.getClientList() },
                 error => console.log(error));
         }
         this.editing = false;
-        this.newClient();
     }
 
     deleteClient(client: Client): void {
-        this._dataService.Delete("Clients", client.clientId)
+        this._dataService.Delete('Clients', client.clientId)
             .subscribe(client => {
                 this.removeClient(client);
             },
             error => console.log(error));
     }
 
+    updateEditClient(client: Client): void {
+
+    }
+
     editClient(client: Client): void {
         this.addEditClientSubj.next(client);
+        this.editing = true;
     }
 
     removeClient(client) {
@@ -42,20 +46,21 @@ export class ClientService {
         this.clientsSubj.next(this.clientsSubj.getValue().splice(index, 1));
     }
 
-    newClient(): void {
-        this.addEditClientSubj.next(new Client('', ''));
-    }
-
     getAddEditClient(): Observable<Client> {
         return this.addEditClientSubj.asObservable();
     }
 
+    getClientsList(): Observable<Client[]> {
+        return this.clientsSubj.asObservable();
+    }
+
     private getClientList(): void {
-        this._dataService.GetAll('Clients').subscribe(clients => this.clientsSubj.next(clients), error => console.log(error), () => { });
+        this._dataService.GetAll('Clients').subscribe((clients: Array<Client>) => {
+            this.clientsSubj.next(clients)
+        }, error => console.log(error), () => { });
     }
 
     constructor(private _dataService: DataService) {
-        this.newClient();
         this.getClientList(); 
     }
 }

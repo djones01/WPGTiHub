@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Client } from "./client";
-import { DataService } from "../../services/data.service";
 import { ClientService } from "../../services/client.service";
 import { Subscription } from "rxjs/Subscription";
 
@@ -22,9 +21,11 @@ export class ClientListComponent implements OnInit, OnDestroy {
         this._clientService.deleteClient(client);
     }
 
-    constructor(private _dataService: DataService, private _clientService: ClientService) { }
+    constructor(private _clientService: ClientService) { }
     ngOnInit() {
-        this.clientsSub = this._dataService.GetAll('Clients').subscribe(clients => this.clients = clients, error => console.log(error), () => { });
+        this.clientsSub = this._clientService.getClientsList().subscribe((clients: Client[]) => {
+            this.clients = clients
+        });
     }
     ngOnDestroy() {
         this.clientsSub.unsubscribe();
