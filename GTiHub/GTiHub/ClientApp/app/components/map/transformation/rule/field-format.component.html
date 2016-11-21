@@ -1,0 +1,23 @@
+<div *ngIf="fieldDataType=='date'">
+    <button type="button" class="btn btn-default" (click)="openCustomFormat(content)"><span class="glyphicon glyphicon-pencil"></span> Custom Date Format</button>
+</div>
+
+<!-- Modal to contain Format fields -->
+<template ngbModalContainer #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Select Field Format</h4>
+    </div>
+    <div class="modal-body">
+        <!--Date Editing-->
+        <div *ngIf="fieldDataType=='date'" class="container-fluid">
+            <date-format></date-format>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="c('Use Format')" [disabled]="!hasValidFormat">Use Format</button>
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+</template>

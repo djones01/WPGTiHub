@@ -1,0 +1,60 @@
+﻿<div class="form-group">
+    <label for="presetPatterns">Select Common Date Pattern (will clear custom formats)</label>
+    <select name="presetPatterns" class="form-control" [(ngModel)]="datePattern">
+        <option value="">Select Pattern</option>
+        <option *ngFor="let option of presetOpts" [value]="option.value">
+            {{option.display}}
+        </option>
+    </select>
+</div>
+<hr />
+<label>Create Custom Date Pattern</label>
+<div>
+    <ul class="list-group" *ngIf="dateParts.length > 0">
+        <li *ngFor="let datePart of dateParts; let i=index;" class="list-group-item">
+            <div class="row form-inline">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="type">Select Type</label>
+                        <select #type name="type" class="form-control">
+                            <option value="" disabled selected>Select Type</option>
+                            <option value="datepart">Date Part</option>
+                            <option value="separator">Separator</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div *ngIf="type.value == 'datepart'" class="form-group">
+                        <!-- Datepart selects -->
+                        <label for="dateTimeOpts">Date / Time Formats</label>
+                        <select class="form-control" name="dateTimeOpts" [(ngModel)]="datePart.value" (ngModelChange)="modifyDatePattern()" #dateTimeOpts="ngModel">
+                            <option [value]="''" disabled selected>Select Format</option>
+                            <optgroup *ngFor="let optGroup of dateOptions" label="{{optGroup.label}}">
+                                <option *ngFor="let option of optGroup.options" [value]="option.value">
+                                    {{option.display}}
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div *ngIf="type.value == 'separator'" class="form-group">
+                        <label for="separator">Date / Time Separators</label>
+                        <select class="form-control" name="separator" [(ngModel)]="datePart.value" (ngModelChange)="modifyDatePattern()" #separator="ngModel">
+                            <option [value]="''" disabled selected>Select Separator</option>
+                            <option value="fslash">/</option>
+                            <option value="dash">-</option>
+                            <option value="colon">:</option>
+                            <option value="space">space</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default" (click)="deleteDatePart(i)"><span class="glyphicon glyphicon-trash"></span> Delete Date Part</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="alert" *ngIf="datePattern.length > 0" [ngClass]="{ 'alert-success': hasValidFormat, 'alert-danger': !hasValidFormat }">
+        Example Format as Entered ( Current Date ): {{ dateExamplePattern }}
+    </div>
+</div>
+<button type="button" class="btn btn-default" (click)="addDatePart()"><span class="glyphicon glyphicon-plus"></span> Add Date Part</button>

@@ -1,0 +1,57 @@
+﻿<div class="margin-add-bottom"> 
+    <div *ngIf="ruleSourceFields.length > 0">
+        <div class="container-fluid">
+            <div *ngFor="let ruleSourceField of ruleSourceFields; let i=index" class="row override-bs-padding">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" [(ngModel)]="ruleSourceField.prepend" name="prepend" #prepend="ngModel" placeholder="Prepend Value" />
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" (click)="openSourceSelect(content, ruleSourceField)"><span class="glyphicon glyphicon-search"></span> Source Field</button>
+                        </span>
+                        <label *ngIf="ruleSourceField.sourceField != null" class="form-control hide-overflow">{{ruleSourceField.sourceField.name}}</label>
+                        <label *ngIf="ruleSourceField.sourceField == null" class="form-control hide-overflow">Source Field</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" [(ngModel)]="ruleSourceField.append" name="append" #append="ngModel" placeholder="Append Value" />
+                </div>
+                <div *ngIf="ruleSourceField.sourceField" class="col-md-2">
+                    <field-format [fieldDataType]="ruleSourceField.sourceField.datatype"></field-format>
+                    <!-- <input class="form-control" type="text" [(ngModel)]="ruleSourceField.custom_Format" name="custom_Format" #custom_Format="ngModel" placeholder="Custom Format" /> -->
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-default" (click)="removeRuleSourceField(ruleSourceField)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="ruleSourceFields.length == 0">
+        No Rule Source Fields to show
+    </div>
+</div>
+<button type="button" (click)="addRuleSourceField()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Rule Source Field</button>
+<!-- Modal to contain Source Selection component -->
+<template ngbModalContainer #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Select a Source Field</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <source-list></source-list>
+            </div>
+            <div class="col-sm-6">
+                <sourcefield-list></sourcefield-list>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="c('Select SField')" [disabled]="!hasSelectedSourceField">Select Source Field</button>
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+</template>

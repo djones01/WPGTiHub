@@ -1,0 +1,122 @@
+﻿<div class="container">
+    <hr />
+    <!-- Show all of the file packages so the user can select files and set options -->
+    <div class="panel panel-default margin-remove-bottom">
+        <div class="panel-heading">
+            Provide Files for each Source
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row">
+                    <div *ngIf="filePackages.length > 1" class="col-md-1">
+                        Primary
+                    </div>
+                    <div class="col-md-2">
+                        Name
+                    </div>
+                    <div class="col-md-2">
+                        Description
+                    </div>
+                    <div class="col-md-2">
+                        Header Options
+                    </div>
+                    <div class="col-md-1">
+                        Delimiter
+                    </div>
+                    <div class="col-md-4">
+                        Source File Selection
+                    </div>
+                </div>
+            </li>
+            <li *ngFor="let filePackage of filePackages; let i = index;" class="list-group-item">
+                <div class="row">
+                    <div *ngIf="filePackages.length > 1" class="col-md-1">                     
+                        <input type="radio" (click)="primaryChanged(filePackage)" name="primary" id="'primary'+filePackage.sourceId" [checked]="filePackage.isSourceHeader == true" value="true" />
+                    </div>
+                    <div class="col-md-2">
+                        {{filePackage.sourceName}}
+                    </div>
+                    <div class="col-md-2">
+                        {{filePackage.sourceDescription}}
+                    </div>
+                    <div class="col-md-2">
+                        <label><input type="radio" [name]="filePackage.sourceId" id="firstRowHeaderTrue" [(ngModel)]="filePackage.firstRowHeader" [value]="true" />First Row is Header</label>
+                        <label><input type="radio" [name]="filePackage.sourceId" id="firstRowHeaderFalse" [(ngModel)]="filePackage.firstRowHeader" [value]="false" />Alternate First Row</label>
+                        <input type="number" class="form-control" min="1"  *ngIf="!filePackage.firstRowHeader" [(ngModel)]="filePackage.altHeadRow" />
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" name="delimiter" class="form-control threechar" maxlength="1" size="1" [(ngModel)]="filePackage.delimiter" />
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-default">
+                                    Browse&hellip; <input type="file" name="dataFile" style="display:none;" #dataFile (change)="fileChangeEvent(filePackage.sourceId, i)" ng2FileSelect [uploader]="uploader" />
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly value="{{dataFile.value | extractFileName}}" />
+                        </div>
+                    </div>
+                </div>           
+            </li>
+        </ul>
+    </div>
+    <hr />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            File Generation Options
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label for="evaluateConditions"><input type="checkbox" name="evaluateConditions" checked="checked" [(ngModel)]="evalConditions" />Evaluate Conditions</label>
+                    </div>   
+                    <div class="checkbox">
+                        <label for="checkTypes"><input type="checkbox" name="checkTypes" [(ngModel)]="checkCells" />Check Cell Content types</label>
+                    </div>                   
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Generated File Name / Extension</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="fileName" placeholder="File Name"/>
+                            <!--Fix for bootstrap pushing select to new line-->
+                            <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                            <select class="form-control" [(ngModel)]="fileExt">
+                                <option value="csv">.csv</option>
+                                <option value="txt">.txt</option>
+                                <option value="dat">.dat</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="fileExt == 'txt' || fileExt == 'dat'" class="form-group">
+                        <label>Output File Delimiter</label>
+                        <input type="text" class="form-control threechar" maxlength="1" size="1" [(ngModel)]="outputDelimiter" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Log File Name (optional)</label>
+                        <div class="input-group">                         
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon">.txt</span>
+                        </div>                      
+                    </div>
+                    <div class="form-group">
+                        <label>Logging Type</label>
+                        <select class="form-control">
+                            <option value="full">Full (Normal Actions + Errors)</option>
+                            <option value="normal">Normal Actions Only</option>
+                            <option value="errors">Errors Only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-default" (click)="uploadAll()">
+        <span *ngIf="!processingMap"><span class="glyphicon glyphicon-check"></span> Run Mapping</span>
+        <span *ngIf="processingMap"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Processing...</span>
+    </button>
+</div>

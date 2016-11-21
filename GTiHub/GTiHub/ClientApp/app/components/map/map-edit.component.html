@@ -1,0 +1,81 @@
+﻿<div class="container-fluid custom-container">
+    <div [hidden]="addingTransform">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Add / Edit Map
+                    </div>
+                    <div class="panel-body">
+                        <form *ngIf="active" (ngSubmit)="onSubmit()" #mapForm="ngForm">
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="description"
+                                       [(ngModel)]="map.description" name="description"
+                                       #description="ngModel"
+                                       required>
+                                <div *ngIf="!description.valid && !description.pristine"
+                                     class="alert alert-danger">
+                                    Description is required
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="effective_Date">Effective Date</label>
+                                <div style="width: 200px">
+                                    <input class="form-control" name="effective_Date" #effective_Date="ngModel" [(ngModel)]="map.effective_Date"
+                                           ng2-datetime-picker
+                                           date-only="true" required />
+                                    <div *ngIf="!effective_Date.valid && !effective_Date.pristine"
+                                         class="alert alert-danger">
+                                        Description is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label for="active">
+                                        <input type="checkbox" checked="checked" id="active"
+                                               [(ngModel)]="map.active" name="active"
+                                               #active="ngModel">Active
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-default" [disabled]="!mapForm.form.valid || transformations.length == 0"><span class="glyphicon glyphicon-plus"></span> Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <!-- Area to add Transforms -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Add / Edit Attached Transformations
+                    </div>
+                    <div class="panel-body">
+                        <div *ngIf="transformations.length > 0">
+                            <div *ngFor="let transformation of transformations" class="row">
+                                <div class="col-md-8">
+                                    {{transformation.description}}
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <button type="button" class="btn btn-default" (click)="editTransform(transformation)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                                    <button type="button" class="btn btn-default" (click)="deleteTransform(transformation)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="transformations.length == 0">
+                            No Transformations in Map
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-default" (click)="addNewTransform()"><span class="glyphicon glyphicon-plus"></span> Add New Transformation</button>
+                            <button type="button" class="btn btn-default" (click)="addExistingTransform()"><span class="glyphicon glyphicon-plus"></span> Add Existing Transformation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>    
+    </div>
+   <div [hidden]="!addingTransform">
+       <transform-addedit></transform-addedit>
+   </div>
+</div>

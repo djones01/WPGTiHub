@@ -1,4 +1,4 @@
-// Module Imports
+// module Imports
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
@@ -8,28 +8,45 @@ import { FileUploadModule  } from "ng2-file-upload";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { Ng2DatetimePickerModule } from "ng2-datetime-picker";
 
-// Service Imports
+// service imports
 import { DataService } from "./services/data.service";
 
-// Component Imports
+// component imports
 import { AppComponent } from "./components/app/app.component"
 import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { HomeComponent } from "./components/home/home.component";
 
+// client
 import { ClientComponent } from "./components/client/client.component";
 import { ClientListComponent } from "./components/client/client-list.component";
 
+// source
 import { SrcComponent } from "./components/source/src.component";
 import { SrcFldComponent } from "./components/source/srcfld.component";
 import { SrcListComponent } from "./components/source/selection/src-list.component";
 import { SrcFldListComponent } from "./components/source/selection/srcfld-list.component";
 
+// target
 import { TgtComponent } from "./components/target/tgt.component";
 import { TgtFldComponent } from "./components/target/tgtfld.component";
 import { TgtListComponent } from "./components/target/selection/tgt-list.component";
 import { TgtFldListComponent } from "./components/target/selection/tgtfld-list.component";
 
-// Pipes Imports
+// map
+import { MapComponent } from "./components/map/map.component";
+import { MapEditComponent } from "./components/map/map-edit.component";
+import { MapListComponent } from "./components/map/map-list.component";
+import { RunMapComponent } from "./components/map/run-map/map-runmap.component";
+import { MapFileSelectComponent } from "./components/map/run-map/map-fileselect.component";
+import { TransformComponent } from "./components/map/transformation/transform.component";
+import { ConditionComponent } from "./components/map/transformation/condition/condition.component";
+import { RuleComponent } from "./components/map/transformation/rule/rule.component";
+import { RuleSrcFldComponent } from "./components/map/transformation/rule/rulesrcfld.component";
+import { FieldFormatComponent } from "./components/map/transformation/rule/field-format.component";
+import { DateFormatComponent } from "./components/map/transformation/rule/date-format.component";
+
+
+// pipes imports
 import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
 
 @NgModule({
@@ -48,6 +65,17 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         TgtListComponent,
         TgtFldComponent,
         TgtFldListComponent,
+        MapComponent,
+        MapEditComponent,
+        MapListComponent,
+        RunMapComponent,
+        MapFileSelectComponent,
+        TransformComponent,
+        ConditionComponent,
+        RuleComponent,
+        RuleSrcFldComponent,
+        FieldFormatComponent,
+        DateFormatComponent,
         ExtractFileNamePipe
     ],
     imports: [
@@ -64,6 +92,8 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
             { path: 'client', component: ClientComponent },
             { path: 'source', component: SrcComponent },
             { path: 'target', component: TgtComponent },
+            { path: "map", component: MapComponent },
+            { path: "run-map", component: RunMapComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],

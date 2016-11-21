@@ -1,0 +1,20 @@
+<h2>Select Map and Source Files</h2>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group input-container">
+                <label for="mapSelect">Select Map to Run</label>
+                <select #mapSelect class="form-control" (change)="onMapChange(mapSelect.value)">
+                    <option value="" disabled selected>Select Map</option>
+                    <option *ngFor="let map of maps" [value]="map.mapId">
+                        {{map.description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div [hidden]="mapSelect.value ==''">
+        <map-fileselect></map-fileselect>      
+    </div>
+</div>

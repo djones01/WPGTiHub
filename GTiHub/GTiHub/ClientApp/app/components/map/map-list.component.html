@@ -1,0 +1,33 @@
+﻿<div class="panel-default">
+    <div class="panel-heading">
+        <button type="button" class="btn btn-default text-right"><span class="glyphicon glyphicon-plus" (click)="addMap()"></span>Add Map</button>
+    </div>      
+    <ul *ngIf="maps.length > 0" class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-10">
+                    Description
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </li>
+        <li *ngFor="let map of maps" class="list-group-item">
+            <div class="row">
+                <div class="col-md-10">
+                    {{map.description}}
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default" (click)="editMap(map)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button type="button" class="btn btn-default" (click)="deleteMap(map)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div *ngIf="maps.length == 0" class="panel-body">
+        No Maps to show
+    </div>
+</div>
+
+
+

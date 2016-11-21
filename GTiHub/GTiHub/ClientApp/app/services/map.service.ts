@@ -5,31 +5,31 @@ import { Transformation, Rule, RuleSourceField, Condition, Map } from "../compon
 import { DataService } from "./data.service";
 
 @Injectable()
-export class MapAddEditService {
-    //------------------------------Subjects-----------------------------------------//
+export class MapService {
+    // ------------------------------Subjects-----------------------------------------//
 
-    //Values for tracking state of a map
+    // Values for tracking state of a map
     private mapsSubj = new BehaviorSubject<Array<Map>>([]);
     private mapSubj = new BehaviorSubject(null);
     private mapTransformsSubj = new BehaviorSubject<Array<Transformation>>([]);
     private mapAddingOrModifyingTransSubj = new BehaviorSubject(false);
     private editingMapSubj = new BehaviorSubject(false);
 
-    //Values for tracking state of a transformation
+    // Values for tracking state of a transformation
     private transformSubj = new BehaviorSubject(new Transformation("", null, []));
 
-    //Rule / rule source fields
+    // Rule / rule source fields
     rsfSeqNum = 1;
     private ruleSubj = new BehaviorSubject(new Rule("", "", "", null, []));
     private ruleSourceFieldsSubj = new BehaviorSubject<Array<RuleSourceField>>([]);
 
-    //Conditions
+    // Conditions
     condSeqNum = 1;
     private conditionsSubj = new BehaviorSubject<Array<Condition>>([]);
 
-    //-------------------------------Methods-----------------------------------------//
+    // -------------------------------Methods-----------------------------------------//
 
-    //Map methods
+    // Map methods
     getMap() {
         return this.mapSubj.asObservable();
     }
@@ -62,10 +62,10 @@ export class MapAddEditService {
         return this.editingMapSubj.asObservable();
     }
 
-    //Transform methods
+    // Transform methods
     setTransform(transform: Transformation, editing: boolean) {
         if (editing) {
-            //Load Rule and Condition data for the transform to be edited
+            // Load Rule and Condition data for the transform to be edited
             this.transformSubj.next(transform);
         } else {
             this.transformSubj.next(new Transformation("", null, []));
@@ -77,7 +77,7 @@ export class MapAddEditService {
     }
 
     createOrUpdateTransform() {
-        //Currently adding a transform
+        // Currently adding a transform
         if (this.mapAddingOrModifyingTransSubj.getValue()) {
             const transform = this.transformSubj.getValue();
             transform.conditions = this.conditionsSubj.getValue();
@@ -86,7 +86,7 @@ export class MapAddEditService {
             transform.rule = rule;
             this.mapTransformsSubj.next(this.mapTransformsSubj.getValue().concat(this.transformSubj.getValue()));
         }
-        //Currently editing a transform
+        // Currently editing a transform
         else {
         }
     }
@@ -125,7 +125,7 @@ export class MapAddEditService {
                 () => {});
     }
 
-    //Rule methods
+    // Rule methods
     setRule(rule: Rule) {
         this.ruleSubj.next(rule);
     }
@@ -134,7 +134,7 @@ export class MapAddEditService {
         return this.ruleSubj.asObservable();
     }
 
-    //Rule Source Fields methods
+    // Rule Source Fields methods
     setRuleSourceFields(ruleSourceFields: RuleSourceField[]) {
         this.ruleSourceFieldsSubj.next(ruleSourceFields);
     }
@@ -144,13 +144,13 @@ export class MapAddEditService {
     }
 
     addRuleSourceField() {
-        //Use concat here since push would return the length of the array post push
+        // Use concat here since push would return the length of the array post push
         this.ruleSourceFieldsSubj.next(this.ruleSourceFieldsSubj.getValue()
             .concat(new RuleSourceField(this.rsfSeqNum++, "", "", "", null)));
     }
 
     removeRuleSourceField(ruleSourceField: RuleSourceField) {
-        //Use filter in order to return list
+        // Use filter in order to return list
         const ruleSourceFields = this.ruleSourceFieldsSubj.getValue();
         const removeIndex = ruleSourceFields.indexOf(ruleSourceField);
         for (let i = removeIndex; i < ruleSourceFields.length; i++) {
@@ -160,7 +160,7 @@ export class MapAddEditService {
         this.ruleSourceFieldsSubj.next(filtered);
     }
 
-    //Condition methods
+    // Condition methods
     setConditions(conditions: Condition[]) {
         this.conditionsSubj.next(conditions);
     }
@@ -170,13 +170,13 @@ export class MapAddEditService {
     }
 
     addCondition() {
-        //Use concat here since push would return the length of the array post push
+        // Use concat here since push would return the length of the array post push
         this.conditionsSubj.next(this.conditionsSubj.getValue()
             .concat(new Condition(this.condSeqNum++, "", "", "", "", "", null)));
     }
 
     removeCondition(condition: Condition) {
-        //Use filter in order to return list
+        // Use filter in order to return list
         const conditions = this.conditionsSubj.getValue();
         const removeIndex = conditions.indexOf(condition);
         for (let i = removeIndex; i < conditions.length; i++) {
@@ -187,7 +187,7 @@ export class MapAddEditService {
     }
 
     constructor(private _dataService: DataService) {
-        //Get the list of maps
+        // Get the list of maps
         this.refreshMapsList();
     }
 }

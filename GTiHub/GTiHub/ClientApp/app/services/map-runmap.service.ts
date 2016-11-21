@@ -7,12 +7,12 @@ import { Map } from "../components/map/map";
 
 @Injectable()
 export class RunMapService {
-    //Array of FilePackages which will be appended to formdata
+    // Array of FilePackages which will be appended to formdata
     private filePackagesSubj = new BehaviorSubject<Array<FilePackage>>([]);
     private mapsSubj = new BehaviorSubject<Array<Map>>([]);
     private selectedMapIdSubj = new BehaviorSubject<number>(null);
 
-    //On changing selected mapping
+    // On changing selected mapping
     initFilePackages(mapId: number) {
         var filepackages = new Array<FilePackage>();
         this._dataService.GetAllWithId("Maps/MapSources", mapId)
@@ -36,7 +36,7 @@ export class RunMapService {
     }
 
     initMaps() {
-        //Returns an object
+        // Returns an object
         this._dataService.GetAll("Maps")
             .subscribe((maps: Object[]) => {
                 var selectMaps = new Array<Map>();
