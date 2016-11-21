@@ -4,47 +4,35 @@ import { Client } from "./client";
 import { ClientService } from "../../services/client.service";
 import { Subscription } from "rxjs/Subscription";
 
+
 @Component({
     selector: "client",
     template: require('./client.component.html'),
     providers: [ClientService]
 })
 export class ClientComponent implements OnInit, OnDestroy {
-    private clientForm: FormGroup;
+    client: Client;
+    active: boolean = true;
 
     //Subscriptions
     addEditClientSub: Subscription;
-    formChangesSub: Subscription;
 
     onSubmit(client: Client) {
         this._clientService.addClient(client);
-        this.clientForm.reset();
+        this.reset();
     }
 
     reset() {
-        this.clientForm.reset();
+        this._clientService.newClient();
+        this.active = false;
+        setTimeout(() => this.active = true, 0);
     }
 
     constructor(private formBuilder: FormBuilder, private _clientService: ClientService) {
     }
 
     ngOnInit(): void {   
-        this.buildForm();
-        this.addEditClientSub = this._clientService.getAddEditClient().subscribe(client => {
-            if (client != null) {
-                this.clientForm.patchValue(client, { onlySelf: true });
-                this.formChangesSub = this.clientForm.valueChanges
-                    .subscribe(x => this._clientService.updateEditClient(this.clientForm.value));
-            }   
-        }); 
-    }
-
-    buildForm() {
-        // Build the form
-        this.clientForm = this.formBuilder.group({
-            name: ['', Validators.required],
-            industry: ['', Validators.required]
-        });
+        this.addEditClientSub = this._clientService.getAddEditClient().subscribe(client => this.client = client); 
     }
 
     ngOnDestroy(): void {

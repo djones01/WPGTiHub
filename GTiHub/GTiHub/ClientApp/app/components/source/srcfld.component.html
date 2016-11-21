@@ -1,0 +1,49 @@
+﻿<div class="panel panel-default">
+     <div class="panel-heading">Source Fields</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div *ngIf="sourceFields.length > 0">
+                    <div class="row row-centered margin-add-bottom">
+                        <div class="col-md-2">
+                            Sequence Number
+                        </div>
+                        <div class="col-md-4">
+                            Source Field Name
+                        </div>
+                        <div class="col-md-3">
+                            Datatype
+                        </div>
+                        <div class="col-md-1">
+                            Active
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    <div *ngFor="let sourceField of sourceFields  | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" class="row row-centered">
+                        <div class="col-md-2">{{sourceField.seqNum}}</div>
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" [(ngModel)]="sourceField.name" name="sFieldName" #sFieldName="ngModel" />
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" [(ngModel)]="sourceField.datatype" name="sFieldDatatype" #sFieldDatatype="ngModel">
+                                <option *ngFor="let option of options" [ngValue]="option.value">{{option.display}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" [(ngModel)]="sourceField.active" name="sFieldActive" #sFieldActive="ngModel" />
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default" (click)="removeSourceField(sourceField, i)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                        </div>
+                    </div>
+                </div>         
+                <div *ngIf="sourceFields.length == 0">
+                    No Source Fields to Show
+                </div>
+            </div>  
+        </div>  
+    <div class="align-center" colspan="7" *ngIf="sourceFields && sourceFields.length > 5">
+        <pagination-controls (pageChange)="p = $event" #api>
+        </pagination-controls>
+    </div>        
+</div>        

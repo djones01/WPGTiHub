@@ -39,6 +39,9 @@
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.14.1",
     "zone.js": "^0.6.21",
-    "ng2-pagination": "1.0.1"
+    "ng2-pagination": "^1.0.1",
+    "ng2-datetime-picker": "^0.9.10",
+    "ng2-file-upload": "^1.1.4-2",
+    "@ng-bootstrap/ng-bootstrap": "*"
   }
 }

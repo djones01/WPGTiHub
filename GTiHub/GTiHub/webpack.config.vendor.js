@@ -32,7 +32,10 @@ module.exports = {
             'es6-promise',
             'jquery',
             'zone.js',
-            'ng2-pagination'
+            'ng2-pagination',
+            'ng2-datetime-picker',
+            'ng2-file-upload',
+            '@ng-bootstrap/ng-bootstrap'
         ]
     },
     output: {

@@ -17,9 +17,9 @@
                 <div class="col-md-2">{{client.name}}</div>
                 <div class="col-md-2">{{client.industry}}</div>
                 <div class="col-md-2">{{client.created_By}}</div>
-                <div class="col-md-1">{{client.creation_Date | date: 'dd/MM/yyyy'}}</div>
+                <div class="col-md-1">{{client.creation_Date | date: 'MM/dd/yyyy'}}</div>
                 <div class="col-md-2">{{client.modified_By}}</div>
-                <div class="col-md-1">{{client.date_Modified | date: 'dd/MM/yyyy'}}</div>
+                <div class="col-md-1">{{client.date_Modified | date: 'MM/dd/yyyy'}}</div>
                 <div class="col-md-2">
                     <button class="btn btn-default" (click)="editClient(client)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                     <button class="btn btn-default" (click)="deleteClient(client)"><span class="glyphicon glyphicon-trash"></span> Delete</button>

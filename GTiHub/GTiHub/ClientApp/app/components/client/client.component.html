@@ -1,18 +1,25 @@
 ﻿<h2>Add / Edit Clients</h2>
+<hr />
 <div class="container-fluid">
-    <form [formGroup]="clientForm" novalidate (ngSubmit)="onSubmit(clientForm.value)">
+    <form *ngIf="active" #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm.value)">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control input" id="name" formControlName="name">
-                    <small [hidden]="clientForm.controls.name.valid || clientForm.controls.name.pristine" class="text-danger">
-                        Name is required
+                    <input type="text" class="form-control" id="name"
+                           [(ngModel)]="client.name" name="name"
+                           #name="ngModel"
+                           required>
+                    <small [hidden]="name.valid || name.pristine" class="text-danger">
+                        Name is required 
                     </small>
                 </div>
                 <div class="form-group">
-                    <label for="power">Industry</label>
-                    <select class="form-control" id="industry" formControlName="industry">
+                    <label for="industry">Industry</label>
+                    <select class="form-control" id="industry"
+                            [(ngModel)]="client.industry" name="industry"
+                            #industry="ngModel"
+                            required>
                         <option value="" selected disabled>Select Industry</option>
                         <option>Agriculture, Forestry and Fishing</option>
                         <option>Mining</option>
@@ -32,8 +39,8 @@
                         <option>Public Administration</option>
                         <option>Nonclassifiable</option>
                     </select>
-                    <small [hidden]="clientForm.controls.industry.valid || clientForm.controls.industry.pristine" class="text-danger">
-                        Industry is required
+                    <small [hidden]="industry.valid || industry.pristine" class="text-danger">
+                        Industry is required.
                     </small>
                 </div>
                 <div class="form-group">
@@ -43,5 +50,6 @@
             </div>
         </div>       
     </form>
+    <hr>
     <client-list></client-list>
 </div>

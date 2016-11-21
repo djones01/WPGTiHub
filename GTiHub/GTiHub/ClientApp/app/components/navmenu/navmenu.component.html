@@ -18,13 +18,18 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/counter']">
-                        <span class='glyphicon glyphicon-education'></span> Sources
+                    <a [routerLink]="['/source']">
+                        <span class='glyphicon glyphicon-import'></span> Sources
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/fetch-data']">
-                        <span class='glyphicon glyphicon-th-list'></span> Targets
+                    <a [routerLink]="['/map']">
+                        <span class='glyphicon glyphicon-random'></span> Maps
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/target']">
+                        <span class='glyphicon glyphicon-export'></span> Targets
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
@@ -32,8 +37,6 @@
                         <span class='glyphicon glyphicon-cog'></span> Clients
                     </a>
                 </li>
-               
-
             </ul>
         </div>
     </div>

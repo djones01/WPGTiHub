@@ -1,0 +1,31 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        Select Target Field
+    </div>
+    <div class="panel-body">
+        <div class="list-group" *ngIf="targetFields.length > 0">
+            <a href="javascript:;" *ngFor="let targetField of targetFields | paginate: { itemsPerPage: 5, currentPage: z };"  class="list-group-item" [class.active]="targetField == selectedTargetField" (click)="onSelectTargetField(targetField)">
+                <h4 class="list-group-item-heading">{{targetField.name}}</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{targetField.seqNum}}
+                    </div>
+                    <div class="col-md-4">
+                        {{targetField.datatype}}
+                    </div>
+                    <div class="col-md-4">
+                        Active?: {{targetField.active}}
+                    </div>
+                </div>
+            </a>
+
+        </div>    
+        <div *ngIf="targetFields.length == 0">
+            No Target Fields to show
+        </div>
+        <div class="align-center" *ngIf="targetFields && targetFields.length > 5">
+            <pagination-controls (pageChange)="z = $event" #api>
+            </pagination-controls>
+        </div>
+    </div>
+</div>

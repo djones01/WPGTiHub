@@ -1,0 +1,49 @@
+﻿<div class="panel panel-default">
+     <div class="panel-heading">Target Fields</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div *ngIf="targetFields.length > 0">
+                    <div class="row row-centered margin-add-bottom">
+                        <div class="col-md-2">
+                            Sequence Number
+                        </div>
+                        <div class="col-md-4">
+                            Target Field Name
+                        </div>
+                        <div class="col-md-3">
+                            Datatype
+                        </div>
+                        <div class="col-md-1">
+                            Active
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    <div *ngFor="let targetField of targetFields  | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" class="row row-centered">
+                        <div class="col-md-2">{{targetField.seqNum}}</div>
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" [(ngModel)]="targetField.name" name="tFieldName" #tFieldName="ngModel" />
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" [(ngModel)]="targetField.datatype" name="tFieldDatatype" #tFieldDatatype="ngModel">
+                                <option *ngFor="let option of options" [ngValue]="option.value">{{option.display}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" [(ngModel)]="targetField.active" name="tFieldActive" #tFieldActive="ngModel" />
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default" (click)="removeTargetField(targetField, i)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                        </div>
+                    </div>
+                </div>         
+                <div *ngIf="targetFields.length == 0">
+                    No Target Fields to Show
+                </div>
+            </div>  
+        </div>  
+    <div class="align-center" colspan="7" *ngIf="targetFields && targetFields.length > 5">
+        <pagination-controls (pageChange)="p = $event" #api>
+        </pagination-controls>
+    </div>        
+</div>        
