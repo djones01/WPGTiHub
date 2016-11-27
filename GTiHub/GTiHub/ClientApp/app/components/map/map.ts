@@ -1,57 +1,42 @@
-﻿import { SourceField } from "../source/source";
+﻿import { ISourceField } from "../source/source";
 import { TargetField } from "../target/target";
 
-export class Map {
-    constructor(
-        public description: string,
-        public effective_Date: Date,
-        public active: boolean,
-        public transformations: Transformation[],
-        public mapId?: number
-    ) {
-    }
+export interface IMap {
+    description: string;
+    effective_Date: Date;
+    active: boolean;
+    transformations: ITransformation[],
+    mapId?: number;
 }
 
-export class Transformation {
-    constructor(
-        public description: string,
-        public rule: Rule,
-        public conditions: Condition[]
-    ) {
-    }
+export interface ITransformation {
+    description: string;
+    rule: IRule;
+    conditions: ICondition[]
 }
 
-export class Condition {
-    constructor(
-        public seqNum: number,
-        public chain_Operation: string,
-        public left_Paren: string,
-        public operation: string,
-        public cond_Value: string,
-        public right_Paren: string,
-        public sourceField: SourceField
-    ) {
-    }
+export interface ICondition {
+    seqNum: number;
+    chain_Operation: string;
+    left_Paren: string;
+    operation: string;
+    cond_Value: string;
+    right_Paren: string;
+    sourceField: ISourceField;
 }
 
-export class Rule {
-    constructor(
-        public rule_Value: string,
-        public alt_Value: string,
-        public rule_Operation: string,
-        public targetField: TargetField,
-        public ruleSourceFields: RuleSourceField[]
-    ) {
-    }
+export interface IRule {
+    rule_Value: string;
+    alt_Value: string;
+    rule_Operation: string;
+    targetField: TargetField;
+    ruleSourceFields: IRuleSourceField[];
 }
 
-export class RuleSourceField {
-    constructor(
-        public seqNum: number,
-        public append: string,
-        public prepend: string,
-        public custom_Format: string,
-        public sourceField: SourceField
-    ) {
-    }
+export interface IRuleSourceField {
+    seqNum: number;
+    append: string;
+    prepend: string;
+    custom_Format: string;
+    sourceField: ISourceField;
 }

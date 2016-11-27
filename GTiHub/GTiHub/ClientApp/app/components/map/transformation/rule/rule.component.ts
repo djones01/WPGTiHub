@@ -1,21 +1,23 @@
-﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
-import { DataService } from "../../../../services/data.service";
-import { Response, Headers } from "@angular/http";
+﻿import { Component, ViewChild, OnInit, OnDestroy, Input } from "@angular/core";
+import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { SrcFldListComponent } from "../../../source/selection/srcfld-list.component";
 import { SrcListComponent } from "../../../source/selection/src-list.component";
-import { SFieldSelectService } from "../../../../services/source-select.service";
+import { SFieldSelectService } from "../../../../services/srcfld-select.service";
 import { TFieldSelectService } from "../../../../services/target-select.service";
 import { Subscription } from "rxjs/Subscription";
-import { Rule } from "../../map";
+import { IRule } from "../../map";
 import { TargetField } from "../../../target/target";
 
 @Component({
-    selector: "rule-addedit",
+    selector: "rule",
     template: require("./rule.component.html"),
-    providers: [DataService]
+    providers: []
 })
 export class RuleComponent implements OnInit, OnDestroy {
+    @Input('group')
+    ruleForm: FormGroup
+
     hasSelectedTargetField: boolean;
     selectedTargetField: TargetField;
     rule_Operations = [
@@ -23,10 +25,9 @@ export class RuleComponent implements OnInit, OnDestroy {
         { value: "assign", display: "Automatic / System Generated" },
         { value: "text", display: "Text" }
     ];
-    rule: Rule;
+    rule: IRule;
 
     //Subscriptions
-    ruleSubscription: Subscription;
     hasSelectedTargetFieldSubscription: Subscription;
     getSelectedTargetFieldSubscription: Subscription;
 
@@ -44,12 +45,7 @@ export class RuleComponent implements OnInit, OnDestroy {
                 (reason) => {});
     }
 
-    constructor(private _dataService: DataService,
-        private modalService: NgbModal,
-        private sourceSelectService: SFieldSelectService,
-        private targetSelectService: TFieldSelectService) {
-        this.rule = new Rule("", "", "text", null, null);
-    }
+    constructor(private modalService: NgbModal, private sourceSelectService: SFieldSelectService, private targetSelectService: TFieldSelectService) {}
 
     ngOnInit(): void {
         this.hasSelectedTargetFieldSubscription = this.targetSelectService.hasSelectedTargetField()
@@ -60,6 +56,6 @@ export class RuleComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.hasSelectedTargetFieldSubscription.unsubscribe();
-        this.ruleSubscription.unsubscribe();
+        this.getSelectedTargetFieldSubscription.unsubscribe();
     }
 }

@@ -1,0 +1,101 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Field Generation Options
+            </div>
+            <div class="panel-body">
+                <div class="radio">
+                    <label><input type="radio" name="sfieldOptMan" [(ngModel)]="sopt" [value]="false" />Manual Fields</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="sFieldOptTemplate" [(ngModel)]="sopt" [value]="true" checked />Extract From File</label>
+                </div>
+                <div *ngIf="sopt">
+                    <div class="form-group">
+                        <label for="templateFile">Select Template File</label>
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-default">
+                                    Browse&hellip; <input type="file" name="templateFile" #templateFile style="display:none;" ng2FileSelect [uploader]="uploader" />
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly value="{{templateFile.value | extractFileName}}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="delimiter">Delimiter</label>
+                        <input type="text" name="delimiter" [(ngModel)]="delimiter" maxlength="1" size="1" width="1" class="form-control threechar" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default"
+                                (click)="extractFile()" [disabled]="!uploader.getNotUploadedItems().length || delimiter == ''">
+                            <span class="glyphicon glyphicon-upload"></span> Extract Fields
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="!sopt" class="form-group">
+                    <label for="name">Number of Fields (max of 300)</label>
+                    <input type="number" value="0" min="0" max="300" class="form-control" id="sfieldCount" name="sfieldCount" [(ngModel)]="sfieldCount" (change)="onFieldCountChange()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form [formGroup]="srcFldsForm">
+    <div class="panel panel-default">
+        <div class="panel-heading">Source Fields</div>
+        <div class="panel-body">
+            <div *ngIf="srcFldsForm.controls.srcFlds.controls.length > 0" formArrayName="srcFlds">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="col-md-2">
+                            Sequence Number
+                        </div>
+                        <div class="col-md-4">
+                            Source Field Name
+                        </div>
+                        <div class="col-md-3">
+                            Datatype
+                        </div>
+                        <div class="col-md-1">
+                            Active
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </li>
+                    <li *ngFor="let srcFld of srcFldsForm.controls.srcFlds.controls  | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" class="list-group-item">
+                        <div class="col-md-2">{{srcFld.seqNum}}</div>
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" formControlName="name" />
+                            <small *ngIf="!srcForm.controls.name.valid" class="text-danger">
+                                Source Field Name is required
+                            </small>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" formControlName="datatype">
+                                <option value="" disabled selected>Select Datatype</option>
+                                <option *ngFor="let option of options" [ngValue]="option.value">{{option.display}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" formControlName="active" />
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default" (click)="removeSourceField(sourceField, i)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="srcFldsForm.controls.srcFlds.controls.length == 0">
+                No Source Fields to Show
+            </div>
+        </div>
+        <div class="align-center" colspan="7" *ngIf="srcFlds && srcFlds.controls.length > 5">
+            <pagination-controls (pageChange)="p = $event" #api>
+            </pagination-controls>
+        </div>
+    </div>
+</form>
+     

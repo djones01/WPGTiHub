@@ -2,7 +2,7 @@
 import { RunMapService } from "../../../services/map-runmap.service";
 import { Subscription } from "rxjs/Subscription";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
-import { Map } from "../map";
+import { IMap } from "../map";
 import { FilePackage } from "./filepackage";
 
 @Component({

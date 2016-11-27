@@ -3,13 +3,13 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 import { DataService } from "./data.service";
 import { FilePackage } from "../components/map/run-map/filepackage";
-import { Map } from "../components/map/map";
+import { IMap } from "../components/map/map";
 
 @Injectable()
 export class RunMapService {
     // Array of FilePackages which will be appended to formdata
     private filePackagesSubj = new BehaviorSubject<Array<FilePackage>>([]);
-    private mapsSubj = new BehaviorSubject<Array<Map>>([]);
+    private mapsSubj = new BehaviorSubject<Array<IMap>>([]);
     private selectedMapIdSubj = new BehaviorSubject<number>(null);
 
     // On changing selected mapping
@@ -36,26 +36,26 @@ export class RunMapService {
     }
 
     initMaps() {
-        // Returns an object
-        this._dataService.GetAll("Maps")
-            .subscribe((maps: Object[]) => {
-                var selectMaps = new Array<Map>();
-                maps.forEach(function(map) {
-                    selectMaps.push(new Map(map["description"],
-                        map["effective_Date"],
-                        map["active"],
-                        map["transformations"],
-                        map["mapId"]));
-                });
-                this.mapsSubj.next(selectMaps);
-            });
+        //// Returns an object
+        //this._dataService.GetAll("Maps")
+        //    .subscribe((maps: Object[]) => {
+        //        var selectMaps = new Array<Map>();
+        //        maps.forEach(function(map) {
+        //            selectMaps.push(new Map(map["description"],
+        //                map["effective_Date"],
+        //                map["active"],
+        //                map["transformations"],
+        //                map["mapId"]));
+        //        });
+        //        this.mapsSubj.next(selectMaps);
+        //    });
     }
 
-    getMaps(): Observable<Array<Map>> {
+    getMaps(): Observable<IMap[]> {
         return this.mapsSubj.asObservable();
     }
 
-    getFilePackages(): Observable<Array<FilePackage>> {
+    getFilePackages(): Observable<FilePackage[]> {
         return this.filePackagesSubj.asObservable();
     }
 

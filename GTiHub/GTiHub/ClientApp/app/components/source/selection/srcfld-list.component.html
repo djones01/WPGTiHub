@@ -3,8 +3,8 @@
         Select Source Field
     </div>
     <div class="panel-body">
-        <div class="list-group" *ngIf="sourceFields.length > 0">
-            <a href="javascript:;" *ngFor="let sourceField of sourceFields | paginate: { itemsPerPage: 5, currentPage: z };"  class="list-group-item" [class.active]="sourceField == selectedSourceField" (click)="onSelectSourceField(sourceField)">
+        <ul class="list-group" *ngIf="sourceFields.length > 0">
+            <li *ngFor="let sourceField of sourceFields | paginate: { itemsPerPage: 5, currentPage: z };"  class="list-group-item" [class.active]="sourceField == selectedSourceField" (click)="onSelectSourceField(sourceField)">
                 <h4 class="list-group-item-heading">{{sourceField.name}}</h4>
                 <div class="row">
                     <div class="col-md-4">
@@ -17,9 +17,8 @@
                         Active?: {{sourceField.active}}
                     </div>
                 </div>
-            </a>
-
-        </div>    
+            </li>
+        </ul>    
         <div *ngIf="sourceFields.length == 0">
             No Source Fields to show
         </div>

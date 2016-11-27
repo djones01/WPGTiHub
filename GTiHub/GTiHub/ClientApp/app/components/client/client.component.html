@@ -1,6 +1,6 @@
-﻿<h2>Add / Edit Clients</h2>
-<hr />
-<div class="container-fluid">
+﻿<div class="container-fluid">
+    <h2>Add / Edit Clients</h2>
+    <hr />
     <form *ngIf="active" #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm.value)">
         <div class="row">
             <div class="col-md-3">
@@ -11,7 +11,7 @@
                            #name="ngModel"
                            required>
                     <small [hidden]="name.valid || name.pristine" class="text-danger">
-                        Name is required 
+                        Name is required
                     </small>
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                     <button type="button" class="btn btn-default" (click)="reset()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
                 </div>
             </div>
-        </div>       
+        </div>
     </form>
     <hr>
     <client-list></client-list>

@@ -1,20 +1,15 @@
-﻿export class Source {
-    constructor(
-        public name: string,
-        public description: string,
-        public effective_Date: string,
-        public active: boolean,
-        public sourceFields: SourceField[]
-    ) {
-    }
+﻿export interface ISource {
+    name: string;
+    description: string;
+    effective_Date: string;
+    active: boolean;
+    sourceFields: ISourceField[];
+    sourceId?: number;
 }
 
-export class SourceField {
-    constructor(
-        public name: string,
-        public datatype: string,
-        public active: boolean,
-        public seqNum: number
-    ) {
-    }
+export interface ISourceField {
+    name: string;
+    datatype: string;
+    active: boolean;
+    seqNum: number;
 }

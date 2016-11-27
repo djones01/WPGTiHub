@@ -89,26 +89,4 @@
         <button type="button" class="btn btn-default" (click)="addCondition()"><span class="glyphicon glyphicon-plus"></span> Add Condition</button>
     </div>
 </div>
-<!-- Modal to contain Source Selection component -->
-<template ngbModalContainer #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Select a Source Field</h4>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-6">
-                <source-list></source-list>
-            </div>
-            <div class="col-sm-6">
-                <sourcefield-list></sourcefield-list>
-            </div>
-        </div>   
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="c('Select SField')" [disabled]="!hasSelectedSourceField">Select Source Field</button>
-        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    </div>
-</template>
+

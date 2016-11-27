@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MapFileSelectComponent } from "./map-fileselect.component";
 import { RunMapService } from "../../../services/map-runmap.service";
 import { Subscription } from "rxjs/Subscription";
-import { Map } from "../map";
+import { IMap } from "../map";
 
 @Component({
     selector: "map-runmap",
@@ -11,7 +11,7 @@ import { Map } from "../map";
 })
 export class RunMapComponent implements OnInit, OnDestroy {
     //List of maps for map selection dropdown
-    maps: Map[];
+    maps: IMap[];
 
     //Subscriptions
     mapSubscription: Subscription;

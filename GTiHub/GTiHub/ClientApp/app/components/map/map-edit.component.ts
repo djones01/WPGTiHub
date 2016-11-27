@@ -1,66 +1,54 @@
 ﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
-import { DataService } from "../../services/data.service";
-import { Response, Headers } from "@angular/http";
-import { Transformation, Map } from "./map";
+import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { IMap } from "./map";
 import { MapService } from "../../services/map.service";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: "map-edit",
-    template: require("./map.component.html")
+    template: require("./map-edit.component.html")
 })
 export class MapEditComponent implements OnInit, OnDestroy {
-    //Map which is being added or edited
-    map: Map;
-    //List of Transformations for the map
-    transformations: Transformation[];
-    //Whether or not we're editing a map currently
-    editingMap: boolean;
-    //Toggles whether or not to show the Transformation components
-    addingTransform: boolean;
-    active = true;
+    public mapForm: FormGroup;
 
-    //Subscriptions for map create service
-    mapSubscription: Subscription;
-    addingTransformSubscription: Subscription;
-    mapTransformsSubscription: Subscription;
-    mapHasTransformSubscription: Subscription;
-    editingMapSubscription: Subscription;
-
-    //Sets the transform for editing
-    editTransform(transform: Transformation) {
-        this.mapService.addingOrModifyingTransform(true);
-        this.mapService.setTransform(transform, true);
+    //Init new transformation
+    initTransform() {
+        return this._fb.group({
+            description: ['', Validators.required],
+            rule: this._fb.group({
+                rule_Value: ['', Validators.required],
+                alt_Value: [''],
+                rule_Operation: ['', Validators.required],
+                targetField: [null],
+                ruleSourceFields: this._fb.array([])
+            }),
+            conditions: this._fb.array([])
+        });
     }
 
-    //Delete a transform
+    initRule() {
 
-    //Sets the visible component to the transform add/edit component
-    addNewTransform() {
-        this.mapService.addingOrModifyingTransform(true);
     }
 
-    onSubmit() {
-        this.mapService.addOrUpdateMap();
+    addTransform() {
+        const control = <FormArray>this.mapForm.controls['transformations'];
+        control.push(this.initTransform());
+    }
+    removeTransform(i: number) {
+        const control = <FormArray>this.mapForm.controls['transformations'];
+        control.removeAt(i);
     }
 
-    constructor(private _dataService: DataService, private mapService: MapService) {
+    constructor(private _fb: FormBuilder) { }
+    ngOnInit() {
+        this.mapForm = this._fb.group({
+            description: ['', Validators.required],
+            effective_Date: [''],
+            active: [true],
+            transformations: this._fb.array([])
+        });
     }
+    ngOnDestroy() {
 
-    ngOnInit(): void {
-        this.addingTransformSubscription = this.mapService.getAddingOrModifyingTransform()
-            .subscribe(addingTransform => this.addingTransform = addingTransform);
-        this.mapTransformsSubscription = this.mapService.getMapTransforms()
-            .subscribe(mapTransforms => this.transformations = mapTransforms);
-        this.mapSubscription = this.mapService.getMap().subscribe(map => this.map = map);
-        this.editingMapSubscription = this.mapService.getAddingOrModifyingMap()
-            .subscribe(editingMap => this.editingMap = editingMap);
-    }
-
-    ngOnDestroy(): void {
-        this.addingTransformSubscription.unsubscribe();
-        this.mapTransformsSubscription.unsubscribe();
-        this.mapSubscription.unsubscribe();
-        this.editingMapSubscription.unsubscribe();
     }
 }

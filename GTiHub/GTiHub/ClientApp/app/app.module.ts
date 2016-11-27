@@ -21,10 +21,12 @@ import { ClientComponent } from "./components/client/client.component";
 import { ClientListComponent } from "./components/client/client-list.component";
 
 // source
-import { SrcComponent } from "./components/source/src.component";
-import { SrcFldComponent } from "./components/source/srcfld.component";
+import { SrcEditComponent } from "./components/source/src-edit.component";
+import { SrcFldEditComponent } from "./components/source/srcfld-edit.component";
 import { SrcListComponent } from "./components/source/selection/src-list.component";
 import { SrcFldListComponent } from "./components/source/selection/srcfld-list.component";
+import { SrcFldSelectComponent } from "./components/source/selection/srcfld-select.component";
+    
 
 // target
 import { TgtComponent } from "./components/target/tgt.component";
@@ -38,7 +40,7 @@ import { MapEditComponent } from "./components/map/map-edit.component";
 import { MapListComponent } from "./components/map/map-list.component";
 import { RunMapComponent } from "./components/map/run-map/map-runmap.component";
 import { MapFileSelectComponent } from "./components/map/run-map/map-fileselect.component";
-import { TransformComponent } from "./components/map/transformation/transform.component";
+import { TransformationComponent } from "./components/map/transformation/transformation.component";
 import { ConditionComponent } from "./components/map/transformation/condition/condition.component";
 import { RuleComponent } from "./components/map/transformation/rule/rule.component";
 import { RuleSrcFldComponent } from "./components/map/transformation/rule/rulesrcfld.component";
@@ -57,10 +59,11 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         HomeComponent,
         ClientComponent,
         ClientListComponent,
-        SrcComponent,
+        SrcEditComponent,
         SrcListComponent,
-        SrcFldComponent,
+        SrcFldEditComponent,
         SrcFldListComponent,
+        SrcFldSelectComponent,
         TgtComponent,
         TgtListComponent,
         TgtFldComponent,
@@ -70,7 +73,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         MapListComponent,
         RunMapComponent,
         MapFileSelectComponent,
-        TransformComponent,
+        TransformationComponent,
         ConditionComponent,
         RuleComponent,
         RuleSrcFldComponent,
@@ -90,7 +93,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'client', component: ClientComponent },
-            { path: 'source', component: SrcComponent },
+            { path: 'source', component: SrcEditComponent },
             { path: 'target', component: TgtComponent },
             { path: "map", component: MapComponent },
             { path: "run-map", component: RunMapComponent },

@@ -2,12 +2,12 @@
     <div class="panel-heading">
         Select Source
     </div>
-    <div class="list-group">
-        <a href="javascript:;" *ngFor="let source of sources | paginate: { itemsPerPage: 5, currentPage: p };" [class.active]="source == selectedSource" class="list-group-item" (click)="onSelectSource(source)">
+    <ul class="list-group">
+        <li *ngFor="let source of sources | paginate: { itemsPerPage: 5, currentPage: p };" [class.active]="source == selectedSource" class="list-group-item" (click)="onSelectSource(source)">
             <h4 class="list-group-item-heading">{{source.name}}</h4>
             <p class="list-group-item-text">{{source.description}}</p>
-        </a>
-    </div>
+        </li>
+    </ul>
     <div class="align-center" *ngIf="sources && sources.length > 5">
         <pagination-controls (pageChange)="p = $event" #api>
         </pagination-controls>

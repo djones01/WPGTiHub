@@ -5,10 +5,10 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { SrcFldListComponent } from "../../../source/selection/srcfld-list.component";
 import { SrcListComponent } from "../../../source/selection/src-list.component";
 import { FieldFormatComponent } from "./field-format.component";
-import { SFieldSelectService } from "../../../../services/source-select.service";
+import { SFieldSelectService } from "../../../../services/srcfld-select.service";
 import { Subscription } from "rxjs/Subscription";
-import { SourceField } from "../../../source/source";
-import { RuleSourceField } from "../../map";
+import { ISourceField } from "../../../source/source";
+import { IRuleSourceField } from "../../map";
 import { MapService } from "../../../../services/map.service";
 
 @Component({
@@ -18,10 +18,10 @@ import { MapService } from "../../../../services/map.service";
 })
 export class RuleSrcFldComponent implements OnInit, OnDestroy {
     //List of rule source fields currently in the component
-    ruleSourceFields: RuleSourceField[];
+    ruleSourceFields: IRuleSourceField[];
     hasSelectedSourceField: boolean;
     selectedSourceField: any;
-    selectingRuleSourceField: RuleSourceField;
+    selectingRuleSourceField: IRuleSourceField;
     seqNum: number;
 
     //Modal subscriptions
@@ -65,8 +65,8 @@ export class RuleSrcFldComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         //Modal subscriptions
-        this.hasSelectedSubscription = this.selectService.hasSelectedSourceField()
-            .subscribe(hasSelectedSourceField => this.hasSelectedSourceField = hasSelectedSourceField);
+        //this.hasSelectedSubscription = this.selectService.hasSelectedSourceField()
+            //subscribe(hasSelectedSourceField => this.hasSelectedSourceField = hasSelectedSourceField);
         this.getSelectedSubscription = this.selectService.getSelectedSourceField()
             .subscribe(selectedSourceField => this.selectedSourceField = selectedSourceField);
         //Map creation subscriptions

@@ -1,5 +1,5 @@
 ﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
-import { Map } from "./map";
+import { IMap } from "./map";
 import { MapService } from "../../services/map.service";
 import { Subscription } from "rxjs/Subscription";
 
@@ -9,16 +9,20 @@ import { Subscription } from "rxjs/Subscription";
     providers: [MapService]
 })
 export class MapComponent implements OnInit, OnDestroy {
-    editingMap = false;
+    editingMap: boolean;
 
     // Subscriptions
     editingMapSubscription: Subscription;
 
-    constructor(private mapService: MapService) {
+    addMap() {
+        this._mapService.setEditingMap(true);
+    }
+
+    constructor(private _mapService: MapService) {
     }
 
     ngOnInit(): void {
-        this.editingMapSubscription = this.mapService.getAddingOrModifyingMap()
+        this.editingMapSubscription = this._mapService.getAddingOrModifyingMap()
             .subscribe(editingMap => this.editingMap = editingMap);
     }
     ngOnDestroy(): void {

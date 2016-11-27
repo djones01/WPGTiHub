@@ -1,5 +1,5 @@
 ﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
-import { Map } from "./map";
+import { IMap } from "./map";
 import { MapService } from "../../services/map.service";
 import { Subscription } from "rxjs/Subscription";
 
@@ -9,20 +9,17 @@ import { Subscription } from "rxjs/Subscription";
 })
 export class MapListComponent implements OnInit, OnDestroy {
     //List of maps currently in the project
-    maps: Map[];
+    maps: IMap[];
 
     //Subscriptions
     mapsSubscription: Subscription;
 
-    editMap(map: Map): void {
+    editMap(map: IMap): void {
         this.mapService.setEditMap(map);
     }
 
-    deleteMap(map: Map): void {
+    deleteMap(map: IMap): void {
         this.mapService.deleteMap(map);
-    }
-
-    addMap(): void {
     }
 
     constructor(private mapService: MapService) {

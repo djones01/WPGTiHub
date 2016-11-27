@@ -1,21 +1,19 @@
 ﻿import { Component, ViewChild, OnInit, Input, OnDestroy } from "@angular/core";
-import { Response, Headers } from "@angular/http";
-import { SourceField, Source } from "../source";
+import { ISourceField } from "../source";
 import { Subscription } from "rxjs/Subscription";
-import { SFieldSelectService } from "../../../services/source-select.service";
+import { SFieldSelectService } from "../../../services/srcfld-select.service";
 
 @Component({
     selector: "sourcefield-list",
     template: require('./srcfld-list.component.html')
 })
 export class SrcFldListComponent implements OnInit, OnDestroy {
-    private sourceFields: SourceField[] = [];
-    private selectedSourceField: SourceField;
+    private sourceFields: ISourceField[] = [];
+    private selectedSourceField: ISourceField;
 
     filterSubscription: Subscription;
-    selectedSubscription: Subscription;
 
-    onSelectSourceField(sourceField: SourceField): void {
+    onSelectSourceField(sourceField: ISourceField): void {
         this.selectService.setSelectedSourceField(sourceField);
     }
 
@@ -23,13 +21,10 @@ export class SrcFldListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.filterSubscription = this.selectService.getFilteredSourceFields()
-            .subscribe((sourceFields: SourceField[]) => this.sourceFields = sourceFields);
-        this.selectedSubscription = this.selectService.getSelectedSourceField()
-            .subscribe(sourceField => this.selectedSourceField = sourceField);
+            .subscribe((sourceFields: ISourceField[]) => this.sourceFields = sourceFields);
     }
 
     ngOnDestroy(): void {
         this.filterSubscription.unsubscribe();
-        this.selectedSubscription.unsubscribe();
     }
 }

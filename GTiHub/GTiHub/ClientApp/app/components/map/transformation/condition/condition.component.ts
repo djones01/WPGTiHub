@@ -1,14 +1,14 @@
 ﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { DataService } from "../../../../services/data.service";
 import { Response, Headers } from "@angular/http";
-import { Condition } from "../../map";
+import { ICondition } from "../../map";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { SrcFldListComponent } from "../../../source/selection/srcfld-list.component";
 import { SrcListComponent } from "../../../source/selection/src-list.component";
-import { SFieldSelectService } from "../../../../services/source-select.service";
+import { SFieldSelectService } from "../../../../services/srcfld-select.service";
 import { Subscription } from "rxjs/Subscription";
 import { MapService } from "../../../../services/map.service";
-import { SourceField } from "../../../source/source";
+import { ISourceField } from "../../../source/source";
 
 @Component({
     selector: "condition-addedit",
@@ -17,11 +17,11 @@ import { SourceField } from "../../../source/source";
 })
 export class ConditionComponent implements OnInit, OnDestroy {
     active = true;
-    selectingCondition: Condition;
+    selectingCondition: ICondition;
     hasSelectedSourceField = false;
-    selectedSourceField: SourceField;
+    selectedSourceField: ISourceField;
     //List of Conditions currently in the add/edit list
-    conditions: Condition[] = [];
+    conditions: ICondition[] = [];
 
     //Options for operator selection
     private dateNumOpts = [
@@ -44,58 +44,14 @@ export class ConditionComponent implements OnInit, OnDestroy {
         { value: "!=", display: "not equal" }
     ];
 
-    //Modal subscriptions
-    hasSelectedSubscription: Subscription;
-    getSelectedSubscription: Subscription;
-    //Map create subscriptions
-    getConditionsSubscription: Subscription;
 
+    constructor() { }
 
-    //Modal Functions
-    openSourceSelect(content, condition) {
-        this.selectingCondition = condition;
-        this.modalService.open(content, { size: "lg" })
-            .result.then((result) => {
-                    //User selected source field in modal
-                    if (result == "Select SField") {
-                        this.selectingCondition.sourceField = this.selectedSourceField;
-                        this.selectingCondition = null;
-                    }
-                },
-                (reason) => {});
+    ngOnInit() {
+
+    }
+    ngOnDestroy() {
+
     }
 
-    removeCondition(condition) {
-        //this.mapService.removeCondition(condition);
-    }
-
-    //Add a new condition to the list of conditions
-    addCondition() {
-       // this.mapService.addCondition();
-    }
-
-    constructor(private _dataService: DataService,
-        private modalService: NgbModal,
-        private selectService: SFieldSelectService,
-        private mapService: MapService) {
-    }
-
-    ngOnInit(): void {
-        //Modal subscriptions
-        this.hasSelectedSubscription = this.selectService.hasSelectedSourceField()
-            .subscribe(hasSelectedSourceField => this.hasSelectedSourceField = hasSelectedSourceField);
-        this.getSelectedSubscription = this.selectService.getSelectedSourceField()
-            .subscribe(selectedSourceField => this.selectedSourceField = selectedSourceField);
-        //Map create subscriptions
-        //this.getConditionsSubscription = this.mapService.getConditions()
-           // .subscribe(conditions => this.conditions = conditions);
-    }
-
-    ngOnDestroy(): void {
-        //Modal subscriptions
-        this.hasSelectedSubscription.unsubscribe();
-        this.getSelectedSubscription.unsubscribe();
-        //Map create subscriptions
-        this.getConditionsSubscription.unsubscribe();
-    }
 }
