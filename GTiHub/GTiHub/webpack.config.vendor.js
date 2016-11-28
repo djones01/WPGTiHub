@@ -35,7 +35,8 @@ module.exports = {
             'ng2-pagination',
             'ng2-datetime-picker',
             'ng2-file-upload',
-            '@ng-bootstrap/ng-bootstrap'
+            '@ng-bootstrap/ng-bootstrap',
+            'ng2-bootstrap'
         ]
     },
     output: {

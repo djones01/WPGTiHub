@@ -11,6 +11,7 @@
     "@angular/platform-browser-dynamic": "2.0.0",
     "@angular/platform-server": "2.0.0",
     "@angular/router": "3.0.0",
+    "@ng-bootstrap/ng-bootstrap": "*",
     "@types/node": "^6.0.38",
     "angular2-platform-node": "~2.0.10",
     "angular2-universal": "~2.0.10",
@@ -26,6 +27,10 @@
     "file-loader": "^0.9.0",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.2.1",
+    "ng2-bootstrap": "^1.1.16",
+    "ng2-datetime-picker": "^0.9.10",
+    "ng2-file-upload": "^1.1.4-2",
+    "ng2-pagination": "^1.0.1",
     "preboot": "^4.5.2",
     "raw-loader": "^0.5.1",
     "rxjs": "5.0.0-beta.12",
@@ -38,10 +43,6 @@
     "webpack-externals-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.14.1",
-    "zone.js": "^0.6.21",
-    "ng2-pagination": "^1.0.1",
-    "ng2-datetime-picker": "^0.9.10",
-    "ng2-file-upload": "^1.1.4-2",
-    "@ng-bootstrap/ng-bootstrap": "*"
+    "zone.js": "^0.6.21"
   }
 }

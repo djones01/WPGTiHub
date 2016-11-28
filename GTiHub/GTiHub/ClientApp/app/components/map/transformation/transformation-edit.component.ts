@@ -5,21 +5,23 @@ import { MapService } from "../../../services/map.service";
 
 
 @Component({
-    selector: "transformation",
-    template: require("./transformation.component.html")
+    selector: "transformation-edit",
+    template: require("./transformation-edit.component.html")
 })
-export class TransformationComponent implements OnInit, OnDestroy {
+export class TransformationEditComponent implements OnInit, OnDestroy {
     @Input('group')
     public transForm: FormGroup;
-    private currSeqNum: number = 1;
+    private condSeqNum: number = 1;
 
     // Init new condition
     initCondition() {
         return this._fb.group({
-            seqNum: [this.currSeqNum++],
-            append: [''],
-            prepend: [''],
-            custom_format: [''],
+            seqNum: [this.condSeqNum++],
+            chain_Operation: ['',Validators.required],
+            left_Paren: [''],
+            operation: ['', Validators.required],
+            cond_Value: ['', Validators.required],
+            right_Paren: [''],
             sourceField: [null, Validators.required]
         });
     }
@@ -37,7 +39,7 @@ export class TransformationComponent implements OnInit, OnDestroy {
     constructor(private _fb: FormBuilder) {}
 
     ngOnInit(): void {
-
+        
     }
 
     ngOnDestroy(): void {

@@ -14,6 +14,7 @@ export class SrcFldListComponent implements OnInit, OnDestroy {
     filterSubscription: Subscription;
 
     onSelectSourceField(sourceField: ISourceField): void {
+        this.selectedSourceField = sourceField;
         this.selectService.setSelectedSourceField(sourceField);
     }
 

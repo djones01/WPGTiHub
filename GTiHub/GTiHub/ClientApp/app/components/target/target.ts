@@ -1,20 +1,15 @@
-﻿export class Target {
-    constructor(
-        public name: string,
-        public description: string,
-        public effective_Date: string,
-        public active: boolean,
-        public targetFields: TargetField[]
-    ) {
-    }
+﻿export interface ITarget {
+    name: string;
+    description: string;
+    effective_Date: string;
+    active: boolean;
+    sourceFields: ITargetField[];
+    targetId?: number;
 }
 
-export class TargetField {
-    constructor(
-        public name: string,
-        public datatype: string,
-        public active: boolean,
-        public seqNum: number
-    ) {
-    }
+export interface ITargetField {
+    name: string;
+    datatype: string;
+    active: boolean;
+    seqNum: number;
 }

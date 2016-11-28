@@ -1,30 +1,34 @@
-﻿import { Component, forwardRef, Input } from "@angular/core";
+﻿import { Component, forwardRef, Input, OnInit, OnDestroy } from "@angular/core";
 import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { SrcFldListComponent } from "./srcfld-list.component";
 import { SrcListComponent } from "./src-list.component";
 import { SFieldSelectService } from "../../../services/srcfld-select.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: "srcfld-select",
     template: require("./srcfld-select.component.html"),
+    styles: [require("./srcfld-select.component.css")],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SrcFldSelectComponent), multi: true },
         { provide: NG_VALIDATORS, useExisting: forwardRef(() => SrcFldSelectComponent), multi: true },
         SFieldSelectService
     ]
 })
-export class SrcFldSelectComponent implements ControlValueAccessor {
+export class SrcFldSelectComponent implements ControlValueAccessor, OnInit, OnDestroy {
     propagateChange: any = () => { };
-    @Input('selectedSourceField') _selectedSourceField:any;
+    validateFn: any = () => { };
+    @Input('selectedSourceField') _selectedSourceField: any;
+    srcFldSub: Subscription;
 
     // Modal Functions
-    openSourceSelect(content, condition) {
+    openSourceSelect(content) {
         this.modalService.open(content, { size: "lg" })
             .result.then((result) => {
                 //User selected source field in modal
-                if (result == "Select SField") {
-                    this.selectService.getSelectedSourceField().subscribe(sourceField => this.selectedSourceField = sourceField);
+                if (result != "Select SField") {
+                    this.selectedSourceField = null;
                 }
             },
             (reason) => { });
@@ -42,6 +46,10 @@ export class SrcFldSelectComponent implements ControlValueAccessor {
         }
     }
 
+    validate(c: FormControl) {
+        return this.validateFn(c);
+    }
+
     get selectedSourceField() {
         return this._selectedSourceField;
     }
@@ -52,5 +60,12 @@ export class SrcFldSelectComponent implements ControlValueAccessor {
     }
 
     constructor(private modalService: NgbModal, private selectService: SFieldSelectService) {
+    }
+
+    ngOnInit() {
+        this.srcFldSub = this.selectService.getSelectedSourceField().subscribe(sourceField => this.selectedSourceField = sourceField);
+    }
+    ngOnDestroy() {
+        this.srcFldSub.unsubscribe();
     }
 }

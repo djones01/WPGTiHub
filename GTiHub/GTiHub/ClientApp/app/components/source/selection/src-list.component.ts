@@ -13,7 +13,8 @@ export class SrcListComponent implements OnInit, OnDestroy {
     sourcesSubscription: Subscription;
 
     onSelectSource(source: ISource) {
-        this.selectService.filterSourceFields(this.selectedSource.sourceId);
+        this.selectedSource = source;
+        this.selectService.filterSourceFields(source.sourceId);
     }
 
     constructor(private selectService: SFieldSelectService) {

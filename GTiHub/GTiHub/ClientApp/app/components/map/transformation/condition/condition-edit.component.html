@@ -1,0 +1,68 @@
+﻿<div [formGroup]="conditionForm">
+    <div class="row">
+        <div class="col-md-1">
+            <select class="form-control" *ngIf="conditionForm.controls.seqNum.value != 1" formControlName="chain_Operation">
+                <option value="||">Or</option>
+                <option value="&&">And</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <select class="form-control" formControlName="left_Paren">
+                <option value=""></option>
+                <option value="(">(</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <srcfld-select formControlName="sourceField"></srcfld-select>
+            <small [hidden]="conditionForm.controls.sourceField.valid" class="text-danger">
+                Source Field is required
+            </small>
+        </div>
+        <div class="col-md-2">
+            <div *ngIf="conditionForm.controls.sourceField.value != null">
+                <select class="form-control" formControlName="operation">
+                    <option value="" disabled selected>Select Op</option>
+                    <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'num' && conditionForm.controls.sourceField.value.datatype != 'currency' && conditionForm.controls.sourceField.value.datatype != 'date'"
+                            *ngFor="let option of dateNumOpts" value="option.value">
+                        {{option.display}}
+                    </option>
+                    <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'text' && conditionForm.controls.sourceField.value.datatype != 'url' && conditionForm.controls.sourceField.value.datatype != 'email'"
+                            *ngFor="let option of textOpts" value="option.value">
+                        {{option.display}}
+                    </option>
+                    <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'bool'" *ngFor="let option of boolOpts" value="option.value">
+                        {{option.display}}
+                    </option>
+                </select>
+                <small [hidden]="conditionForm.controls.operation.valid" class="text-danger">
+                    operation is required
+                </small>
+            </div>          
+        </div>
+        <div class="col-md-4">
+            <div *ngIf="conditionForm.controls.sourceField.value != null">
+                <input *ngIf="conditionForm.controls.sourceField.value.datatype == 'text' || conditionForm.controls.sourceField.value.datatype == 'url' || conditionForm.controls.sourceField.value.datatype == 'email'"
+                       class="form-control" type="text" formControlName="cond_Value" />
+                <input *ngIf="conditionForm.controls.sourceField.value.datatype == 'num' || conditionForm.controls.sourceField.value.datatype == 'currency'"
+                       class="form-control" type="number" step="any" formControlName="cond_Value" />
+                <input *ngIf="conditionForm.controls.sourceField.value.datatype == 'date'" type="date" class="form-control" formControlName="cond_Value" />
+                <select *ngIf="conditionForm.controls.sourceField.value.datatype == 'bool'" class="form-control" formControlName="cond_Value">
+                    <option value="" disabled selected>Select T/F</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+                <small [hidden]="conditionForm.controls.cond_Value.valid" class="text-danger">
+                    Condition Val is required
+                </small>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <select class="form-control" formControlName="right_Paren">
+                <option value=""></option>
+                <option value=")">)</option>
+            </select>
+        </div>
+    </div>  
+</div>
+                        
+

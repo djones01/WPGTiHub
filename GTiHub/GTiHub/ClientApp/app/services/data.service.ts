@@ -10,7 +10,7 @@ export class DataService {
     private headers: Headers;
 
     constructor(private _http: Http) {
-        this.actionUrl = "api/";
+        this.actionUrl = "http://localhost:50709/api/";
         this.headers = new Headers();
         this.headers.append("Content-Type", "application/json");
         this.headers.append("Accept", "application/json");
@@ -36,7 +36,7 @@ export class DataService {
 
     Add(action: string, itemToAdd: any): Observable<any> {
         return this._http.post(this.actionUrl + action, JSON.stringify(itemToAdd), { headers: this.headers })
-            .map(this.extractData)
+            .map(res => res.json())
             .catch(this.handleError);
     }
 

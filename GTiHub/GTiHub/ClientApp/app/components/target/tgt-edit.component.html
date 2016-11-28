@@ -1,20 +1,20 @@
 ﻿<div class="container-fluid">
-    <h2>Add / Edit Sources</h2>
+    <h2>Add / Edit Targets</h2>
     <hr />
-    <form [formGroup]="srcForm" novalidate (ngSubmit)="onSubmit(srcForm)">
+    <form [formGroup]="tgtForm" novalidate (ngSubmit)="onSubmit(tgtForm)">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" formControlName="name">
-                    <small *ngIf="!srcForm.controls.name.valid" class="text-danger">
+                    <small *ngIf="!tgtForm.controls.name.valid" class="text-danger">
                         Name is required
                     </small>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
                     <textarea class="form-control textarea-resize" formControlName="description"></textarea>
-                    <small *ngIf="!srcForm.controls.description.valid" class="text-danger">
+                    <small *ngIf="!tgtForm.controls.description.valid" class="text-danger">
                         Description is required
                     </small>
                 </div>
@@ -31,9 +31,9 @@
                 </div>
             </div>
         </div>
-        <srcfld-edit [group]="srcForm"></srcfld-edit>
-        <button type="submit" class="btn btn-default" [disabled]="srcForm.controls.sourceFields.controls.length == 0  || !srcForm.valid" (click)="onSubmit(srcForm.value)"><span class="glyphicon glyphicon-plus"></span> Submit</button>
-        <button type="button" class="btn btn-default" (click)="newSource()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
-        <button type="button" class="btn btn-default" (click)="openSourceSelect(content)">Edit Source</button>
-    </form>  
+        <tgtfld-edit [group]="tgtForm"></tgtfld-edit>
+        <button type="submit" class="btn btn-default" [disabled]="tgtForm.controls.targetFields.controls.length == 0  || !tgtForm.valid" (click)="onSubmit(tgtForm.value)"><span class="glyphicon glyphicon-plus"></span> Submit</button>
+        <button type="button" class="btn btn-default" (click)="newTarget()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
+        <button type="button" class="btn btn-default" (click)="openTargetSelect(content)">Edit Target</button>
+    </form>
 </div>  

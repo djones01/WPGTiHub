@@ -30,7 +30,7 @@
                         <span class="glyphicon glyphicon-remove pull-right" (click)="removeTransform(i)"></span>
                     </div>
                     <div class="panel-body">
-                        <transformation [group]="mapForm.controls.transformations.controls[i]"></transformation>
+                        <transformation-edit [group]="mapForm.controls.transformations.controls[i]"></transformation-edit>
                     </div>
                 </div>              
             </div>
@@ -39,4 +39,7 @@
         <button type="button" class="btn btn-default" (click)="addTransform()"><span class="glyphicon glyphicon-plus"></span> Add Transformation</button>
         <button type="submit" class="btn btn-default" [disabled]="!mapForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>
     </form>
+</div>
+<div>
+    {{mapForm.value | json}}
 </div>

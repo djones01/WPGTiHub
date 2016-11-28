@@ -1,0 +1,35 @@
+﻿<div [formGroup]="transForm">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-control" formControlName="description" />
+                <small [hidden]="transForm.controls.description.valid" class="text-danger">
+                    Description is required
+                </small>
+            </div>
+        </div>     
+    </div>
+    <hr />
+    <div formArrayName="conditions">
+        <div class="panel panel-default" *ngIf="transForm.controls.conditions.length > 0">
+            <div class="panel-heading">
+                Conditions
+            </div>
+            <div class="panel-body">
+                <div *ngFor="let condition of transForm.controls.conditions.controls; let i=index">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <condition-edit [group]="transForm.controls.conditions.controls[i]"></condition-edit>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-default" (click)="removeCondition(i)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>          
+                    </div>                        
+                </div>  
+            </div>
+        </div>       
+    </div>
+    <hr *ngIf="transForm.controls.conditions.length > 0" />
+    <button type="button" class="btn btn-default" (click)="addCondition()"><span class="glyphicon glyphicon-plus"></span>Add Condition</button>
+</div>

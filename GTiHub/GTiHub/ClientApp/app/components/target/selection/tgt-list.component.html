@@ -2,18 +2,15 @@
     <div class="panel-heading">
         Select Target
     </div>
-    <div class="list-group">
-        <a href="javascript:;" *ngFor="let target of targets | paginate: { itemsPerPage: 5, currentPage: p };" [class.active]="target == selectedTarget" class="list-group-item" (click)="onSelectTarget(target)">
+    <ul class="list-group">
+        <li *ngFor="let target of targets | paginate: { itemsPerPage: 5, currentPage: p };" [class.active]="target == selectedTarget" class="list-group-item" (click)="onSelectTarget(target)">
             <h4 class="list-group-item-heading">{{target.name}}</h4>
             <p class="list-group-item-text">{{target.description}}</p>
-        </a>
-    </div>
-    <div *ngIf="targets.length == 0" class="panel-body">
-        No Targets to show
-    </div>
+        </li>
+    </ul>
     <div class="align-center" *ngIf="targets && targets.length > 5">
         <pagination-controls (pageChange)="p = $event" #api>
         </pagination-controls>
     </div>
 </div>
-    
+

@@ -5,11 +5,11 @@ import { RouterModule } from "@angular/router";
 import { UniversalModule } from "angular2-universal";
 import { Ng2PaginationModule } from "ng2-pagination";
 import { FileUploadModule  } from "ng2-file-upload";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { Ng2DatetimePickerModule } from "ng2-datetime-picker";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
 // service imports
 import { DataService } from "./services/data.service";
+import { UploadService } from "./services/file-upload.service";
 
 // component imports
 import { AppComponent } from "./components/app/app.component"
@@ -29,8 +29,8 @@ import { SrcFldSelectComponent } from "./components/source/selection/srcfld-sele
     
 
 // target
-import { TgtComponent } from "./components/target/tgt.component";
-import { TgtFldComponent } from "./components/target/tgtfld.component";
+import { TgtEditComponent } from "./components/target/tgt-edit.component";
+import { TgtFldEditComponent } from "./components/target/tgtfld-edit.component";
 import { TgtListComponent } from "./components/target/selection/tgt-list.component";
 import { TgtFldListComponent } from "./components/target/selection/tgtfld-list.component";
 
@@ -40,10 +40,10 @@ import { MapEditComponent } from "./components/map/map-edit.component";
 import { MapListComponent } from "./components/map/map-list.component";
 import { RunMapComponent } from "./components/map/run-map/map-runmap.component";
 import { MapFileSelectComponent } from "./components/map/run-map/map-fileselect.component";
-import { TransformationComponent } from "./components/map/transformation/transformation.component";
-import { ConditionComponent } from "./components/map/transformation/condition/condition.component";
-import { RuleComponent } from "./components/map/transformation/rule/rule.component";
-import { RuleSrcFldComponent } from "./components/map/transformation/rule/rulesrcfld.component";
+import { TransformationEditComponent } from "./components/map/transformation/transformation-edit.component";
+import { ConditionEditComponent } from "./components/map/transformation/condition/condition-edit.component";
+import { RuleEditComponent } from "./components/map/transformation/rule/rule-edit.component";
+import { RuleSrcFldEditComponent } from "./components/map/transformation/rule/rulesrcfld-edit.component";
 import { FieldFormatComponent } from "./components/map/transformation/rule/field-format.component";
 import { DateFormatComponent } from "./components/map/transformation/rule/date-format.component";
 
@@ -60,23 +60,23 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         ClientComponent,
         ClientListComponent,
         SrcEditComponent,
-        SrcListComponent,
         SrcFldEditComponent,
+        SrcListComponent,
         SrcFldListComponent,
         SrcFldSelectComponent,
-        TgtComponent,
+        TgtEditComponent,
         TgtListComponent,
-        TgtFldComponent,
+        TgtFldEditComponent,
         TgtFldListComponent,
         MapComponent,
         MapEditComponent,
         MapListComponent,
         RunMapComponent,
         MapFileSelectComponent,
-        TransformationComponent,
-        ConditionComponent,
-        RuleComponent,
-        RuleSrcFldComponent,
+        TransformationEditComponent,
+        ConditionEditComponent,
+        RuleEditComponent,
+        RuleSrcFldEditComponent,
         FieldFormatComponent,
         DateFormatComponent,
         ExtractFileNamePipe
@@ -86,21 +86,20 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         FormsModule,
         ReactiveFormsModule,
         Ng2PaginationModule,
-        Ng2DatetimePickerModule,
-        NgbModule.forRoot(),
+        NgbModalModule.forRoot(),
         FileUploadModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'client', component: ClientComponent },
             { path: 'source', component: SrcEditComponent },
-            { path: 'target', component: TgtComponent },
+            { path: 'target', component: TgtEditComponent },
             { path: "map", component: MapComponent },
             { path: "run-map", component: RunMapComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [DataService]
+    providers: [DataService, UploadService]
 })
 export class AppModule {
 }

@@ -36,23 +36,23 @@
                 </div>
 
                 <div *ngIf="!sopt" class="form-group">
-                    <button type="button" class="btn btn-default" (click)="addSrcFld()"><span class="glyphicon glyphicon-plus"></span>Add Source Field</button>
+                    <button type="button" class="btn btn-default" (click)="addTgtFld()"><span class="glyphicon glyphicon-plus"></span>Add Target Field</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<form [formGroup]="srcFldsForm">
+<form [formGroup]="tgtFldsForm">
     <div class="panel panel-default">
-        <div class="panel-heading">Source Fields</div>
-        <ul class="list-group" *ngIf="srcFldsForm.controls.sourceFields.controls.length > 0" formArrayName="sourceFields">
+        <div class="panel-heading">Target Fields</div>
+        <ul class="list-group" *ngIf="tgtFldsForm.controls.targetFields.controls.length > 0" formArrayName="targetFields">
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-md-2">
                         Sequence #
                     </div>
                     <div class="col-md-4">
-                        Source Field Name
+                        Target Field Name
                     </div>
                     <div class="col-md-3">
                         Datatype
@@ -62,14 +62,14 @@
                     </div>
                     <div class="col-md-2">
                     </div>
-                </div>                      
+                </div>
             </li>
-            <li *ngFor="let srcFld of srcFldsForm.controls.sourceFields.controls; let i=index" class="list-group-item">
+            <li *ngFor="let tgtFld of tgtFldsForm.controls.targetFields.controls; let i=index" class="list-group-item">
                 <div class="row" [formGroupName]="i">
-                    <div class="col-md-2 text-center">{{srcFld.controls.seqNum.value}}</div>
+                    <div class="col-md-2 text-center">{{tgtFld.controls.seqNum.value}}</div>
                     <div class="col-md-4">
                         <input class="form-control" type="text" formControlName="name" />
-                        <small *ngIf="!srcFld.controls.name.valid" class="text-danger">
+                        <small *ngIf="!tgtFld.controls.name.valid" class="text-danger">
                             Name is required
                         </small>
                     </div>
@@ -78,7 +78,7 @@
                             <option value="" disabled selected>Select Datatype</option>
                             <option *ngFor="let option of options" [ngValue]="option.value">{{option.display}}</option>
                         </select>
-                        <small *ngIf="!srcFld.controls.datatype.valid" class="text-danger">
+                        <small *ngIf="!tgtFld.controls.datatype.valid" class="text-danger">
                             Datatype is required
                         </small>
                     </div>
@@ -86,14 +86,13 @@
                         <input type="checkbox" formControlName="active" />
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-default" (click)="removeSrcFld(i)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                        <button class="btn btn-default" (click)="removeTgtFld(i)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                     </div>
-                </div>                       
+                </div>
             </li>
         </ul>
-        <div *ngIf="srcFldsForm.controls.sourceFields.controls.length == 0" class="panel-body">
-            No Source Fields to Show
+        <div *ngIf="tgtFldsForm.controls.targetFields.controls.length == 0" class="panel-body">
+            No Target Fields to Show
         </div>
     </div>
 </form>
-     

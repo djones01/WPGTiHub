@@ -4,10 +4,10 @@ import { UploadService } from "../../services/file-upload.service";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
 
 @Component({
-    selector: "srcfld-edit",
-    template: require('./srcfld-edit.component.html')
+    selector: "tgtfld-edit",
+    template: require('./tgtfld-edit.component.html')
 })
-export class SrcFldEditComponent {
+export class TgtFldEditComponent {
     //Control the template / manual header boxes
     sopt = true;
     seqNumCount: number = 1;
@@ -15,32 +15,32 @@ export class SrcFldEditComponent {
     uploader: FileUploader;
 
     @Input('group')
-    srcFldsForm: FormGroup;
+    tgtFldsForm: FormGroup;
 
-    addSrcFld() {
-        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
-        control.push(this.initSrcFld());
+    addTgtFld() {
+        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
+        control.push(this.initTgtFld());
     }
 
-    resetSrcFlds() {
-        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
+    resetTgtFlds() {
+        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
         control.reset([]);
     }
 
-    removeSrcFld(i: number) {
+    removeTgtFld(i: number) {
         let x = i;
-        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
-        // renumber the seqnums of other source fields
+        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
+        // renumber the seqnums of other target fields
         for (x; x < control.length; x++) {
             let group = <FormGroup>control.at(x);
             let newVal = group.controls['seqNum'].value - 1;
             group.controls['seqNum'].setValue(newVal);
-        }    
+        }
         this.seqNumCount--;
         control.removeAt(i);
     }
 
-    initSrcFld() {
+    initTgtFld() {
         return this._fb.group({
             seqNum: [this.seqNumCount++],
             name: ['', Validators.required],
@@ -61,14 +61,14 @@ export class SrcFldEditComponent {
 
     extractFile() {
         this._uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
-            .subscribe((sourceFields: Object[]) => {
-                if (sourceFields) {
-                    const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
-                    this.resetSrcFlds();
-                    for (let i = 0; i < sourceFields.length; i++) {
-                        this.addSrcFld();
-                        control.at(i).patchValue(sourceFields[i]);
-                    }            
+            .subscribe((targetFields: Object[]) => {
+                if (targetFields) {
+                    const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
+                    this.resetTgtFlds();
+                    for (let i = 0; i < targetFields.length; i++) {
+                        this.addTgtFld();
+                        control.at(i).patchValue(targetFields[i]);
+                    }
                 }
             });
     }

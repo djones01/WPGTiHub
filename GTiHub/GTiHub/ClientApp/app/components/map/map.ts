@@ -1,5 +1,5 @@
 ﻿import { ISourceField } from "../source/source";
-import { TargetField } from "../target/target";
+import { ITargetField } from "../target/target";
 
 export interface IMap {
     description: string;
@@ -29,7 +29,7 @@ export interface IRule {
     rule_Value: string;
     alt_Value: string;
     rule_Operation: string;
-    targetField: TargetField;
+    targetField: ITargetField;
     ruleSourceFields: IRuleSourceField[];
 }
 
