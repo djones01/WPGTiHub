@@ -1,6 +1,5 @@
 ﻿import { Component, Input, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
-import { Subscription } from "rxjs/Subscription";
 import { MapService } from "../../../services/map.service";
 
 
@@ -8,9 +7,12 @@ import { MapService } from "../../../services/map.service";
     selector: "transformation-edit",
     template: require("./transformation-edit.component.html")
 })
-export class TransformationEditComponent implements OnInit, OnDestroy {
+export class TransformationEditComponent implements OnInit {
     @Input('group')
     transForm: FormGroup;
+    @Input('i')
+    i: number;
+
     public seqNumCount: number = 1;
 
     // Init new condition
@@ -44,13 +46,9 @@ export class TransformationEditComponent implements OnInit, OnDestroy {
         control.removeAt(i);
     }
 
-    constructor(private _fb: FormBuilder) {}
+    constructor(private _fb: FormBuilder, private mapService: MapService) {}
 
     ngOnInit(): void {
         
-    }
-
-    ngOnDestroy(): void {
-
     }
 }

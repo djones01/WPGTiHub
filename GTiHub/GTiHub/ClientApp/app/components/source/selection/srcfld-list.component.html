@@ -1,30 +1,31 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading">
-        Select Source Field
+        Select Target Field
     </div>
     <div class="panel-body">
-        <ul class="list-group" *ngIf="sourceFields.length > 0">
-            <li *ngFor="let sourceField of sourceFields | paginate: { itemsPerPage: 5, currentPage: z };"  class="list-group-item" [class.active]="sourceField == selectedSourceField" (click)="onSelectSourceField(sourceField)">
-                <h4 class="list-group-item-heading">{{sourceField.name}}</h4>
+        <ul class="list-group" *ngIf="targetFields.length > 0">
+            <li *ngFor="let targetField of targetFields | paginate: { itemsPerPage: 5, currentPage: p };" class="list-group-item" [class.active]="targetField == selectedTargetField" (click)="onSelectTargetField(targetField)">
+                <h4 class="list-group-item-heading">{{targetField.name}}</h4>
                 <div class="row">
                     <div class="col-md-4">
-                        {{sourceField.seqNum}}
+                        {{targetField.seqNum}}
                     </div>
                     <div class="col-md-4">
-                        {{sourceField.datatype}}
+                        {{targetField.datatype}}
                     </div>
                     <div class="col-md-4">
-                        Active?: {{sourceField.active}}
+                        Active?: {{targetField.active}}
                     </div>
                 </div>
             </li>
-        </ul>    
-        <div *ngIf="sourceFields.length == 0">
-            No Source Fields to show
-        </div>
-        <div class="align-center" *ngIf="sourceFields && sourceFields.length > 5">
-            <pagination-controls (pageChange)="z = $event" #api>
+        </ul>
+        <div class="align-center" *ngIf="targetFields && targetFields.length > 5">
+            <pagination-controls (pageChange)="p = $event" #api>
             </pagination-controls>
         </div>
+        <div *ngIf="targetFields.length == 0">
+            No Target Fields to show
+        </div>
+       
     </div>
 </div>

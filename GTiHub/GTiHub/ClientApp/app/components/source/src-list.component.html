@@ -1,0 +1,52 @@
+﻿<div class="panel-default">
+    <div class="panel-heading">
+        <span>Sources in Project</span><span class="glyphicon glyphicon-import pull-right"></span>
+    </div>
+    <ul *ngIf="sources.length > 0" class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3">
+                    Name
+                </div>
+                <div class="col-md-3">
+                    Description
+                </div>
+                <div class="col-md-2">
+                    Effective Date
+                </div>
+                <div class="col-md-1">
+                    Active
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </li>
+        <li *ngFor="let source of sources" class="list-group-item">
+            <div class="row">
+                <div class="col-md-3">
+                    {{source.name}}
+                </div>
+                <div class="col-md-3">
+                    {{source.description}}
+                </div>
+                <div class="col-md-2">
+                    {{source.effective_Date}}
+                </div>
+                <div class="col-md-1">
+                    <span *ngIf="source.active" class="glyphicon glyphicon-ok"></span>
+                    <span *ngIf="!source.active" class="glyphicon glyphicon-remove"></span>
+                </div>
+                <div class="col-md-3 text-right">
+                    <button type="button" class="btn btn-default" (click)="editSource(source)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button type="button" class="btn btn-default" (click)="deleteSource(source.sourceId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div *ngIf="sources.length == 0" class="panel-body">
+        No Sources to show
+    </div>
+</div>
+
+
+

@@ -1,13 +1,14 @@
-﻿import { Component, ViewChild, Input } from "@angular/core";
+﻿import { Component, ViewChild, Input, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { UploadService } from "../../services/file-upload.service";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
+import { SourceService } from "../../services/source.service";
 
 @Component({
     selector: "srcfld-edit",
     template: require('./srcfld-edit.component.html')
 })
-export class SrcFldEditComponent {
+export class SrcFldEditComponent implements OnInit {
     //Control the template / manual header boxes
     sopt = true;
     seqNumCount: number = 1;
@@ -35,7 +36,7 @@ export class SrcFldEditComponent {
             let group = <FormGroup>control.at(x);
             let newVal = group.controls['seqNum'].value - 1;
             group.controls['seqNum'].setValue(newVal);
-        }    
+        }
         this.seqNumCount--;
         control.removeAt(i);
     }
@@ -60,7 +61,7 @@ export class SrcFldEditComponent {
     ];
 
     extractFile() {
-        this._uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
+        this.uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
             .subscribe((sourceFields: Object[]) => {
                 if (sourceFields) {
                     const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
@@ -68,12 +69,29 @@ export class SrcFldEditComponent {
                     for (let i = 0; i < sourceFields.length; i++) {
                         this.addSrcFld();
                         control.at(i).patchValue(sourceFields[i]);
-                    }            
+                    }
                 }
             });
     }
 
-    constructor(private _fb: FormBuilder, private _uploadService: UploadService) {
+    setSourceFields(sourceFields: Object[]) {
+        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
+        this.resetSrcFlds();
+        for (let i = 0; i < sourceFields.length; i++) {
+            this.addSrcFld();
+            control.at(i).patchValue(sourceFields[i]);
+        }
+    }
+
+    constructor(private _fb: FormBuilder, private uploadService: UploadService, private sourceService: SourceService) {
         this.uploader = new FileUploader({});
+    }
+
+    ngOnInit() {
+        this.sourceService.editSource.subscribe(editSource => {
+            if (editSource && editSource.sourceFields) {
+                this.setSourceFields(editSource.sourceFields);
+            }
+        });
     }
 }

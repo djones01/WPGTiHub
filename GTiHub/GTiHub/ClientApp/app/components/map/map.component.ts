@@ -1,7 +1,4 @@
-﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
-import { IMap } from "./map";
-import { MapService } from "../../services/map.service";
-import { Subscription } from "rxjs/Subscription";
+﻿import { Component } from "@angular/core";
 
 @Component({
     selector: "map",
@@ -9,6 +6,5 @@ import { Subscription } from "rxjs/Subscription";
 })
 export class MapComponent {
 
-    constructor(private _mapService: MapService) {
-    }
+    constructor() {}
 }

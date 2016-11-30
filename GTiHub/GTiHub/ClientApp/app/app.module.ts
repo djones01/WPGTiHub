@@ -12,6 +12,7 @@ import { DataService } from "./services/data.service";
 import { UploadService } from "./services/file-upload.service";
 import { MapService } from "./services/map.service";
 import { TargetService } from "./services/target.service";
+import { SourceService } from "./services/source.service";
 
 // component imports
 import { AppComponent } from "./components/app/app.component";
@@ -23,16 +24,20 @@ import { ClientComponent } from "./components/client/client.component";
 import { ClientListComponent } from "./components/client/client-list.component";
 
 // source
+import { SrcComponent } from "./components/source/src.component";
 import { SrcEditComponent } from "./components/source/src-edit.component";
+import { SrcListComponent } from "./components/source/src-list.component";
 import { SrcFldEditComponent } from "./components/source/srcfld-edit.component";
-import { SrcListComponent } from "./components/source/selection/src-list.component";
+import { SrcListSelectComponent } from "./components/source/selection/src-list-select.component";
 import { SrcFldListComponent } from "./components/source/selection/srcfld-list.component";
 import { SrcFldSelectComponent } from "./components/source/selection/srcfld-select.component";    
 
 // target
+import { TgtComponent } from "./components/target/tgt.component";
 import { TgtEditComponent } from "./components/target/tgt-edit.component";
+import { TgtListComponent } from "./components/target/tgt-list.component";
 import { TgtFldEditComponent } from "./components/target/tgtfld-edit.component";
-import { TgtListComponent } from "./components/target/selection/tgt-list.component";
+import { TgtListSelectComponent } from "./components/target/selection/tgt-list-select.component";
 import { TgtFldListComponent } from "./components/target/selection/tgtfld-list.component";
 import { TgtFldSelectComponent } from "./components/target/selection/tgtfld-select.component";
 
@@ -49,6 +54,8 @@ import { RuleSrcFldEditComponent } from "./components/map/transformation/rule/ru
 import { FieldFormatComponent } from "./components/map/transformation/rule/field-format.component";
 import { DateFormatComponent } from "./components/map/transformation/rule/date-format.component";
 
+// project
+import { ProjOverviewComponent } from "./components/project/proj-overview.component";
 
 // pipes imports
 import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
@@ -61,13 +68,17 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         HomeComponent,
         ClientComponent,
         ClientListComponent,
+        SrcComponent,
         SrcEditComponent,
-        SrcFldEditComponent,
         SrcListComponent,
+        SrcFldEditComponent,
+        SrcListSelectComponent,
         SrcFldListComponent,
         SrcFldSelectComponent,
+        TgtComponent,
         TgtEditComponent,
         TgtListComponent,
+        TgtListSelectComponent,
         TgtFldEditComponent,
         TgtFldListComponent,
         TgtFldSelectComponent,
@@ -80,6 +91,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         ConditionEditComponent,
         RuleEditComponent,
         RuleSrcFldEditComponent,
+        ProjOverviewComponent,
         FieldFormatComponent,
         DateFormatComponent,
         ExtractFileNamePipe
@@ -95,15 +107,15 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
             { path: "", redirectTo: "home", pathMatch: "full" },
             { path: "home", component: HomeComponent },
             { path: "client", component: ClientComponent },
-            { path: "source", component: SrcEditComponent },
-            { path: "target", component: TgtEditComponent },
-            { path: "map", component: MapComponent },
+            { path: "src-edit", component: SrcEditComponent },
+            { path: "tgt-edit", component: TgtEditComponent },
             { path: "map-edit", component: MapEditComponent },
+            { path: "proj-overview", component: ProjOverviewComponent },
             { path: "run-map", component: RunMapComponent },
             { path: "**", redirectTo: "home" }
         ])
     ],
-    providers: [DataService, UploadService, MapService, TargetService]
+    providers: [DataService, UploadService, MapService, TargetService, SourceService]
 })
 export class AppModule {
 }

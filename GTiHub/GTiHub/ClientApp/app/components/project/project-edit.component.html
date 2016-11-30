@@ -1,0 +1,25 @@
+﻿<div class="container">
+    <h4>Add or Edit Project</h4>
+    <hr />
+    <form>
+        <!-- Project Name Input group -->
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" [(ngModel)]="model.name" name="name" #name="projectName" required /> 
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+                Project Name is required
+            </div>
+        </div>
+        <!-- Project Description -->
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" [(ngModel)]="model.description" name="description" #name="projectDesc" required></textarea>
+            <div [hidden]="description.valid || description.pristine"
+                 class="alert alert-danger">
+                Project Description is required
+            </div>
+        </div>
+        
+    </form>
+</div>

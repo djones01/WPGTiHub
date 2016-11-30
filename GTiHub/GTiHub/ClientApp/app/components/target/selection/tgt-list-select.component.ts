@@ -4,10 +4,10 @@ import { TFieldSelectService } from "../../../services/tgtfld-select.service";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
-    selector: "target-list",
-    template: require('./tgt-list.component.html')
+    selector: "tgt-list-select",
+    template: require('./tgt-list-select.component.html')
 })
-export class TgtListComponent {
+export class TgtListSelectComponent {
     @Input('targets')
     targets: ITarget[];
     private selectedTarget: ITarget = null;

@@ -6,17 +6,13 @@ import { DataService } from "./data.service";
 
 @Injectable()
 export class TargetService {
-    // Storage 
-    targets: Observable<ITarget[]>;
-    private _targets: BehaviorSubject<ITarget[]>;
-
-    // Current editing target
-    editTarget: Observable<ITarget>;
-    private _editTarget: BehaviorSubject<ITarget>;
+    private _targets: BehaviorSubject<ITarget[]> = new BehaviorSubject([]);
+    targets: Observable<ITarget[]> = this._targets.asObservable();
+    private _editTarget: BehaviorSubject<ITarget> = new BehaviorSubject(null);
+    editTarget: Observable<ITarget> = this._editTarget.asObservable();
 
     private dataStore: {
-        targets: ITarget[],
-        editTarget: ITarget
+        targets: ITarget[]
     };
 
     loadall() {
@@ -31,16 +27,18 @@ export class TargetService {
         return this._dataService.Get("Targets/GetTargetFieldsbyTarget", targetId);
     }
 
-    setEditTarget(editTarget: ITarget) {
-        this.dataStore.editTarget = editTarget;
+    setEditTarget(editTarget: ITarget) { 
         // Filter target fields for the target being edited
-
-        this._editTarget.next(editTarget);
+        this.getTargetFields(editTarget.targetId)
+            .subscribe(targetFields => {
+                editTarget.targetFields = targetFields;
+                this._editTarget.next(editTarget);
+            },
+            error => console.log(error));
     }
 
-    initEditTarget() {
-        this.dataStore.editTarget = { name: '', description: '', effective_Date: new Date(), active: true, targetFields: [] };
-        this._editTarget.next(this.dataStore.editTarget);
+    clearEditTarget() {
+        this._editTarget.next(null);
     }
 
     add(target: ITarget) {
@@ -59,7 +57,7 @@ export class TargetService {
         }, error => console.log(error));
     }
 
-    deleteMap(targetId: number) {
+    deleteTarget(targetId: number) {
         this._dataService.Delete('Targets', targetId).subscribe(response => {
             this.dataStore.targets.forEach((m, i) => {
                 if (m.targetId === targetId) { this.dataStore.targets.splice(i, 1); }
@@ -69,12 +67,7 @@ export class TargetService {
     }
 
     constructor(private _dataService: DataService) {
-        this.dataStore = { targets: [], editTarget: null };
-        this._targets = <BehaviorSubject<ITarget[]>>new BehaviorSubject([]);
-        this._editTarget = <BehaviorSubject<ITarget>>new BehaviorSubject(null);
-        this.targets = this._targets.asObservable();
-        this.editTarget = this._editTarget.asObservable();
-        this.initEditTarget();
+        this.dataStore = { targets: [] };
         // Get the list of targets
         this.loadall();
     }

@@ -1,0 +1,52 @@
+﻿<div class="panel-default">
+    <div class="panel-heading">
+        <span>Targets in Project</span><span class="glyphicon glyphicon-export pull-right"></span>
+    </div>      
+    <ul *ngIf="targets.length > 0" class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3">
+                    Name
+                </div>
+                <div class="col-md-3">
+                    Description
+                </div>
+                <div class="col-md-2">
+                    Effective Date
+                </div>
+                <div class="col-md-1">
+                    Active
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </li>
+        <li *ngFor="let target of targets" class="list-group-item">
+            <div class="row">
+                <div class="col-md-3">
+                    {{target.name}}
+                </div>
+                <div class="col-md-3">
+                    {{target.description}}
+                </div>
+                <div class="col-md-2">
+                    {{target.effective_Date}}
+                </div>
+                <div class="col-md-1">
+                    <span *ngIf="target.active" class="glyphicon glyphicon-ok"></span>
+                    <span *ngIf="!target.active" class="glyphicon glyphicon-remove"></span>
+                </div>
+                <div class="col-md-3 text-right">
+                    <button type="button" class="btn btn-default" (click)="editTarget(target)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button type="button" class="btn btn-default" (click)="deleteTarget(target.targetId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div *ngIf="targets.length == 0" class="panel-body">
+        No Targets to show
+    </div>
+</div>
+
+
+

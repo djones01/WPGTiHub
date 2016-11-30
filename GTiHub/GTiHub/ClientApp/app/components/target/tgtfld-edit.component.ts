@@ -1,13 +1,14 @@
-﻿import { Component, ViewChild, Input } from "@angular/core";
+﻿import { Component, ViewChild, Input, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { UploadService } from "../../services/file-upload.service";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
+import { TargetService } from "../../services/target.service";
 
 @Component({
     selector: "tgtfld-edit",
     template: require('./tgtfld-edit.component.html')
 })
-export class TgtFldEditComponent {
+export class TgtFldEditComponent implements OnInit{
     //Control the template / manual header boxes
     sopt = true;
     seqNumCount: number = 1;
@@ -60,7 +61,7 @@ export class TgtFldEditComponent {
     ];
 
     extractFile() {
-        this._uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
+        this.uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
             .subscribe((targetFields: Object[]) => {
                 if (targetFields) {
                     const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
@@ -73,7 +74,24 @@ export class TgtFldEditComponent {
             });
     }
 
-    constructor(private _fb: FormBuilder, private _uploadService: UploadService) {
+    setTargetFields(targetFields: Object[]) {
+        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
+        this.resetTgtFlds();
+        for (let i = 0; i < targetFields.length; i++) {
+            this.addTgtFld();
+            control.at(i).patchValue(targetFields[i]);
+        }
+    }
+
+    constructor(private _fb: FormBuilder, private uploadService: UploadService, private targetService: TargetService) {
         this.uploader = new FileUploader({});
+    }
+
+    ngOnInit() {
+        this.targetService.editTarget.subscribe(editTarget => {
+            if (editTarget && editTarget.targetFields) {
+                this.setTargetFields(editTarget.targetFields);
+            }
+        });    
     }
 }

@@ -1,7 +1,7 @@
 ﻿import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { TgtFldListComponent } from "./tgtfld-list.component";
-import { TgtListComponent } from "./tgt-list.component";
+import { TgtListSelectComponent } from "./tgt-list-select.component";
 import { TFieldSelectService } from "../../../services/tgtfld-select.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs/Subscription";

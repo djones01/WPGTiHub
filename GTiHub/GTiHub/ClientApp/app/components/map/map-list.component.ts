@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
+﻿import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { IMap } from "./map";
 import { MapService } from "../../services/map.service";
@@ -7,7 +7,7 @@ import { MapService } from "../../services/map.service";
     selector: "map-list",
     template: require("./map-list.component.html")
 })
-export class MapListComponent implements OnInit, OnDestroy {
+export class MapListComponent implements OnInit {
     maps: IMap[];
 
     editMap(map: IMap): void {
@@ -24,9 +24,5 @@ export class MapListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.mapService.maps.subscribe(maps => this.maps = maps);
-    }
-
-    ngOnDestroy(): void {
-  
     }
 }

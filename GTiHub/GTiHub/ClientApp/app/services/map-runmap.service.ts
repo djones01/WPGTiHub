@@ -8,9 +8,11 @@ import { IMap } from "../components/map/map";
 @Injectable()
 export class RunMapService {
     // Array of FilePackages which will be appended to formdata
-    private filePackagesSubj = new BehaviorSubject<Array<FilePackage>>([]);
-    private mapsSubj = new BehaviorSubject<Array<IMap>>([]);
-    private selectedMapIdSubj = new BehaviorSubject<number>(null);
+    private _filePackages = new BehaviorSubject<FilePackage[]>([]);
+    filePackages: Observable<FilePackage[]> = this._filePackages.asObservable();
+    
+    private _selectedMapId = new BehaviorSubject<number>(null);
+    selectedMapId: Observable<number> = this._selectedMapId.asObservable(); 
 
     // On changing selected mapping
     initFilePackages(mapId: number) {
@@ -30,40 +32,10 @@ export class RunMapService {
                 if (filepackages.length == 1) {
                     filepackages[0].isPrimarySource = true;
                 }
-                this.filePackagesSubj.next(filepackages);
-                this.selectedMapIdSubj.next(mapId);
+                this._filePackages.next(filepackages);
+                this._selectedMapId.next(mapId);
             });
     }
 
-    initMaps() {
-        //// Returns an object
-        //this._dataService.GetAll("Maps")
-        //    .subscribe((maps: Object[]) => {
-        //        var selectMaps = new Array<Map>();
-        //        maps.forEach(function(map) {
-        //            selectMaps.push(new Map(map["description"],
-        //                map["effective_Date"],
-        //                map["active"],
-        //                map["transformations"],
-        //                map["mapId"]));
-        //        });
-        //        this.mapsSubj.next(selectMaps);
-        //    });
-    }
-
-    getMaps(): Observable<IMap[]> {
-        return this.mapsSubj.asObservable();
-    }
-
-    getFilePackages(): Observable<FilePackage[]> {
-        return this.filePackagesSubj.asObservable();
-    }
-
-    getSelectedMapId(): Observable<number> {
-        return this.selectedMapIdSubj.asObservable();
-    }
-
-    constructor(private _dataService: DataService) {
-        this.initMaps();
-    }
+    constructor(private _dataService: DataService) {}
 }

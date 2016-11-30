@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MapFileSelectComponent } from "./map-fileselect.component";
 import { RunMapService } from "../../../services/map-runmap.service";
-import { Subscription } from "rxjs/Subscription";
+import { MapService } from "../../../services/map.service";
 import { IMap } from "../map";
 
 @Component({
@@ -9,24 +9,17 @@ import { IMap } from "../map";
     template: require("./map-runmap.component.html"),
     providers: [RunMapService]
 })
-export class RunMapComponent implements OnInit, OnDestroy {
+export class RunMapComponent implements OnInit {
     //List of maps for map selection dropdown
     maps: IMap[];
-
-    //Subscriptions
-    mapSubscription: Subscription;
 
     onMapChange(mapId: number) {
         this.runMapService.initFilePackages(mapId);
     }
 
-    constructor(private runMapService: RunMapService) {}
+    constructor(private runMapService: RunMapService, private mapService: MapService) {}
 
     ngOnInit() {
-        this.mapSubscription = this.runMapService.getMaps().subscribe(maps => this.maps = maps);
-    }
-
-    ngOnDestroy() {
-        this.mapSubscription.unsubscribe();
+        this.mapService.maps.subscribe(maps => this.maps = maps);
     }
 }

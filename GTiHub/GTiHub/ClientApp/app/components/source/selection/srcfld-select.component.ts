@@ -1,7 +1,7 @@
-﻿import { Component, forwardRef, Input, OnInit, OnDestroy } from "@angular/core";
+﻿import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { SrcFldListComponent } from "./srcfld-list.component";
-import { SrcListComponent } from "./src-list.component";
+import { SrcListSelectComponent } from "./src-list-select.component";
 import { SFieldSelectService } from "../../../services/srcfld-select.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs/Subscription";
@@ -10,17 +10,17 @@ import { Subscription } from "rxjs/Subscription";
     selector: "srcfld-select",
     template: require("./srcfld-select.component.html"),
     styles: [require("./srcfld-select.component.css")],
-    providers: [
+    providers: [SFieldSelectService,
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SrcFldSelectComponent), multi: true },
-        { provide: NG_VALIDATORS, useExisting: forwardRef(() => SrcFldSelectComponent), multi: true },
-        SFieldSelectService
+        { provide: NG_VALIDATORS, useExisting: forwardRef(() => SrcFldSelectComponent), multi: true }
     ]
 })
-export class SrcFldSelectComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class SrcFldSelectComponent implements ControlValueAccessor, OnInit {
     propagateChange: any = () => { };
     validateFn: any = () => { };
     @Input('selectedSourceField') _selectedSourceField: any;
-    srcFldSub: Subscription;
+    private sources = [];
+    private filteredSourceFields = [];
 
     // Modal Functions
     openSourceSelect(content) {
@@ -28,7 +28,7 @@ export class SrcFldSelectComponent implements ControlValueAccessor, OnInit, OnDe
             .result.then((result) => {
                 //User selected source field in modal
                 if (result != "Select SField") {
-                    this.selectedSourceField = null;
+                    
                 }
             },
             (reason) => { });
@@ -59,13 +59,18 @@ export class SrcFldSelectComponent implements ControlValueAccessor, OnInit, OnDe
         this.propagateChange(val);
     }
 
-    constructor(private modalService: NgbModal, private selectService: SFieldSelectService) {
+    //Child component events
+    onSelectSource() {
+        this.selectedSourceField = null;
+    }
+    onFieldSelect(sourceField: any) {
+        this.selectedSourceField = sourceField;
     }
 
+    constructor(private modalService: NgbModal, private selectService: SFieldSelectService) { }
+
     ngOnInit() {
-        this.srcFldSub = this.selectService.getSelectedSourceField().subscribe(sourceField => this.selectedSourceField = sourceField);
-    }
-    ngOnDestroy() {
-        this.srcFldSub.unsubscribe();
+        this.selectService.sources.subscribe(sources => this.sources = sources);
+        this.selectService.filteredSrcFlds.subscribe(filteredSourceFields => this.filteredSourceFields = filteredSourceFields);
     }
 }

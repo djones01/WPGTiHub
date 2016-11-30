@@ -30,7 +30,7 @@
                         <span class="glyphicon glyphicon-remove pull-right" (click)="removeTransform(i)"></span>
                     </div>
                     <div class="panel-body">
-                        <transformation-edit [group]="mapForm.controls.transformations.controls[i]"></transformation-edit>
+                        <transformation-edit [group]="mapForm.controls.transformations.controls[i]" [i]="i"></transformation-edit>
                     </div>
                 </div>              
             </div>

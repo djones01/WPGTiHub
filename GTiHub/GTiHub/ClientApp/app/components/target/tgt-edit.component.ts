@@ -1,7 +1,8 @@
 ﻿import { Component, ViewChild, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TgtFldEditComponent } from "./tgtfld-edit.component";
-import { DataService } from "../../services/data.service";
+import { TargetService } from "../../services/target.service";
 import { ITarget } from "./target";
 import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
 
@@ -11,18 +12,18 @@ import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
 })
 export class TgtEditComponent implements OnInit {
     public tgtForm: FormGroup;
-    private editing: boolean = false;
-    private editId: number;
+
+    editing: boolean = false;
 
     @ViewChild(TgtFldEditComponent)
     private tgtFldEditComponent: TgtFldEditComponent;
 
     onSubmit(target: ITarget) {
         if (this.editing) {
-            this._dataService.Update('Targets', this.editId, target).subscribe(() => { this.newTarget(); }, error => console.log(error));
+            this.targetService.update(target);
         }
         else {
-            this._dataService.Add('Targets', target).subscribe(() => { this.newTarget(); }, error => console.log(error));
+            this.targetService.add(target);
         }
     }
 
@@ -41,9 +42,21 @@ export class TgtEditComponent implements OnInit {
         this.initTgtForm();
     }
 
-    constructor(private _fb: FormBuilder, private _dataService: DataService) { }
+    back() {
+        this.targetService.clearEditTarget();
+        this.router.navigate(['/proj-overview']);
+    }
+
+    constructor(private _fb: FormBuilder, private router: Router, private targetService: TargetService) { }
 
     ngOnInit() {
         this.initTgtForm();
+        this.targetService.editTarget.subscribe(editTarget => {
+            if (editTarget) {
+                this.editing = true;
+                this.tgtForm.patchValue(editTarget);
+            }
+        });
+        
     }
 }

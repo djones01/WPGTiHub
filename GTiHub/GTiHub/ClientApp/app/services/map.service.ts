@@ -6,14 +6,12 @@ import { DataService } from "./data.service";
 
 @Injectable()
 export class MapService {
-    maps: Observable<IMap[]>;
+    public maps: Observable<IMap[]>;
     private _maps: BehaviorSubject<IMap[]>;
-    editMap: Observable<IMap>;
-    private _editMap: BehaviorSubject<IMap>;
+    public editMap: IMap;
 
     private dataStore: {
-        maps: IMap[],
-        editMap: IMap
+        maps: IMap[]
     };
 
     loadall() {
@@ -25,17 +23,16 @@ export class MapService {
     }
 
     setEditMap(editMap: IMap) {
-        this.dataStore.editMap = editMap;
+        this.editMap = editMap;
         // Load Transforms for the map being edited
         this._dataService.Get('Maps/GetMapTransforms', editMap.mapId)
-            .subscribe(transformations => this.dataStore.editMap.transformations = transformations,
+            .subscribe(transformations => this.editMap.transformations = transformations,
             error => console.log(error));
-        this._editMap.next(editMap);
+        
     }
 
     clearEditMap() {
-        this.dataStore.editMap = { description: '', effective_Date: new Date(), active: true, transformations: [] };
-        this._editMap.next(this.dataStore.editMap);
+        this.editMap = { description: '', effective_Date: new Date(), active: true, transformations: [] };
     }
 
     add(map: IMap) {
@@ -64,11 +61,10 @@ export class MapService {
     }
 
     constructor(private _dataService: DataService) {
-        this.dataStore = { maps: [], editMap: { description: '', effective_Date: new Date(), active: true, transformations: [] }};
+        this.dataStore = { maps: [] };
         this._maps = <BehaviorSubject<IMap[]>>new BehaviorSubject([]);
-        this._editMap = <BehaviorSubject<IMap>>new BehaviorSubject(this.dataStore.editMap);
         this.maps = this._maps.asObservable();
-        this.editMap = this._editMap.asObservable();
+        this.clearEditMap();
         // Get the list of maps
         this.loadall();
     }

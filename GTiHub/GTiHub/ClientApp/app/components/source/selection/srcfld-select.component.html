@@ -16,10 +16,10 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-sm-6">
-                <source-list></source-list>
+                <src-list-select [sources]="sources" (onSelectSource)="onSelectSource($event)"></src-list-select>
             </div>
             <div class="col-sm-6">
-                <sourcefield-list></sourcefield-list>
+                <sourcefield-list [filteredSourceFields]="filteredSourceFields" (onFieldSelect)="onFieldSelect($event)"></sourcefield-list>
             </div>
         </div>
     </div>

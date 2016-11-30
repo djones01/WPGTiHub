@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit, OnDestroy } from "@angular/core";
 import { RunMapService } from "../../../services/map-runmap.service";
-import { Subscription } from "rxjs/Subscription";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
 import { IMap } from "../map";
 import { FilePackage } from "./filepackage";
@@ -9,7 +8,7 @@ import { FilePackage } from "./filepackage";
     selector: "map-fileselect",
     template: require("./map-fileselect.component.html")
 })
-export class MapFileSelectComponent implements OnInit, OnDestroy {
+export class MapFileSelectComponent implements OnInit {
     //Array for file packages
     filePackages: FilePackage[];
     uploader: FileUploader;
@@ -24,10 +23,6 @@ export class MapFileSelectComponent implements OnInit, OnDestroy {
     logFileName: string;
     checkCells: boolean;
     evalConditions: boolean;
-
-    //Subscriptions
-    filePackageSubscription: Subscription;
-    selectedMapIdSubscription: Subscription;
 
     //Set all other filepackages to be non primary - WORKAROUND
     primaryChanged(filePackage: FilePackage) {
@@ -148,14 +143,9 @@ export class MapFileSelectComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.filePackageSubscription = this.runMapService.getFilePackages()
-            .subscribe(filePackages => this.filePackages = filePackages);
-        this.selectedMapIdSubscription = this.runMapService.getSelectedMapId()
-            .subscribe(selectedMapId => this.selectedMapId = selectedMapId);
-    }
-
-    ngOnDestroy() {
-        this.filePackageSubscription.unsubscribe();
-        this.selectedMapIdSubscription.unsubscribe();
+        this.runMapService.filePackages.subscribe(filePackages => {
+            this.filePackages = filePackages
+        });
+        this.runMapService.selectedMapId.subscribe(mapId => this.selectedMapId = mapId);
     }
 }

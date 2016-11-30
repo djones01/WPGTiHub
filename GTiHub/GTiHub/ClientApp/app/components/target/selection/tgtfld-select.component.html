@@ -16,7 +16,7 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-sm-6">
-                <target-list [targets]="targets" (onSelectTarget)="onSelectTarget($event)"></target-list>
+                <tgt-list-select [targets]="targets" (onSelectTarget)="onSelectTarget($event)"></tgt-list-select>
             </div>
             <div class="col-sm-6">
                 <targetfield-list [filteredTargetFields]="filteredTargetFields" (onFieldSelect)="onFieldSelect($event)"></targetfield-list>

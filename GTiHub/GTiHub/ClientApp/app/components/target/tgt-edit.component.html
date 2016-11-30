@@ -25,15 +25,15 @@
                 <div class="form-group">
                     <div class="checkbox">
                         <label for="active">
-                            <input type="checkbox" checked="checked" formControlName="active">Active
+                            <input type="checkbox" formControlName="active">Active
                         </label>
                     </div>
                 </div>
             </div>
         </div>
         <tgtfld-edit [group]="tgtForm"></tgtfld-edit>
-        <button type="submit" class="btn btn-default" [disabled]="tgtForm.controls.targetFields.controls.length == 0  || !tgtForm.valid" (click)="onSubmit(tgtForm.value)"><span class="glyphicon glyphicon-plus"></span> Submit</button>
+        <button type="button" class="btn btn-default" (click)="back()">Back to Overview</button>      
         <button type="button" class="btn btn-default" (click)="newTarget()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
-        <button type="button" class="btn btn-default" (click)="openTargetSelect(content)">Edit Target</button>
+        <button type="submit" class="btn btn-primary" [disabled]="tgtForm.controls.targetFields.controls.length == 0  || !tgtForm.valid" (click)="onSubmit(tgtForm.value)"><span class="glyphicon glyphicon-plus"></span> Submit</button>
     </form>
 </div>  

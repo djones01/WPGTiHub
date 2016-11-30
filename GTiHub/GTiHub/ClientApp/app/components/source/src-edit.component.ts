@@ -1,7 +1,8 @@
 ﻿import { Component, ViewChild, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SrcFldEditComponent } from "./srcfld-edit.component";
-import { DataService } from "../../services/data.service";
+import { SourceService } from "../../services/source.service";
 import { ISource } from "./source";
 import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
 
@@ -11,18 +12,18 @@ import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
 })
 export class SrcEditComponent implements OnInit {
     public srcForm: FormGroup;
-    private editing: boolean = false;
-    private editId: number;
+
+    editing: boolean = false;
 
     @ViewChild(SrcFldEditComponent)
     private srcFldEditComponent: SrcFldEditComponent;
 
     onSubmit(source: ISource) {
         if (this.editing) {
-            this._dataService.Update('Sources', this.editId, source).subscribe(() => { this.newSource(); }, error => console.log(error));
+            this.sourceService.update(source);
         }
         else {
-            this._dataService.Add('Sources', source).subscribe(() => { this.newSource(); }, error => console.log(error));
+            this.sourceService.add(source);
         }
     }
 
@@ -41,9 +42,21 @@ export class SrcEditComponent implements OnInit {
         this.initSrcForm();
     }
 
-    constructor(private _fb: FormBuilder, private _dataService: DataService) { }
+    back() {
+        this.sourceService.clearEditSource();
+        this.router.navigate(['/proj-overview']);
+    }
+
+    constructor(private _fb: FormBuilder, private router: Router, private sourceService: SourceService) { }
 
     ngOnInit() {
         this.initSrcForm();
+        this.sourceService.editSource.subscribe(editSource => {
+            if (editSource) {
+                this.editing = true;
+                this.srcForm.patchValue(editSource);
+            }
+        });
+
     }
 }

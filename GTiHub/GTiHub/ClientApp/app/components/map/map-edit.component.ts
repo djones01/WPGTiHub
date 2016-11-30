@@ -20,12 +20,12 @@ export class MapEditComponent implements OnInit {
 
     editMap: IMap;
 
-    initMap() {
+    initMapForm() {
         this.mapForm = this._fb.group({
-            description: [this.editMap.description, Validators.required],
-            effective_Date: [this.editMap.effective_Date],
-            active: [this.editMap.active],
-            transformations: this._fb.array(this.editMap.transformations)
+            description: ['', Validators.required],
+            effective_Date: [new Date()],
+            active: [true],
+            transformations: this._fb.array([])
         });
     }
 
@@ -43,21 +43,20 @@ export class MapEditComponent implements OnInit {
         });
     }
 
-    patchEditValues(editMap: IMap) {
-        if (editMap != null) {
-            this.mapForm.patchValue(editMap);
-        }
-    }
-
     onSubmit(map: IMap) {
-        this.mapService.add(map);
+        if (this.editMap != null) {
+            this.mapService.add(map);
+        }
+        else {
+            this.mapService.update(map);
+        }
         this.newMap();
     }
 
     newMap() {
         this.transformationEditComponent.seqNumCount = 1;
         this.ruleEditComponent.seqNumCount = 1;
-        this.initMap();
+        this.initMapForm();
     }
 
     addTransform() {
@@ -71,13 +70,28 @@ export class MapEditComponent implements OnInit {
 
     back() {
         this.mapService.clearEditMap();
-        this.router.navigate(['/map']);
+        this.router.navigate(['/proj-overview']);
     }
 
     constructor(private _fb: FormBuilder, private router: Router, private mapService: MapService) { }
 
     ngOnInit() {
-        this.mapService.editMap.subscribe(editMap => this.editMap = editMap);
-        this.initMap();
+        this.initMapForm();
+        // Get the map currently being edited
+        this.editMap = this.mapService.editMap;
+        if (this.editMap != null) {
+            const control = <FormArray>this.mapForm.controls['transformations'];
+            this.editMap.transformations.forEach((tf, i) => {
+                this.addTransform();
+                //Add rule source fields
+                tf.rule.ruleSourceFields.forEach((rsf, i) => {
+                    this.ruleEditComponent.addRuleSrcFld();
+                });
+                //Add conditions
+                tf.conditions.forEach((cond, i) => {
+                    this.transformationEditComponent.addCondition();
+                });
+            });           
+        }
     }
 }

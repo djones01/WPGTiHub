@@ -1,31 +1,22 @@
-﻿import { Component, ViewChild, OnInit, Input, OnDestroy } from "@angular/core";
+﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { ISourceField } from "../source";
-import { Subscription } from "rxjs/Subscription";
 import { SFieldSelectService } from "../../../services/srcfld-select.service";
 
 @Component({
     selector: "sourcefield-list",
     template: require('./srcfld-list.component.html')
 })
-export class SrcFldListComponent implements OnInit, OnDestroy {
-    private sourceFields: ISourceField[] = [];
-    private selectedSourceField: ISourceField;
+export class SrcFldListComponent {
+    @Input('filteredSourceFields')
+    sourceFields: ISourceField[];
+    private selectedSourceField: ISourceField = null;
 
-    filterSubscription: Subscription;
+    @Output('onFieldSelect') onFieldSelect = new EventEmitter<ISourceField>();
 
     onSelectSourceField(sourceField: ISourceField): void {
         this.selectedSourceField = sourceField;
-        this.selectService.setSelectedSourceField(sourceField);
+        this.onFieldSelect.emit(this.selectedSourceField);
     }
 
     constructor(private selectService: SFieldSelectService) { }
-
-    ngOnInit(): void {
-        this.filterSubscription = this.selectService.getFilteredSourceFields()
-            .subscribe((sourceFields: ISourceField[]) => this.sourceFields = sourceFields);
-    }
-
-    ngOnDestroy(): void {
-        this.filterSubscription.unsubscribe();
-    }
 }
