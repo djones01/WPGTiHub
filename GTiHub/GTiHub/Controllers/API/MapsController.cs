@@ -51,12 +51,14 @@
             return new ObjectResult(map);
         }
 
+        // GET api/Maps/GetMapTransforms/5
         [HttpGet("GetMapTransforms/{id}")]
         public IEnumerable<Transformation> GetMapTransforms(int id)
         {
             return
                 this._dbContext.Transformations.Where(x => x.MapId == id)
                     .Include(transform => transform.Rule)
+                        .ThenInclude(rule => rule.RuleSourceFields)
                     .Include(transform => transform.Conditions)
                     .ToList();
         }
@@ -80,10 +82,14 @@
                 foreach (var transform in mapTransforms)
                 {
                     // Check conditions
-                    foreach (var condition in transform.Conditions) if (!sourcesInMap.Any(x => condition.SourceField.Source.SourceId == x.SourceId)) sourcesInMap.Add(condition.SourceField.Source);
+                    foreach (var condition in transform.Conditions)
+                        if (!sourcesInMap.Any(x => condition.SourceField.Source.SourceId == x.SourceId))
+                            sourcesInMap.Add(condition.SourceField.Source);
 
                     // Check rulesourcefields
-                    foreach (var ruleSourceField in transform.Rule.RuleSourceFields) if (!sourcesInMap.Any(x => ruleSourceField.SourceField.Source.SourceId == x.SourceId)) sourcesInMap.Add(ruleSourceField.SourceField.Source);
+                    foreach (var ruleSourceField in transform.Rule.RuleSourceFields)
+                        if (!sourcesInMap.Any(x => ruleSourceField.SourceField.Source.SourceId == x.SourceId))
+                            sourcesInMap.Add(ruleSourceField.SourceField.Source);
                 }
 
             // Why do I need to do this for it to work????

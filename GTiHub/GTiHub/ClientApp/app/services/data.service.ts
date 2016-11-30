@@ -1,7 +1,6 @@
 ﻿import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
 import { Observable } from "rxjs/Rx";
-import { Client } from "../components/client/client";
 
 @Injectable()
 export class DataService {
@@ -22,13 +21,7 @@ export class DataService {
             .catch((error: any) => Observable.throw(error.json().error || "Server Error"));
     }
 
-    GetAllWithId(action: string, id: number): Observable<any> {
-        return this._http.get(this.actionUrl + action + "/" + id)
-            .map(res => res.json())
-            .catch((error: any) => Observable.throw(error.json().error || "Server Error"));
-    }
-
-    GetSingle(action: string, id: number): Observable<any> {
+    Get(action: string, id: number): Observable<any> {
         return this._http.get(this.actionUrl + action + "/" + id)
             .map(res => res.json())
             .catch((error: any) => Observable.throw(error.json().error || "Server Error"));

@@ -10,9 +10,11 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 // service imports
 import { DataService } from "./services/data.service";
 import { UploadService } from "./services/file-upload.service";
+import { MapService } from "./services/map.service";
+import { TargetService } from "./services/target.service";
 
 // component imports
-import { AppComponent } from "./components/app/app.component"
+import { AppComponent } from "./components/app/app.component";
 import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { HomeComponent } from "./components/home/home.component";
 
@@ -25,14 +27,14 @@ import { SrcEditComponent } from "./components/source/src-edit.component";
 import { SrcFldEditComponent } from "./components/source/srcfld-edit.component";
 import { SrcListComponent } from "./components/source/selection/src-list.component";
 import { SrcFldListComponent } from "./components/source/selection/srcfld-list.component";
-import { SrcFldSelectComponent } from "./components/source/selection/srcfld-select.component";
-    
+import { SrcFldSelectComponent } from "./components/source/selection/srcfld-select.component";    
 
 // target
 import { TgtEditComponent } from "./components/target/tgt-edit.component";
 import { TgtFldEditComponent } from "./components/target/tgtfld-edit.component";
 import { TgtListComponent } from "./components/target/selection/tgt-list.component";
 import { TgtFldListComponent } from "./components/target/selection/tgtfld-list.component";
+import { TgtFldSelectComponent } from "./components/target/selection/tgtfld-select.component";
 
 // map
 import { MapComponent } from "./components/map/map.component";
@@ -68,6 +70,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         TgtListComponent,
         TgtFldEditComponent,
         TgtFldListComponent,
+        TgtFldSelectComponent,
         MapComponent,
         MapEditComponent,
         MapListComponent,
@@ -89,17 +92,18 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         NgbModalModule.forRoot(),
         FileUploadModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'client', component: ClientComponent },
-            { path: 'source', component: SrcEditComponent },
-            { path: 'target', component: TgtEditComponent },
+            { path: "", redirectTo: "home", pathMatch: "full" },
+            { path: "home", component: HomeComponent },
+            { path: "client", component: ClientComponent },
+            { path: "source", component: SrcEditComponent },
+            { path: "target", component: TgtEditComponent },
             { path: "map", component: MapComponent },
+            { path: "map-edit", component: MapEditComponent },
             { path: "run-map", component: RunMapComponent },
-            { path: '**', redirectTo: 'home' }
+            { path: "**", redirectTo: "home" }
         ])
     ],
-    providers: [DataService, UploadService]
+    providers: [DataService, UploadService, MapService, TargetService]
 })
 export class AppModule {
 }

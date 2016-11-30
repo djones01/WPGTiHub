@@ -1,4 +1,4 @@
-﻿export interface Client {
+﻿export interface IClient {
     clientId?: number;
     name: string;
     industry: string;

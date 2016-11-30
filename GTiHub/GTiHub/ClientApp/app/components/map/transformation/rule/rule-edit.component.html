@@ -6,6 +6,9 @@
         <div class="panel-body">
             <!-- Select target field -->
             <tgtfld-select formControlName="targetField"></tgtfld-select>
+            <small [hidden]="ruleForm.controls.targetField.valid" class="text-danger">
+                Target Field is required
+            </small>
             <hr />
             <!-- Select operation -->
             <div>
@@ -19,14 +22,27 @@
             </div>
         </div>
     </div>
-    <div *ngIf="rule.rule_Operation != ''" class="panel panel-default">
+    <div *ngIf="ruleForm.controls.rule_Operation.value != ''" class="panel panel-default">
         <div class="panel-heading">
             Add / Edit Rule Values
         </div>
         <div class="panel-body">
             <!-- Show if operation applies to rule source fields -->
             <div *ngIf="ruleForm.controls.rule_Operation.value == 'sfield'">
-
+                <div formArrayName="ruleSourceFields">
+                    <div *ngFor="let ruleSourceField of ruleForm.controls.ruleSourceFields.controls; let i=index">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <rulesrcfld-edit [group]="ruleForm.controls.ruleSourceFields.controls[i]"></rulesrcfld-edit>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-default" (click)="removeRuleSrcFld(i)"><span class="glyphicon glyphicon-trash"></span></button>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <hr *ngIf="ruleForm.controls.ruleSourceFields.length > 0" />
+                <button type="button" (click)="addRuleSrcFld()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Rule Source Field</button>
             </div>
             <!-- Show for assign op -->
             <div *ngIf="ruleForm.controls.rule_Operation.value == 'assign'">

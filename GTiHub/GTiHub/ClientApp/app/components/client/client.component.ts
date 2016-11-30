@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Client } from "./client";
+import { IClient } from "./client";
 import { ClientService } from "../../services/client.service";
 import { Subscription } from "rxjs/Subscription";
 
@@ -11,13 +11,13 @@ import { Subscription } from "rxjs/Subscription";
     providers: [ClientService]
 })
 export class ClientComponent implements OnInit, OnDestroy {
-    client: Client;
+    client: IClient;
     active: boolean = true;
 
     //Subscriptions
     addEditClientSub: Subscription;
 
-    onSubmit(client: Client) {
+    onSubmit(client: IClient) {
         this._clientService.addClient(client);
         this.reset();
     }

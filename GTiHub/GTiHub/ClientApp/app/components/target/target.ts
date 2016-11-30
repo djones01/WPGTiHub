@@ -1,9 +1,9 @@
 ﻿export interface ITarget {
     name: string;
     description: string;
-    effective_Date: string;
+    effective_Date: Date;
     active: boolean;
-    sourceFields: ITargetField[];
+    targetFields: ITargetField[];
     targetId?: number;
 }
 
@@ -12,4 +12,6 @@ export interface ITargetField {
     datatype: string;
     active: boolean;
     seqNum: number;
+    targetFieldId?: number;
+    targetId?: number;
 }

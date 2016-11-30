@@ -3,18 +3,18 @@ import { Http, Response, Headers, RequestOptions } from "@angular/http";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Rx";
 import { DataService } from "./data.service";
-import { Client } from "../components/client/client";
+import { IClient } from "../components/client/client";
 
 @Injectable()
 export class ClientService {
     private editing: boolean = false;
-    clientsSubj = new BehaviorSubject<Array<Client>>([]);
-    addEditClientSubj = new BehaviorSubject<Client>(null);
+    clientsSubj = new BehaviorSubject<Array<IClient>>([]);
+    addEditClientSubj = new BehaviorSubject<IClient>(null);
 
-    addClient(client: Client, editId?: number): void {
+    addClient(client: IClient, editId?: number): void {
         if (this.editing) {
             let editIndex = this.clientsSubj.getValue().indexOf(client);
-            this._dataService.Update('Clients', this.addEditClientSubj.getValue().clientId , this.addEditClientSubj.getValue())
+            this._dataService.Update('Clients', this.addEditClientSubj.getValue().clientId , client)
                 .subscribe(() => {},
                 error => console.log(error));
         } else {
@@ -28,7 +28,7 @@ export class ClientService {
         this.newClient();
     }
 
-    deleteClient(client: Client): void {
+    deleteClient(client: IClient): void {
         this._dataService.Delete('Clients', client.clientId)
             .subscribe(client => {
                 this.removeClient(client);
@@ -36,7 +36,7 @@ export class ClientService {
             error => console.log(error));
     }
 
-    editClient(client: Client): void {
+    editClient(client: IClient): void {
         this.addEditClientSubj.next(client);
         this.editing = true;
     }
@@ -50,16 +50,16 @@ export class ClientService {
         this.addEditClientSubj.next({ name: '', industry: '' });
     }
 
-    getAddEditClient(): Observable<Client> {
+    getAddEditClient(): Observable<IClient> {
         return this.addEditClientSubj.asObservable();
     }
 
-    getClientsList(): Observable<Client[]> {
+    getClientsList(): Observable<IClient[]> {
         return this.clientsSubj.asObservable();
     }
 
     private refreshClientsList(): void {
-        this._dataService.GetAll('Clients').subscribe((clients: Array<Client>) => {
+        this._dataService.GetAll('Clients').subscribe((clients: Array<IClient>) => {
             this.clientsSubj.next(clients)
         }, error => console.log(error), () => { });
     }

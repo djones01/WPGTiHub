@@ -11,6 +11,8 @@
         </div>     
     </div>
     <hr />
+    <rule-edit [group]="transForm.controls.rule"></rule-edit>
+    <hr />
     <div formArrayName="conditions">
         <div class="panel panel-default" *ngIf="transForm.controls.conditions.length > 0">
             <div class="panel-heading">
@@ -31,5 +33,5 @@
         </div>       
     </div>
     <hr *ngIf="transForm.controls.conditions.length > 0" />
-    <button type="button" class="btn btn-default" (click)="addCondition()"><span class="glyphicon glyphicon-plus"></span>Add Condition</button>
+    <button type="button" class="btn btn-default" (click)="addCondition()"><span class="glyphicon glyphicon-plus"></span> Add Condition</button>
 </div>

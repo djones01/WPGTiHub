@@ -5,27 +5,10 @@ import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: "map",
-    template: require("./map.component.html"),
-    providers: [MapService]
+    template: require("./map.component.html")
 })
-export class MapComponent implements OnInit, OnDestroy {
-    editingMap: boolean;
-
-    // Subscriptions
-    editingMapSubscription: Subscription;
-
-    addMap() {
-        this._mapService.setEditingMap(true);
-    }
+export class MapComponent {
 
     constructor(private _mapService: MapService) {
-    }
-
-    ngOnInit(): void {
-        this.editingMapSubscription = this._mapService.getAddingOrModifyingMap()
-            .subscribe(editingMap => this.editingMap = editingMap);
-    }
-    ngOnDestroy(): void {
-        this.editingMapSubscription.unsubscribe();
     }
 }

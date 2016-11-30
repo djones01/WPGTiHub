@@ -15,7 +15,7 @@ export class RunMapService {
     // On changing selected mapping
     initFilePackages(mapId: number) {
         var filepackages = new Array<FilePackage>();
-        this._dataService.GetAllWithId("Maps/MapSources", mapId)
+        this._dataService.Get("Maps/MapSources", mapId)
             .subscribe(sources => {
                 sources.forEach(function(source) {
                     filepackages.push(new FilePackage(false,

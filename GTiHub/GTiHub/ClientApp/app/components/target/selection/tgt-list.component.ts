@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, OnInit, Output, OnDestroy } from "@angular/core";
+﻿import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ITarget } from "../target";
 import { TFieldSelectService } from "../../../services/tgtfld-select.service";
 import { Subscription } from "rxjs/Subscription";
@@ -7,25 +7,18 @@ import { Subscription } from "rxjs/Subscription";
     selector: "target-list",
     template: require('./tgt-list.component.html')
 })
-export class TgtListComponent implements OnInit, OnDestroy {
-    private targets: ITarget[] = [];
-    private selectedTarget: ITarget;
-    targetsSubscription: Subscription;
+export class TgtListComponent {
+    @Input('targets')
+    targets: ITarget[];
+    private selectedTarget: ITarget = null;
 
-    onSelectTarget(target: ITarget) {
+    @Output('onSelectTarget') onSelectTarget = new EventEmitter();
+
+    selectTarget(target: ITarget) {
         this.selectedTarget = target;
-        this.selectService.filterTargetFields(target.targetId);
+        this.onSelectTarget.emit();
+        this.selectService.filterTgtFlds(target.targetId);
     }
 
-    constructor(private selectService: TFieldSelectService) {
-    }
-
-    ngOnInit(): void {
-        this.targetsSubscription = this.selectService.getTargets().subscribe(targets => this.targets = targets);
-        this.selectService.initTargets();
-    }
-
-    ngOnDestroy(): void {
-        this.targetsSubscription.unsubscribe();
-    }
+    constructor(private selectService: TFieldSelectService) { }
 }

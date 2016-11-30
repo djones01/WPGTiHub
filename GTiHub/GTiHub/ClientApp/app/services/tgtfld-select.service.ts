@@ -2,43 +2,43 @@
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 import { ITarget, ITargetField } from "../components/target/target";
-import { DataService } from "./data.service";
+import { TargetService } from "./target.service";
 
 @Injectable()
 export class TFieldSelectService {
-    private targetsSubj = new BehaviorSubject<Array<ITarget>>([]);
-    private filteredTargetFieldsSubj = new BehaviorSubject([]);
-    private selectedTargetFieldSubj = new BehaviorSubject<ITargetField>(null);
+    targets: Observable<ITarget[]>;
+    private _targets: BehaviorSubject<ITarget[]>;
+    filteredTgtFlds: Observable<ITargetField[]>;
+    private _filteredTgtFlds: BehaviorSubject<ITargetField[]>;
 
-    getSelectedTargetField(): Observable<ITargetField> {
-        return this.selectedTargetFieldSubj.asObservable();
-    }
+    private dataStore: {
+        targets: ITarget[],
+        selectedTarget: ITarget,
+        filteredTgtFlds: ITargetField[]
+        selectedTgtFld: ITargetField
+    };
 
-    setSelectedTargetField(targetField: ITargetField) {
-        this.selectedTargetFieldSubj.next(targetField);
-    }
-
-    filterTargetFields(targetId: number) {
-        this.selectedTargetFieldSubj.next(null);
-        //Set the available target fields
-        this._dataService.GetAllWithId("Targets/GetTargetFieldsByTarget", targetId)
+    filterTgtFlds(targetId: number) {
+        this.targetService.getTargetFields(targetId)
             .subscribe(targetFields => {
-                this.filteredTargetFieldsSubj.next(targetFields);
-            });
+                this.dataStore.filteredTgtFlds = targetFields;
+                this._filteredTgtFlds.next(this.dataStore.filteredTgtFlds);
+            }, error => console.log(error));       
     }
 
-    getFilteredTargetFields(): Observable<ITargetField[]> {
-        return this.filteredTargetFieldsSubj.asObservable();
-    }
+    constructor(private targetService: TargetService) {
+        this.dataStore = { targets: [], selectedTarget: null, filteredTgtFlds: [], selectedTgtFld: null };
 
-    getTargets(): Observable<ITarget[]> {
-        return this.targetsSubj.asObservable();
-    }
+        this._targets = <BehaviorSubject<ITarget[]>>new BehaviorSubject([]);
+        this._filteredTgtFlds = <BehaviorSubject<ITargetField[]>>new BehaviorSubject([]);
 
-    initTargets() {
-        this._dataService.GetAll("Targets")
-            .subscribe(targets => this.targetsSubj.next(targets), error => console.log(error));
-    }
+        this.targets = this._targets.asObservable();
+        this.filteredTgtFlds = this._filteredTgtFlds.asObservable();
 
-    constructor(private _dataService: DataService) { }
+        //Init list of targets
+        this.targetService.targets.subscribe(targets => {
+            this.dataStore.targets = targets
+            this._targets.next(this.dataStore.targets);
+        });       
+    }
 }

@@ -10,13 +10,13 @@ import { MapService } from "../../../services/map.service";
 })
 export class TransformationEditComponent implements OnInit, OnDestroy {
     @Input('group')
-    public transForm: FormGroup;
-    private condSeqNum: number = 1;
+    transForm: FormGroup;
+    public seqNumCount: number = 1;
 
     // Init new condition
     initCondition() {
         return this._fb.group({
-            seqNum: [this.condSeqNum++],
+            seqNum: [this.seqNumCount++],
             chain_Operation: ['',Validators.required],
             left_Paren: [''],
             operation: ['', Validators.required],
@@ -32,7 +32,15 @@ export class TransformationEditComponent implements OnInit, OnDestroy {
         control.push(this.initCondition());
     }
     removeCondition(i: number) {
+        let x = i;
         const control = <FormArray>this.transForm.controls['conditions'];
+        // renumber the seqnums of other source fields
+        for (x; x < control.length; x++) {
+            let group = <FormGroup>control.at(x);
+            let newVal = group.controls['seqNum'].value - 1;
+            group.controls['seqNum'].setValue(newVal);
+        }
+        this.seqNumCount--;
         control.removeAt(i);
     }
 

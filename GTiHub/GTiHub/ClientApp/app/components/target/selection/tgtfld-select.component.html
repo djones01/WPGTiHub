@@ -16,10 +16,10 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-sm-6">
-                <target-list></target-list>
+                <target-list [targets]="targets" (onSelectTarget)="onSelectTarget($event)"></target-list>
             </div>
             <div class="col-sm-6">
-                <targetfield-list></targetfield-list>
+                <targetfield-list [filteredTargetFields]="filteredTargetFields" (onFieldSelect)="onFieldSelect($event)"></targetfield-list>
             </div>
         </div>
     </div>
