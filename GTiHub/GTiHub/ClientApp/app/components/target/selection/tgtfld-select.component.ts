@@ -24,7 +24,7 @@ export class TgtFldSelectComponent implements ControlValueAccessor, OnInit {
 
     // Modal Functions
     openTargetSelect(content) {
-        this.modalService.open(content, { size: "lg" })
+        this.modalService.open(content, { size: "lg", backdrop: "static" })
             .result.then((result) => {
                 //User selected target field in modal
                 if (result != "Select TField") {

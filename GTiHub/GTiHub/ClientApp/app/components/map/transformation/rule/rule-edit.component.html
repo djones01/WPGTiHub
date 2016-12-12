@@ -1,27 +1,31 @@
 ﻿<form [formGroup]="ruleForm">
-    <div class="panel panel-default input-container">
-        <div class="panel-heading">
-            Rule Options
-        </div>
-        <div class="panel-body">
-            <!-- Select target field -->
-            <tgtfld-select formControlName="targetField"></tgtfld-select>
-            <small [hidden]="ruleForm.controls.targetField.valid" class="text-danger">
-                Target Field is required
-            </small>
-            <hr />
-            <!-- Select operation -->
-            <div>
-                <label>Assignment Options</label>
-                <div *ngFor="let rule_Opt of rule_Operations">
-                    <label>
-                        <input type="radio" formControlName="rule_Operation" [value]="rule_Opt.value" [checked]>
-                        {{rule_Opt.display}}
-                    </label>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Rule Options
+                </div>
+                <div class="panel-body">
+                    <!-- Select target field -->
+                    <tgtfld-select formControlName="targetField"></tgtfld-select>
+                    <small [hidden]="ruleForm.controls.targetField.valid" class="text-danger">
+                        Target Field is required
+                    </small>
+                    <hr />
+                    <!-- Select operation -->
+                    <div>
+                        <label>Assignment Options</label>
+                        <div *ngFor="let rule_Opt of rule_Operations">
+                            <label>
+                                <input type="radio" formControlName="rule_Operation" [value]="rule_Opt.value" [checked]>
+                                {{rule_Opt.display}}
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>    
+    </div>  
     <div *ngIf="ruleForm.controls.rule_Operation.value != ''" class="panel panel-default">
         <div class="panel-heading">
             Add / Edit Rule Values
@@ -53,6 +57,9 @@
                 <div class="form-group">
                     <label for="rule_Value">Rule Value</label>
                     <textarea class="form-control textarea-resize" placeholder="Value to set if conditions evaluate to true for a field" formControlName="rule_Value"></textarea>
+                    <small [hidden]="ruleForm.controls.rule_Value.valid" class="text-danger">
+                        Rule value is required
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="alt_Value">Alt Value (optional)</label>

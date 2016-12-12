@@ -47,6 +47,7 @@ import { MapEditComponent } from "./components/map/map-edit.component";
 import { MapListComponent } from "./components/map/map-list.component";
 import { RunMapComponent } from "./components/map/run-map/map-runmap.component";
 import { MapFileSelectComponent } from "./components/map/run-map/map-fileselect.component";
+import { MapOptionsComponent } from "./components/map/run-map/map-options.component";
 import { TransformationEditComponent } from "./components/map/transformation/transformation-edit.component";
 import { ConditionEditComponent } from "./components/map/transformation/condition/condition-edit.component";
 import { RuleEditComponent } from "./components/map/transformation/rule/rule-edit.component";
@@ -87,6 +88,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         MapListComponent,
         RunMapComponent,
         MapFileSelectComponent,
+        MapOptionsComponent,
         TransformationEditComponent,
         ConditionEditComponent,
         RuleEditComponent,

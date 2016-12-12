@@ -1,6 +1,6 @@
-<h2>Select Map and Source Files</h2>
-<hr />
-<div class="container-fluid">
+<div class="container">
+    <h2>Select Map and Source Files</h2>
+    <hr />
     <div class="row">
         <div class="col-md-4">
             <div class="form-group input-container">
@@ -14,7 +14,56 @@
             </div>
         </div>
     </div>
-    <div [hidden]="mapSelect.value ==''">
-        <map-fileselect></map-fileselect>      
-    </div>
+    <form [formGroup]="mapRunForm">
+        <div class="panel panel-default margin-remove-bottom">
+            <div class="panel-heading">
+                Provide Files for each Source
+            </div>
+            <div class="panel-body">
+                <div class="panel-body" *ngIf="filePackageCount > 0">
+                    <div class="row">
+                        <div *ngIf="filePackageCount > 1" class="col-md-1">
+                            Primary
+                        </div>
+                        <div class="col-md-2">
+                            Name
+                        </div>
+                        <div class="col-md-2">
+                            Description
+                        </div>
+                        <div class="col-md-2">
+                            Header Options
+                        </div>
+                        <div class="col-md-1">
+                            Delimiter
+                        </div>
+                        <div class="col-md-4">
+                            Source File Selection
+                        </div>
+                    </div>
+                    <div formArrayName="filePackages">
+                        <div class="row" *ngFor="let filePackage of mapRunForm.controls.filePackages.controls; let i = index;">
+                            <div [formGroupName]="i">
+                                <map-fileselect [group]="mapRunForm.controls.filePackages.controls[i]"
+                                                [filePackageCount]="filePackageCount"
+                                                [sourceName]="filePackages[i].sourceName"
+                                                [sourceDescription]="filePackages[i].sourceDescription"
+                                                [uploader]="uploader"></map-fileselect>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="filePackageCount == 0">
+                    Selected Map contains no Sources to provide files for
+                </div>
+            </div>          
+        </div>
+        <div *ngIf="filePackageCount > 0">
+            <map-options [group]="mapRunForm.controls.options"></map-options>
+            <button type="button" [disabled]="!mapRunForm.valid" class="btn btn-default" (click)="onSubmit(mapRunForm.value)">
+                <span *ngIf="!processingMap"><span class="glyphicon glyphicon-check"></span> Run Mapping</span>
+                <span *ngIf="processingMap"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Processing...</span>
+            </button>
+        </div>        
+    </form>   
 </div>

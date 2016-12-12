@@ -36,7 +36,6 @@ export class DataService {
     Update(action: string, id: number, itemToUpdate: any): Observable<any> {
         return this._http
             .put(this.actionUrl + action + "/" + id, JSON.stringify(itemToUpdate), { headers: this.headers })
-            .map(res => res.json())
             .catch((error: any) => Observable.throw(error.json().error || "Server Error"));
     }
 

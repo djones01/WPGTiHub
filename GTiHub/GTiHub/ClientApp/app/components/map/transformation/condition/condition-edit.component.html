@@ -23,14 +23,14 @@
                 <select class="form-control" formControlName="operation">
                     <option value="" disabled selected>Select Op</option>
                     <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'num' && conditionForm.controls.sourceField.value.datatype != 'currency' && conditionForm.controls.sourceField.value.datatype != 'date'"
-                            *ngFor="let option of dateNumOpts" value="option.value">
+                            *ngFor="let option of dateNumOpts" [value]="option.value">
                         {{option.display}}
                     </option>
                     <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'text' && conditionForm.controls.sourceField.value.datatype != 'url' && conditionForm.controls.sourceField.value.datatype != 'email'"
-                            *ngFor="let option of textOpts" value="option.value">
+                            *ngFor="let option of textOpts" [value]="option.value">
                         {{option.display}}
                     </option>
-                    <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'bool'" *ngFor="let option of boolOpts" value="option.value">
+                    <option [hidden]="conditionForm.controls.sourceField.value.datatype != 'bool'" *ngFor="let option of boolOpts" [value]="option.value">
                         {{option.display}}
                     </option>
                 </select>

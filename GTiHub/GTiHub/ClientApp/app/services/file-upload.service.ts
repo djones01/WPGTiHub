@@ -9,8 +9,7 @@ export class UploadService {
     public progressObserver = new BehaviorSubject(0);
 
     public makeFileRequest(url: string, paramNames: string[], params: string[], files: File[]): Observable<any> {
-        let formData: FormData = new FormData(),
-            xhr: XMLHttpRequest = new XMLHttpRequest();
+        let formData: FormData = new FormData();
 
         for (let i = 0; i < files.length; i++) {
             formData.append("uploads[]", files[i], files[i].name);
@@ -20,7 +19,12 @@ export class UploadService {
             formData.append(paramNames[i], params[i]);
         }
 
-        return this._http.post(url, formData).map(res => res.json())
+        return this._http.post("api/" + url, formData).map(res => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || "Server Error"));
+    }
+
+    public makeFileRequestFd(url: string, formData: FormData): Observable<any> {
+        return this._http.post("api/" + url, formData)
             .catch((error: any) => Observable.throw(error.json().error || "Server Error"));
     }
 

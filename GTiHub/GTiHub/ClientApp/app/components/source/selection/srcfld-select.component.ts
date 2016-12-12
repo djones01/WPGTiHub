@@ -24,7 +24,7 @@ export class SrcFldSelectComponent implements ControlValueAccessor, OnInit {
 
     // Modal Functions
     openSourceSelect(content) {
-        this.modalService.open(content, { size: "lg" })
+        this.modalService.open(content, { size: "lg", backdrop: "static" })
             .result.then((result) => {
                 //User selected source field in modal
                 if (result != "Select SField") {

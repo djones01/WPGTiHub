@@ -21,9 +21,10 @@
                 </div>
             </div>  
         </div>  
+        <button type="button" class="btn btn-default" (click)="addTransform()"><span class="glyphicon glyphicon-plus"></span> Add Transformation</button>
         <hr />
         <div formArrayName="transformations">
-            <div *ngFor="let transformation of mapForm.controls.transformations.controls; let i=index">
+            <div *ngFor="let transformation of mapForm.controls.transformations?.controls; let i=index">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span>Transformation {{i+1}}</span>
@@ -37,11 +38,7 @@
         </div>
         <hr *ngIf="mapForm.controls.transformations.length > 0"/>
         <button type="button" class="btn btn-default" (click)="back()">Back to Overview</button>
-        <button type="button" class="btn btn-default" (click)="initMap()"><span class="glyphicon glyphicon-repeat"></span> Reset Map</button>
-        <button type="button" class="btn btn-default" (click)="addTransform()"><span class="glyphicon glyphicon-plus"></span> Add Transformation</button>
+        <button type="button" class="btn btn-default" (click)="newMap()"><span class="glyphicon glyphicon-repeat"></span> Reset Map</button>      
         <button type="submit" class="btn btn-primary" [disabled]="!mapForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>     
     </form>
-</div>
-<div>
-    {{mapForm.value | json}}
 </div>

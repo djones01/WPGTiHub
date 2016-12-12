@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { IMap } from "./map";
 import { MapService } from "../../services/map.service";
 
@@ -12,14 +11,13 @@ export class MapListComponent implements OnInit {
 
     editMap(map: IMap): void {
         this.mapService.setEditMap(map);
-        this.router.navigate(['/map-edit']);
     }
 
     deleteMap(mapId: number): void {
         this.mapService.deleteMap(mapId);
     }
 
-    constructor(private mapService: MapService, private router: Router) {
+    constructor(private mapService: MapService) {
     }
 
     ngOnInit(): void {

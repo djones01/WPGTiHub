@@ -30,7 +30,7 @@
                     {{source.description}}
                 </div>
                 <div class="col-md-2">
-                    {{source.effective_Date}}
+                    {{source.effective_Date | date}}
                 </div>
                 <div class="col-md-1">
                     <span *ngIf="source.active" class="glyphicon glyphicon-ok"></span>

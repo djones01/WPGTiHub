@@ -75,9 +75,7 @@
 
                 var success = false;
 
-                this._helpers.SetLogFile("test");
-
-                var stopwatch = Stopwatch.StartNew();
+                this._helpers.SetLogFile(form["mapId"]);
 
                 // Get formatted data from the uploaded files
                 var sourceTables = await Task.Run(() => this._helpers.GetSourceTables(form));
@@ -122,8 +120,6 @@
 
                 // Create new memory stream to return
                 bytes = this._helpers.GetTargetBytes(ref targetTables, targetId, outputDelimiter);
-
-                stopwatch.Stop();
 
                 // return result;    
             }

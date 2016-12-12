@@ -1,17 +1,21 @@
 ﻿import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { IMap } from "../components/map/map";
+import { Map, IMap } from "../components/map/map";
 import { DataService } from "./data.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class MapService {
-    public maps: Observable<IMap[]>;
-    private _maps: BehaviorSubject<IMap[]>;
-    public editMap: IMap;
+    private _maps: BehaviorSubject<Map[]> = new BehaviorSubject([]);
+    maps: Observable<Map[]> = this._maps.asObservable();
+    private _editMap: BehaviorSubject<Map> = new BehaviorSubject(this.newMap());
+    editMap: Observable<Map> = this._editMap.asObservable();
+
+    editing: boolean = false;
 
     private dataStore: {
-        maps: IMap[]
+        maps: Map[]
     };
 
     loadall() {
@@ -22,33 +26,44 @@ export class MapService {
             }, error => console.log(error), () => { });
     }
 
-    setEditMap(editMap: IMap) {
-        this.editMap = editMap;
+    setEditMap(editMap: Map){ 
         // Load Transforms for the map being edited
         this._dataService.Get('Maps/GetMapTransforms', editMap.mapId)
-            .subscribe(transformations => this.editMap.transformations = transformations,
+            .subscribe(transformations => {
+                editMap.transformations = transformations;
+                this.router.navigate(['/map-edit']);
+            },
             error => console.log(error));
-        
+        this._editMap.next(editMap);
+        this.editing = true;
     }
 
-    clearEditMap() {
-        this.editMap = { description: '', effective_Date: new Date(), active: true, transformations: [] };
+    initEditMap() {
+        this._editMap.next(this.newMap());
     }
 
-    add(map: IMap) {
+    newMap() {
+        return new Map('', new Date(), true, [])
+    }
+
+    add(map: Map) {
         this._dataService.Add('Maps', map).subscribe(map => {
             this.dataStore.maps.push(map);
             this._maps.next(this.dataStore.maps);
         }, error => console.log(error));
     }
 
-    update(map: IMap) {
-        this._dataService.Update('Maps', map.mapId, map).subscribe((map: IMap) => {
+    update(map: Map) {
+        let editId = this._editMap.getValue().mapId;
+        map.mapId = editId;
+        this._dataService.Update('Maps', editId, map).subscribe(() => {
             this.dataStore.maps.forEach((m, i) => {
                 if (m.mapId === map.mapId) { this.dataStore.maps[i] = map; }
             });
             this._maps.next(this.dataStore.maps);
         }, error => console.log(error));
+        this.editing = false;
+        this.initEditMap();
     }
 
     deleteMap(mapId: number) {
@@ -60,12 +75,9 @@ export class MapService {
         }, error => console.log(error));
     }
 
-    constructor(private _dataService: DataService) {
+    constructor(private _dataService: DataService, private router: Router) {
         this.dataStore = { maps: [] };
-        this._maps = <BehaviorSubject<IMap[]>>new BehaviorSubject([]);
-        this.maps = this._maps.asObservable();
-        this.clearEditMap();
-        // Get the list of maps
+        this.initEditMap();
         this.loadall();
     }
 }

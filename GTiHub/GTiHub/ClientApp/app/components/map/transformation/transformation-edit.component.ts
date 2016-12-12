@@ -1,6 +1,7 @@
 ﻿import { Component, Input, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { MapService } from "../../../services/map.service";
+import { Map } from "../map";
 
 
 @Component({
@@ -13,13 +14,15 @@ export class TransformationEditComponent implements OnInit {
     @Input('i')
     i: number;
 
+    editMap: Map;
+
     public seqNumCount: number = 1;
 
     // Init new condition
     initCondition() {
         return this._fb.group({
             seqNum: [this.seqNumCount++],
-            chain_Operation: ['',Validators.required],
+            chain_Operation: [''],
             left_Paren: [''],
             operation: ['', Validators.required],
             cond_Value: ['', Validators.required],
@@ -27,7 +30,6 @@ export class TransformationEditComponent implements OnInit {
             sourceField: [null, Validators.required]
         });
     }
-
 
     addCondition() {
         const control = <FormArray>this.transForm.controls['conditions'];
@@ -49,6 +51,16 @@ export class TransformationEditComponent implements OnInit {
     constructor(private _fb: FormBuilder, private mapService: MapService) {}
 
     ngOnInit(): void {
-        
+        this.mapService.editMap.subscribe(editMap => {
+            this.editMap = editMap;
+            if (this.mapService.editing) {
+                if (this.editMap.transformations[this.i].conditions != null) {
+                    this.editMap.transformations[this.i].conditions.forEach((condition) => {
+                        this.addCondition();
+                    });
+                }
+            }        
+        });
+
     }
 }

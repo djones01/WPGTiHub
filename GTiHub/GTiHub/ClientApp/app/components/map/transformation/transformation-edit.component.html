@@ -11,7 +11,7 @@
         </div>     
     </div>
     <hr />
-    <rule-edit [group]="transForm.controls.rule"></rule-edit>
+    <rule-edit [group]="transForm.controls.rule" [i]="i"></rule-edit>
     <hr />
     <div formArrayName="conditions">
         <div class="panel panel-default" *ngIf="transForm.controls.conditions.length > 0">

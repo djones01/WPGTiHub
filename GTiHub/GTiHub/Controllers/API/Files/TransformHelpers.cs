@@ -194,7 +194,7 @@
                 foreach (var transform in transformations)
                 {
                     // If the user has set "Apply Conditions" to true, init tokens
-                    if (applyConditions)
+                    if (applyConditions && transform.Conditions.Count > 0)
                     {
                         expr = CondEvalHelpers.ExprFromConditions(
                             transform.Conditions.OrderBy(x => x.SeqNum).ToList(),
@@ -222,7 +222,7 @@
 
                                     // Loop through all lines in the source array corresponding to the rule field's sourcefield and prepend, append, and format as needed, then add to output table
                                     for (var i = 0; i < lineCount; i++)
-                                        if (applyConditions)
+                                        if (applyConditions && transform.Conditions.Count > 0)
                                         {
                                             // Get parameters from all of the source tables
                                             expression = CondEvalHelpers.GetExpressionParams(

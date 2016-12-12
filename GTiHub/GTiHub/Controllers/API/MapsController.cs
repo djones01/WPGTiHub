@@ -36,7 +36,7 @@
 
         // GET: api/Maps
         [HttpGet]
-        public IEnumerable<Map> Get()
+        public List<Map> Get()
         {
             return this._dbContext.Maps.ToList();
         }
@@ -53,19 +53,20 @@
 
         // GET api/Maps/GetMapTransforms/5
         [HttpGet("GetMapTransforms/{id}")]
-        public IEnumerable<Transformation> GetMapTransforms(int id)
+        public List<Transformation> GetMapTransforms(int id)
         {
-            return
-                this._dbContext.Transformations.Where(x => x.MapId == id)
+            var transforms = this._dbContext.Transformations.Where(x => x.MapId == id)
                     .Include(transform => transform.Rule)
                         .ThenInclude(rule => rule.RuleSourceFields)
+                    .Include(transform => transform.Rule.TargetField)
                     .Include(transform => transform.Conditions)
                     .ToList();
+            return transforms;
         }
 
         // GET api/Maps/MapSources/5
         [HttpGet("MapSources/{id}")]
-        public IEnumerable<Source> MapSources(int id)
+        public List<Source> MapSources(int id)
         {
             var mapTransforms =
                 this._dbContext.Transformations.Where(x => x.MapId == id)
@@ -135,13 +136,19 @@
 
             var updatedMap = this._dbContext.Maps.FirstOrDefault(x => x.MapId == id);
 
-            if (updatedMap == null) return this.NotFound();
+            if (updatedMap == null) return this.NotFound();   
 
             updatedMap.Description = map.Description;
             updatedMap.Effective_Date = map.Effective_Date;
             updatedMap.Active = map.Active;
             updatedMap.ProjectMaps = map.ProjectMaps;
             updatedMap.Transformations = map.Transformations;
+
+            //Clear out the targetfields from the map - workaround
+            foreach (var transformation in updatedMap.Transformations)
+            {
+                transformation.Rule.TargetField = null;
+            }
 
             this._dbContext.SaveChanges();
 

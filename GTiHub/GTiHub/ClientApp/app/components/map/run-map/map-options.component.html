@@ -1,0 +1,65 @@
+﻿<form [formGroup]="optForm">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            File Generation Options
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label for="evalConditions"><input type="checkbox" name="evalConditions" formControlName="evalConditions" />Evaluate Conditions</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="checkTypes"><input type="checkbox" name="checkTypes" formControlName="checkTypes" />Check Cell Content types</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Generated File Name / Extension</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="File Name" formControlName="fileName" />
+                            <!--Fix for bootstrap pushing select to new line-->
+                            <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                            <select class="form-control" #fileExt formControlName="fileExt">
+                                <option value="" disabled selected>Ext</option>
+                                <option value="csv">.csv</option>
+                                <option value="txt">.txt</option>
+                                <option value="dat">.dat</option>
+                            </select>                    
+                        </div>
+                        <small *ngIf="!optForm.controls.fileExt.valid && !optForm.controls.fileName.valid" class="text-danger">
+                            Output File Name and Type required
+                        </small>
+                        <small *ngIf="!optForm.controls.fileName.valid && optForm.controls.fileExt.valid" class="text-danger">
+                            Output File Name is required
+                        </small>
+                        <small *ngIf="!optForm.controls.fileExt.valid && optForm.controls.fileName.valid" class="text-danger">
+                            Output File Type is required
+                        </small>
+                    </div>
+                    <div *ngIf="fileExt.value == 'txt' || fileExt.value == 'dat'" class="form-group">
+                        <label>Output File Delimiter</label>
+                        <input type="text" class="form-control threechar" maxlength="1" size="1" formControlName="outputDelimiter" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Log File Name (optional)</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon">.txt</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Logging Type</label>
+                        <select class="form-control">
+                            <option value="full">Full (Normal Actions + Errors)</option>
+                            <option value="normal">Normal Actions Only</option>
+                            <option value="errors">Errors Only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

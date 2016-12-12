@@ -61,7 +61,7 @@ export class SrcFldEditComponent implements OnInit {
     ];
 
     extractFile() {
-        this.uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
+        this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
             .subscribe((sourceFields: Object[]) => {
                 if (sourceFields) {
                     const control = <FormArray>this.srcFldsForm.controls['sourceFields'];

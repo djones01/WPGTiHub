@@ -61,7 +61,7 @@ export class TgtFldEditComponent implements OnInit{
     ];
 
     extractFile() {
-        this.uploadService.makeFileRequest("api/File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
+        this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
             .subscribe((targetFields: Object[]) => {
                 if (targetFields) {
                     const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
