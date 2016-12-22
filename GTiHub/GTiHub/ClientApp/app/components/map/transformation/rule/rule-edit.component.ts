@@ -1,8 +1,9 @@
 ﻿import { Component, Input, OnInit } from "@angular/core";
-import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormArray } from '@angular/forms';
 import { TgtFldSelectComponent } from "../../../target/selection/tgtfld-select.component";
 import { Map } from "../../map";
-import { MapService } from "../../../../services/map.service";
+import { MapService } from "../../../../services/map/map.service";
+import { MapBuilderService } from "../../../../services/map/map-builder.service";
 
 @Component({
     selector: "rule-edit",
@@ -14,25 +15,11 @@ export class RuleEditComponent implements OnInit {
     @Input('i')
     i: number;
 
-    public seqNumCount: number = 1;
-
-    editMap: Map;
-
     rule_Operations = [
         { value: "sfield", display: "Source Field(s)" },
         { value: "assign", display: "Automatic / System Generated" },
         { value: "text", display: "Text" }
     ];
-
-    initRuleSrcFld() {
-        return this._fb.group({
-            seqNum: [this.seqNumCount++],
-            append: [''],
-            prepend: [''],
-            custom_Format: [''],
-            sourceField: [null, Validators.required]
-        });
-    }
 
     //Add and remove validation based on selection
     subscribeRuleOpChange() {
@@ -106,7 +93,7 @@ export class RuleEditComponent implements OnInit {
 
     addRuleSrcFld() {
         const control = <FormArray>this.ruleForm.controls['ruleSourceFields'];
-        control.push(this.initRuleSrcFld());
+        control.push(this.mapBuilderService.buildRuleSrcFld());
     }
 
     removeRuleSrcFld(i: number) {
@@ -118,23 +105,13 @@ export class RuleEditComponent implements OnInit {
             let newVal = group.controls['seqNum'].value - 1;
             group.controls['seqNum'].setValue(newVal);
         }    
-        this.seqNumCount--;
+        this.mapBuilderService.ruleSrcFldSeqNum--;
         control.removeAt(i);
     }
 
-    constructor(private _fb: FormBuilder, private mapService: MapService) { }
+    constructor(private mapService: MapService, private mapBuilderService: MapBuilderService) { }
 
     ngOnInit() {
         this.subscribeRuleOpChange();
-        this.mapService.editMap.subscribe(editMap => {
-            this.editMap = editMap;
-            if (this.mapService.editing) {
-                if (this.editMap.transformations[this.i].rule.ruleSourceFields != null) {
-                    this.editMap.transformations[this.i].rule.ruleSourceFields.forEach(rsf => {
-                        this.addRuleSrcFld();
-                    });
-                }
-            }          
-        });
     }
 }

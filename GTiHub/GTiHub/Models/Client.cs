@@ -10,19 +10,13 @@
 
     public class Client : BaseEntity
     {
-        public Client()
-        {
-            this.Projects = new List<Project>();
-        }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientId { get; set; }
-
         public string Industry { get; set; }
-
         public string Name { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public  ICollection<Project> Projects { get; set; }
+        public  ICollection<User> Users { get; set; }
     }
 }

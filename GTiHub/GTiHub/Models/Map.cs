@@ -11,24 +11,14 @@
 
     public class Map : BaseEntity
     {
-        public Map()
-        {
-            this.ProjectMaps = new List<ProjectMap>();
-            this.Transformations = new List<Transformation>();
-        }
-
-        public bool Active { get; set; }
-
-        public string Description { get; set; }
-
-        public DateTime Effective_Date { get; set; }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MapId { get; set; }
+        public bool Active { get; set; }
+        public string Description { get; set; }
+        public DateTime Effective_Date { get; set; }
 
-        public ICollection<ProjectMap> ProjectMaps { get; set; }
-
-        public ICollection<Transformation> Transformations { get; set; }
+        public  ICollection<ProjectMap> ProjectMaps { get; set; }
+        public  ICollection<Transformation> Transformations { get; set; }
     }
 }

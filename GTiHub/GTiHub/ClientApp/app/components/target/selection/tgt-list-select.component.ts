@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ITarget } from "../target";
-import { TFieldSelectService } from "../../../services/tgtfld-select.service";
+import { TFieldSelectService } from "../../../services/target/tgtfld-select.service";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({

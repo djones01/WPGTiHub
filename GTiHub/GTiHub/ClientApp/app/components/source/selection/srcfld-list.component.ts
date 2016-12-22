@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { ISourceField } from "../source";
-import { SFieldSelectService } from "../../../services/srcfld-select.service";
+import { SFieldSelectService } from "../../../services/source/srcfld-select.service";
 
 @Component({
     selector: "sourcefield-list",

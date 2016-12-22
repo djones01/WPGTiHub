@@ -1,0 +1,26 @@
+﻿<div class="container-fluid">
+    <h2>Add / Edit Users</h2>
+    <hr />
+    <form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit(userForm)">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
+        </div>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Title" formControlName="title">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" [textMask]="{mask: phoneMask}" class="form-control" id="phone" placeholder="(111) 111-1111" formControlName="phone">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="user@example.com" formControlName="email">
+        </div>
+    </form>
+</div>

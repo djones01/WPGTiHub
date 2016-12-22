@@ -4,14 +4,15 @@ import { Response } from "@angular/http";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
 import { MapFileSelectComponent } from "./map-fileselect.component";
 import { MapOptionsComponent } from "./map-options.component";
-import { RunMapService } from "../../../services/map-runmap.service";
-import { MapService } from "../../../services/map.service";
+import { RunMapService } from "../../../services/map/map-runmap.service";
+import { MapService } from "../../../services/map/map.service";
 import { IFilePackage } from "./filepackage";
 import { IMap } from "../map";
 
 @Component({
     selector: "map-runmap",
     template: require("./map-runmap.component.html"),
+    styles: [require("./map-runmap.component.css")],
     providers: [RunMapService]
 })
 export class RunMapComponent implements OnInit {
@@ -20,6 +21,8 @@ export class RunMapComponent implements OnInit {
     filePackages: IFilePackage[];
 
     uploader: FileUploader;
+
+    processingMap: boolean = false;
 
     //Form for the file selection controls and options
     mapRunForm: FormGroup;
@@ -48,6 +51,19 @@ export class RunMapComponent implements OnInit {
                 control.at(i).patchValue(filePackages[i]);
             }
             this.filePackageCount = filePackages.length;
+        }
+    }
+
+    primarySourceChanged(event) {
+        const fileForms = <FormArray>this.mapRunForm.controls['filePackages'];
+        for (let i = 0; i < fileForms.length; i++) {
+            let fileForm = <FormGroup>fileForms.at(i);
+            let fpSid = (<FormGroup>fileForm.controls['sourceId']).value
+            if (fpSid != event.value) {
+                fileForm.patchValue({
+                    "isPrimarySource": false
+                });
+            }
         }
     }
 
@@ -103,7 +119,8 @@ export class RunMapComponent implements OnInit {
         let mimetype = this.runMapService.getMimeType(options['fileExt']);
         let fileName = options["fileName"] + '.' + options['fileExt'];
 
-        xhr.onreadystatechange = function(e) {
+        var self = this;
+        xhr.onreadystatechange = function (e) {
             if (xhr.readyState == 4) {
                 // Create a new Blob object using the response data of the onload object
                 const blob = new Blob([this.response], { type: mimetype });
@@ -119,6 +136,7 @@ export class RunMapComponent implements OnInit {
                 //release the reference to the file by revoking the Object URL
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
+                self.processingMap = false;
             } else {
                 //deal with error state here
             }
@@ -126,6 +144,7 @@ export class RunMapComponent implements OnInit {
 
         xhr.open("POST", "api/File/RunMapping", true);
         xhr.send(formData);
+        this.processingMap = true;
     } 
 
     constructor(private _fb: FormBuilder, private runMapService: RunMapService, private mapService: MapService) {

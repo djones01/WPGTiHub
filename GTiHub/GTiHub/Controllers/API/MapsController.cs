@@ -58,6 +58,7 @@
             var transforms = this._dbContext.Transformations.Where(x => x.MapId == id)
                     .Include(transform => transform.Rule)
                         .ThenInclude(rule => rule.RuleSourceFields)
+                            .ThenInclude(ruleSourceField => ruleSourceField.SourceField)
                     .Include(transform => transform.Rule.TargetField)
                     .Include(transform => transform.Conditions)
                     .ToList();

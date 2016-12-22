@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { ITargetField } from "../target";
-import { TFieldSelectService } from "../../../services/tgtfld-select.service";
+import { TFieldSelectService } from "../../../services/target/tgtfld-select.service";
 
 @Component({
     selector: "targetfield-list",

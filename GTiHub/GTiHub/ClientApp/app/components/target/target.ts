@@ -1,9 +1,9 @@
 ﻿export interface ITarget {
     name: string;
     description: string;
-    effective_Date: Date;
+    effective_Date: string;
     active: boolean;
-    targetFields: ITargetField[];
+    targetFields?: ITargetField[];
     targetId?: number;
 }
 
@@ -12,6 +12,24 @@ export interface ITargetField {
     datatype: string;
     active: boolean;
     seqNum: number;
-    targetFieldId?: number;
-    targetId?: number;
+}
+
+export class Target implements ITarget {
+    constructor(
+        public name: string,
+        public description: string,
+        public effective_Date: string,
+        public active: boolean,
+        public seqNum: number,
+        public targetFields?: TargetField[],
+        public targetId?: number
+    ) { }
+}
+
+export class TargetField implements ITargetField {
+    constructor(
+        public name: string,
+        public datatype: string,
+        public active: boolean,
+        public seqNum: number) { }
 }

@@ -2,7 +2,7 @@
 import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { SrcFldListComponent } from "./srcfld-list.component";
 import { SrcListSelectComponent } from "./src-list-select.component";
-import { SFieldSelectService } from "../../../services/srcfld-select.service";
+import { SFieldSelectService } from "../../../services/source/srcfld-select.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs/Subscription";
 

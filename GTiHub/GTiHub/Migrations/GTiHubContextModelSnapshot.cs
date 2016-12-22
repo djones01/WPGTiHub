@@ -411,6 +411,8 @@ namespace GTiHub.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClientId");
+
                     b.Property<string>("Created_By");
 
                     b.Property<DateTime?>("Creation_Date");
@@ -434,6 +436,8 @@ namespace GTiHub.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Users");
                 });
@@ -578,6 +582,14 @@ namespace GTiHub.Migrations
                     b.HasOne("GTiHub.Models.EntityModel.Map", "Map")
                         .WithMany("Transformations")
                         .HasForeignKey("MapId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GTiHub.Models.EntityModel.User", b =>
+                {
+                    b.HasOne("GTiHub.Models.EntityModel.Client", "Affiliation")
+                        .WithMany("Users")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

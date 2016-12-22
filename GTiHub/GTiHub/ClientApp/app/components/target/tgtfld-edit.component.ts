@@ -1,8 +1,8 @@
 ﻿import { Component, ViewChild, Input, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
-import { UploadService } from "../../services/file-upload.service";
+import { UploadService } from "../../services/data/file-upload.service";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
-import { TargetService } from "../../services/target.service";
+import { TargetService } from "../../services/target/target.service";
 
 @Component({
     selector: "tgtfld-edit",

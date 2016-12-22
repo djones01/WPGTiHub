@@ -37,8 +37,8 @@
                     <span *ngIf="!source.active" class="glyphicon glyphicon-remove"></span>
                 </div>
                 <div class="col-md-3 text-right">
-                    <button type="button" class="btn btn-default" (click)="editSource(source)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button type="button" class="btn btn-default" (click)="deleteSource(source.sourceId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                    <button type="button" class="btn btn-default" (click)="edit(source)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button type="button" class="btn btn-default" (click)="delete(source.sourceId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                 </div>
             </div>
         </li>

@@ -12,11 +12,13 @@
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse'>
             <ul class='nav navbar-nav'>
+                <!--
                 <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/home']">
                         <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
+                    -->
                 <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/proj-overview']">
                         <span class='glyphicon glyphicon-dashboard'></span> Project
@@ -28,10 +30,17 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/user-edit']">
+                        User
+                    </a>
+                </li>
+                <!--
+                <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/client']">
                         <span class='glyphicon glyphicon-cog'></span> Clients
                     </a>
                 </li>
+                    -->
             </ul>
         </div>
     </div>

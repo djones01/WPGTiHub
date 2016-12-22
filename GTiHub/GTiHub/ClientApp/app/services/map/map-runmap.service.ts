@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { DataService } from "./data.service";
-import { UploadService } from "./file-upload.service";
-import { IFilePackage } from "../components/map/run-map/filepackage";
-import { IMap } from "../components/map/map";
+import { DataService } from "../data/data.service";
+import { UploadService } from "../data/file-upload.service";
+import { IFilePackage } from "../../components/map/run-map/filepackage";
+import { IMap } from "../../components/map/map";
 
 @Injectable()
 export class RunMapService {

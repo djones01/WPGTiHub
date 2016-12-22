@@ -1,33 +1,25 @@
 ﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { IClient } from "./client";
-import { ClientService } from "../../services/client.service";
+import { Client } from "./client";
+import { ClientService } from "../../services/client/client.service";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: "client-list",
     template: require('./client-list.component.html')
 })
-export class ClientListComponent implements OnInit, OnDestroy {
-    private clients: IClient[] = [];
+export class ClientListComponent implements OnInit {
+    private clients: Client[] = [];
 
-    //Subscriptions
-    clientsSub: Subscription;
-
-    editClient(client: IClient) {
-        this._clientService.editClient(client);
+    edit(client: Client) {
+        this.clientService.setEditClient(client);
     }
 
-    deleteClient(client: IClient) {
-        this._clientService.deleteClient(client);
+    delete(client: Client) {
+        this.clientService.delete(client.clientId);
     }
 
-    constructor(private _clientService: ClientService) { }
+    constructor(private clientService: ClientService) { }
     ngOnInit() {
-        this.clientsSub = this._clientService.getClientsList().subscribe((clients: IClient[]) => {
-            this.clients = clients;
-        });
-    }
-    ngOnDestroy() {
-        this.clientsSub.unsubscribe();
+        this.clientService.clients.subscribe(clients => this.clients = clients);
     }
 }

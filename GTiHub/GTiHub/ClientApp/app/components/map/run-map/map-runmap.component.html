@@ -48,7 +48,7 @@
                                                 [filePackageCount]="filePackageCount"
                                                 [sourceName]="filePackages[i].sourceName"
                                                 [sourceDescription]="filePackages[i].sourceDescription"
-                                                [uploader]="uploader"></map-fileselect>
+                                                [uploader]="uploader" (primarySourceChanged)="primarySourceChanged($event);"></map-fileselect>
                             </div>
                         </div>
                     </div>

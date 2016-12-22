@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { IMap } from "./map";
-import { MapService } from "../../services/map.service";
+import { MapService } from "../../services/map/map.service";
 
 @Component({
     selector: "map-list",

@@ -2,8 +2,8 @@
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SrcFldEditComponent } from "./srcfld-edit.component";
-import { SourceService } from "../../services/source.service";
-import { ISource } from "./source";
+import { SourceService } from "../../services/source/source.service";
+import { Source } from "./source";
 import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
 
 @Component({
@@ -18,7 +18,7 @@ export class SrcEditComponent implements OnInit {
     @ViewChild(SrcFldEditComponent)
     private srcFldEditComponent: SrcFldEditComponent;
 
-    onSubmit(source: ISource) {
+    onSubmit(source: Source) {
         if (this.editing) {
             this.sourceService.update(source);
         }
@@ -51,10 +51,10 @@ export class SrcEditComponent implements OnInit {
 
     ngOnInit() {
         this.initSrcForm();
-        this.sourceService.editSource.subscribe(editSource => {
-            if (editSource) {
+        this.sourceService.editSource.subscribe(edit => {
+            if (edit) {
                 this.editing = true;
-                this.srcForm.patchValue(editSource);
+                this.srcForm.patchValue(edit);
             }
         });
 

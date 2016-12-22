@@ -38,7 +38,7 @@
         </div>
         <hr *ngIf="mapForm.controls.transformations.length > 0"/>
         <button type="button" class="btn btn-default" (click)="back()">Back to Overview</button>
-        <button type="button" class="btn btn-default" (click)="newMap()"><span class="glyphicon glyphicon-repeat"></span> Reset Map</button>      
+        <button type="button" class="btn btn-default" (click)="initMapForm()"><span class="glyphicon glyphicon-repeat"></span> Reset Map</button>      
         <button type="submit" class="btn btn-primary" [disabled]="!mapForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>     
     </form>
 </div>

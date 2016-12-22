@@ -1,5 +1,5 @@
-﻿import { ISourceField } from "../source/source";
-import { ITargetField } from "../target/target";
+﻿import { SourceField } from "../source/source";
+import { TargetField } from "../target/target";
 
 //Interfaces
 export interface IMap {
@@ -23,14 +23,14 @@ export interface ICondition {
     operation: string;
     cond_Value: string;
     right_Paren?: string;
-    sourceField?: ISourceField;
+    sourceField?: SourceField;
 }
 
 export interface IRule {
     rule_Value?: string;
     alt_Value?: string;
     rule_Operation: string;
-    targetField: ITargetField;
+    targetField: TargetField;
     ruleSourceFields?: IRuleSourceField[];
 }
 
@@ -39,7 +39,7 @@ export interface IRuleSourceField {
     append?: string;
     prepend?: string;
     custom_Format?: string;
-    sourceField: ISourceField;
+    sourceField: SourceField;
 }
 
 //Classes
@@ -68,14 +68,14 @@ export class Condition implements ICondition {
         public cond_Value: string,
         public left_Paren?: string,
         public right_Paren?: string,
-        public sourceField?: ISourceField
+        public sourceField?: SourceField
     ) { }
 }
 
 export class Rule implements IRule {
     constructor(     
         public rule_Operation: string,
-        public targetField: ITargetField,
+        public targetField: TargetField,
         public ruleSourceFields?: RuleSourceField[],
         public rule_Value?: string,
         public alt_Value?: string,
@@ -85,7 +85,7 @@ export class Rule implements IRule {
 export class RuleSourceField implements IRuleSourceField {
     constructor(
         public seqNum: number,
-        public sourceField: ISourceField,
+        public sourceField: SourceField,
         public append?: string,
         public prepend?: string,
         public custom_Format?: string

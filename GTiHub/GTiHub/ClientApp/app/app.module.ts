@@ -6,13 +6,17 @@ import { UniversalModule } from "angular2-universal";
 import { Ng2PaginationModule } from "ng2-pagination";
 import { FileUploadModule  } from "ng2-file-upload";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { TextMaskModule } from 'angular2-text-mask';
 
 // service imports
-import { DataService } from "./services/data.service";
-import { UploadService } from "./services/file-upload.service";
-import { MapService } from "./services/map.service";
-import { TargetService } from "./services/target.service";
-import { SourceService } from "./services/source.service";
+import { ClientService } from "./services/client/client.service";
+import { DataService } from "./services/data/data.service";
+import { MapService } from "./services/map/map.service";
+import { SourceService } from "./services/source/source.service";
+import { TargetService } from "./services/target/target.service";
+import { UploadService } from "./services/data/file-upload.service";
+import { UserService } from "./services/user/user.service";
+
 
 // component imports
 import { AppComponent } from "./components/app/app.component";
@@ -20,7 +24,7 @@ import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { HomeComponent } from "./components/home/home.component";
 
 // client
-import { ClientComponent } from "./components/client/client.component";
+import { ClientEditComponent } from "./components/client/client-edit.component";
 import { ClientListComponent } from "./components/client/client-list.component";
 
 // source
@@ -57,17 +61,24 @@ import { DateFormatComponent } from "./components/map/transformation/rule/date-f
 
 // project
 import { ProjOverviewComponent } from "./components/project/proj-overview.component";
+import { ProjectEditComponent } from "./components/project/project-edit.component";
+
+// ui elements
+import { DualListComponent } from "./components/ui/dual-listbox.component";
+
+// user 
+import { UserEditComponent } from "./components/user/user-edit.component";
 
 // pipes imports
 import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
 
 @NgModule({
-    bootstrap: [ AppComponent ],
+    bootstrap: [AppComponent],
     declarations: [
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        ClientComponent,
+        ClientEditComponent,
         ClientListComponent,
         SrcComponent,
         SrcEditComponent,
@@ -94,30 +105,44 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         RuleEditComponent,
         RuleSrcFldEditComponent,
         ProjOverviewComponent,
+        ProjectEditComponent,
+        UserEditComponent,
         FieldFormatComponent,
         DateFormatComponent,
+        DualListComponent,
         ExtractFileNamePipe
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         FormsModule,
         ReactiveFormsModule,
+        TextMaskModule,
         Ng2PaginationModule,
         NgbModalModule.forRoot(),
         FileUploadModule,
         RouterModule.forRoot([
-            { path: "", redirectTo: "home", pathMatch: "full" },
-            { path: "home", component: HomeComponent },
-            { path: "client", component: ClientComponent },
+            { path: "", redirectTo: "proj-overview", pathMatch: "full" },
+            { path: "home", component: ProjOverviewComponent },
+            { path: "client", component: ClientEditComponent },
             { path: "src-edit", component: SrcEditComponent },
             { path: "tgt-edit", component: TgtEditComponent },
             { path: "map-edit", component: MapEditComponent },
+            { path: "project-edit", component: ProjectEditComponent }, 
+            { path: "user-edit", component: UserEditComponent }, 
             { path: "proj-overview", component: ProjOverviewComponent },
             { path: "run-map", component: RunMapComponent },
-            { path: "**", redirectTo: "home" }
+            { path: "**", redirectTo: "proj-overview" }
         ])
     ],
-    providers: [DataService, UploadService, MapService, TargetService, SourceService]
+    providers: [
+        DataService,
+        UploadService,
+        MapService,
+        TargetService,
+        SourceService,
+        ClientService,
+        UserService
+    ]
 })
 export class AppModule {
 }

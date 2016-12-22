@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ISource } from "../source";
-import { SFieldSelectService } from "../../../services/srcfld-select.service";
+import { SFieldSelectService } from "../../../services/source/srcfld-select.service";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({

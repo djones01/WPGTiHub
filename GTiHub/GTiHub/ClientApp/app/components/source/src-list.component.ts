@@ -1,22 +1,22 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ISource } from "./source";
-import { SourceService } from "../../services/source.service";
+import { Source } from "./source";
+import { SourceService } from "../../services/source/source.service";
 
 @Component({
     selector: "src-list",
     template: require("./src-list.component.html")
 })
 export class SrcListComponent implements OnInit {
-    sources: ISource[];
+    sources: Source[];
 
-    editSource(source: ISource): void {
+    edit(source: Source): void {
         this.sourceService.setEditSource(source);
         this.router.navigate(['/src-edit']);
     }
 
-    deleteSource(sourceId: number): void {
-        this.sourceService.deleteSource(sourceId);
+    delete(sourceId: number): void {
+        this.sourceService.delete(sourceId);
     }
 
     constructor(private sourceService: SourceService, private router: Router) {

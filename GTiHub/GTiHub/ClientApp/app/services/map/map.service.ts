@@ -1,8 +1,8 @@
 ﻿import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { Map, IMap } from "../components/map/map";
-import { DataService } from "./data.service";
+import { Map, IMap } from "../../components/map/map";
+import { DataService } from "../data/data.service";
 import { Router } from "@angular/router";
 
 @Injectable()
@@ -74,6 +74,8 @@ export class MapService {
             this._maps.next(this.dataStore.maps);
         }, error => console.log(error));
     }
+
+
 
     constructor(private _dataService: DataService, private router: Router) {
         this.dataStore = { maps: [] };

@@ -2,8 +2,8 @@
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TgtFldEditComponent } from "./tgtfld-edit.component";
-import { TargetService } from "../../services/target.service";
-import { ITarget } from "./target";
+import { TargetService } from "../../services/target/target.service";
+import { Target } from "./target";
 import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
 
 @Component({
@@ -18,7 +18,7 @@ export class TgtEditComponent implements OnInit {
     @ViewChild(TgtFldEditComponent)
     private tgtFldEditComponent: TgtFldEditComponent;
 
-    onSubmit(target: ITarget) {
+    onSubmit(target: Target) {
         if (this.editing) {
             this.targetService.update(target);
         }

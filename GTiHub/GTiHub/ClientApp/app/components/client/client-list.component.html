@@ -21,8 +21,8 @@
                 <div class="col-md-2">{{client.modified_By}}</div>
                 <div class="col-md-1">{{client.date_Modified | date: 'MM/dd/yyyy'}}</div>
                 <div class="col-md-2">
-                    <button class="btn btn-default" (click)="editClient(client)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button class="btn btn-default" (click)="deleteClient(client)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                    <button class="btn btn-default" (click)="edit(client)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button class="btn btn-default" (click)="delete(client.clientId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                 </div>
             </div>
         </li>

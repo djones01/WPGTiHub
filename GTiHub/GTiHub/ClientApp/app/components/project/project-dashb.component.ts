@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { DataService } from "../../services/data.service";
+import { ProjectService } from "../../services/project/project.service";
 
 @Component({
     selector: "project-dashb",
@@ -8,14 +8,10 @@ import { DataService } from "../../services/data.service";
 export class ProjectDashboardComponent implements OnInit {
     projects: Object[] = [];
 
-    constructor(private _dataService: DataService) {
-    }
-
-    getProjects(): void {
-        this._dataService.GetAll("Projects").subscribe(projects => this.projects = projects);
+    constructor(private projectService: ProjectService) {
     }
 
     ngOnInit(): void {
-        this.getProjects();
+        this.projectService.projects.subscribe(projects => this.projects = projects);
     }
 }

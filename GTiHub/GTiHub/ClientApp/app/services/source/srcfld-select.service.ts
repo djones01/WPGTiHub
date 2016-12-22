@@ -1,21 +1,21 @@
 ﻿import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { ISource, ISourceField } from "../components/source/source";
+import { Source, SourceField } from "../../components/source/source";
 import { SourceService } from "./source.service";
 
 @Injectable()
 export class SFieldSelectService {
-    sources: Observable<ISource[]>;
-    private _sources: BehaviorSubject<ISource[]>;
-    filteredSrcFlds: Observable<ISourceField[]>;
-    private _filteredSrcFlds: BehaviorSubject<ISourceField[]>;
+    sources: Observable<Source[]>;
+    private _sources: BehaviorSubject<Source[]>;
+    filteredSrcFlds: Observable<SourceField[]>;
+    private _filteredSrcFlds: BehaviorSubject<SourceField[]>;
 
     private dataStore: {
-        sources: ISource[],
-        selectedSource: ISource,
-        filteredSrcFlds: ISourceField[]
-        selectedSrcFld: ISourceField
+        sources: Source[],
+        selectedSource: Source,
+        filteredSrcFlds: SourceField[]
+        selectedSrcFld: SourceField
     };
 
     filterSrcFlds(sourceId: number) {
@@ -29,8 +29,8 @@ export class SFieldSelectService {
     constructor(private sourceService: SourceService) {
         this.dataStore = { sources: [], selectedSource: null, filteredSrcFlds: [], selectedSrcFld: null };
 
-        this._sources = <BehaviorSubject<ISource[]>>new BehaviorSubject([]);
-        this._filteredSrcFlds = <BehaviorSubject<ISourceField[]>>new BehaviorSubject([]);
+        this._sources = <BehaviorSubject<Source[]>>new BehaviorSubject([]);
+        this._filteredSrcFlds = <BehaviorSubject<SourceField[]>>new BehaviorSubject([]);
 
         this.sources = this._sources.asObservable();
         this.filteredSrcFlds = this._filteredSrcFlds.asObservable();

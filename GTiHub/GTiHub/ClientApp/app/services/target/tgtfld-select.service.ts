@@ -1,21 +1,21 @@
 ﻿import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { ITarget, ITargetField } from "../components/target/target";
+import { Target, TargetField } from "../../components/target/target";
 import { TargetService } from "./target.service";
 
 @Injectable()
 export class TFieldSelectService {
-    targets: Observable<ITarget[]>;
-    private _targets: BehaviorSubject<ITarget[]>;
-    filteredTgtFlds: Observable<ITargetField[]>;
-    private _filteredTgtFlds: BehaviorSubject<ITargetField[]>;
+    targets: Observable<Target[]>;
+    private _targets: BehaviorSubject<Target[]>;
+    filteredTgtFlds: Observable<TargetField[]>;
+    private _filteredTgtFlds: BehaviorSubject<TargetField[]>;
 
     private dataStore: {
-        targets: ITarget[],
-        selectedTarget: ITarget,
-        filteredTgtFlds: ITargetField[]
-        selectedTgtFld: ITargetField
+        targets: Target[],
+        selectedTarget: Target,
+        filteredTgtFlds: TargetField[]
+        selectedTgtFld: TargetField
     };
 
     filterTgtFlds(targetId: number) {
@@ -29,8 +29,8 @@ export class TFieldSelectService {
     constructor(private targetService: TargetService) {
         this.dataStore = { targets: [], selectedTarget: null, filteredTgtFlds: [], selectedTgtFld: null };
 
-        this._targets = <BehaviorSubject<ITarget[]>>new BehaviorSubject([]);
-        this._filteredTgtFlds = <BehaviorSubject<ITargetField[]>>new BehaviorSubject([]);
+        this._targets = <BehaviorSubject<Target[]>>new BehaviorSubject([]);
+        this._filteredTgtFlds = <BehaviorSubject<TargetField[]>>new BehaviorSubject([]);
 
         this.targets = this._targets.asObservable();
         this.filteredTgtFlds = this._filteredTgtFlds.asObservable();

@@ -1,6 +1,6 @@
 ﻿import { Component, Input, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
-import { RunMapService } from "../../../services/map-runmap.service";
+import { RunMapService } from "../../../services/map/map-runmap.service";
 
 @Component({
     selector: "map-options",

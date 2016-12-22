@@ -14,6 +14,7 @@
     "@ng-bootstrap/ng-bootstrap": "*",
     "@types/node": "^6.0.38",
     "angular2-platform-node": "~2.0.10",
+    "angular2-text-mask": "^2.1.0",
     "angular2-universal": "~2.0.10",
     "angular2-universal-polyfills": "~2.0.10",
     "aspnet-prerendering": "^1.0.6",

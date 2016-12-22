@@ -2,7 +2,7 @@
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Rx";
-import { DataService } from "./data.service";
+import { DataService } from "../data/data.service";
 
 @Injectable()
 export class UploadService {

@@ -1,13 +1,16 @@
 ﻿import { Component, ViewChild, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Map } from "./map";
-import { MapService } from "../../services/map.service";
+import { MapService } from "../../services/map/map.service";
+import { MapBuilderService } from "../../services/map/map-builder.service";
+import { Router } from "@angular/router";
 import { TransformationEditComponent } from "./transformation/transformation-edit.component";
 import { RuleEditComponent } from "./transformation/rule/rule-edit.component";
 
 @Component({
     selector: "map-edit",
-    template: require("./map-edit.component.html")
+    template: require("./map-edit.component.html"),
+    providers: [MapBuilderService]
 })
 export class MapEditComponent implements OnInit {
     @ViewChild(TransformationEditComponent)
@@ -17,29 +20,8 @@ export class MapEditComponent implements OnInit {
 
     public mapForm: FormGroup;
 
-    editMap: Map;
-
     initMapForm() {
-        this.mapForm = this._fb.group({
-            description: [this.editMap.description, Validators.required],
-            effective_Date: [this.editMap.effective_Date],
-            active: [this.editMap.active],
-            transformations: this._fb.array([])
-        });
-    }
-
-    initTransform() {
-        return this._fb.group({
-            description: ['', Validators.required],
-            rule: this._fb.group({
-                rule_Value: ['', Validators.required],
-                alt_Value: [''],
-                rule_Operation: ['', Validators.required],
-                targetField: [null, Validators.required],
-                ruleSourceFields: this._fb.array([])
-            }),
-            conditions: this._fb.array([])
-        });
+        this.mapForm = this.mapBuilderService.buildMap();
     }
 
     onSubmit(map: Map) {
@@ -49,16 +31,12 @@ export class MapEditComponent implements OnInit {
         else {
             this.mapService.add(map);
         }
-        this.newMap();
-    }
-
-    newMap() {
         this.initMapForm();
     }
 
     addTransform() {
         const control = <FormArray>this.mapForm.controls['transformations'];
-        control.push(this.initTransform());
+        control.push(this.mapBuilderService.buildTransform());
     }
     removeTransform(i: number) {
         const control = <FormArray>this.mapForm.controls['transformations'];
@@ -70,18 +48,16 @@ export class MapEditComponent implements OnInit {
         this.router.navigate(['/proj-overview']);
     }
 
-    constructor(private _fb: FormBuilder, private mapService: MapService) { }
+    constructor(private _fb: FormBuilder, private router: Router, private mapService: MapService, private mapBuilderService: MapBuilderService) { }
 
     ngOnInit() {
-        // Get the map currently being edited, if any
         this.mapService.editMap.subscribe(editMap => {
-            this.editMap = editMap;
-            this.initMapForm(); 
-            if (this.editMap.transformations.length > 0) {
-                for (let i = 0; i < this.editMap.transformations.length; i++){
-                    this.addTransform();
-                }
-            }                  
-        });               
+            if (this.mapService.editing) {
+                this.mapForm = this.mapBuilderService.buildEditMapForm(editMap);    
+            }
+            else {
+                this.initMapForm();
+            }
+        });  
     }
 }
