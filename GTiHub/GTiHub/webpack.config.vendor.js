@@ -37,7 +37,8 @@ module.exports = {
             'ng2-file-upload',
             '@ng-bootstrap/ng-bootstrap',
             'ng2-bootstrap',
-            'angular2-text-mask'
+            'angular2-text-mask',
+            'primeng/primeng'
         ]
     },
     output: {

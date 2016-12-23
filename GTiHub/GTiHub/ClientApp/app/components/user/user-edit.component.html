@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
     <h2>Add / Edit Users</h2>
     <hr />
-    <form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit(userForm)">
+    <form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit(userForm.value)">
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
@@ -22,5 +22,6 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" placeholder="user@example.com" formControlName="email">
         </div>
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Submit</button>
     </form>
 </div>

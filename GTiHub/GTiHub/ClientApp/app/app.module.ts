@@ -14,6 +14,7 @@ import { DataService } from "./services/data/data.service";
 import { MapService } from "./services/map/map.service";
 import { SourceService } from "./services/source/source.service";
 import { TargetService } from "./services/target/target.service";
+import { ProjectService } from "./services/project/project.service";
 import { UploadService } from "./services/data/file-upload.service";
 import { UserService } from "./services/user/user.service";
 
@@ -28,16 +29,17 @@ import { ClientEditComponent } from "./components/client/client-edit.component";
 import { ClientListComponent } from "./components/client/client-list.component";
 
 // source
-import { SrcComponent } from "./components/source/src.component";
+import { SrcOverviewComponent } from "./components/source/src-overview.component";
 import { SrcEditComponent } from "./components/source/src-edit.component";
 import { SrcListComponent } from "./components/source/src-list.component";
 import { SrcFldEditComponent } from "./components/source/srcfld-edit.component";
 import { SrcListSelectComponent } from "./components/source/selection/src-list-select.component";
 import { SrcFldListComponent } from "./components/source/selection/srcfld-list.component";
-import { SrcFldSelectComponent } from "./components/source/selection/srcfld-select.component";    
+import { SrcFldSelectComponent } from "./components/source/selection/srcfld-select.component";  
+import { SrcDualSelectComponent } from "./components/source/selection/src-dual-select.component";  
 
 // target
-import { TgtComponent } from "./components/target/tgt.component";
+import { TgtOverviewComponent } from "./components/target/tgt-overview.component";
 import { TgtEditComponent } from "./components/target/tgt-edit.component";
 import { TgtListComponent } from "./components/target/tgt-list.component";
 import { TgtFldEditComponent } from "./components/target/tgtfld-edit.component";
@@ -46,7 +48,7 @@ import { TgtFldListComponent } from "./components/target/selection/tgtfld-list.c
 import { TgtFldSelectComponent } from "./components/target/selection/tgtfld-select.component";
 
 // map
-import { MapComponent } from "./components/map/map.component";
+import { MapOverviewComponent } from "./components/map/map-overview.component";
 import { MapEditComponent } from "./components/map/map-edit.component";
 import { MapListComponent } from "./components/map/map-list.component";
 import { RunMapComponent } from "./components/map/run-map/map-runmap.component";
@@ -60,7 +62,7 @@ import { FieldFormatComponent } from "./components/map/transformation/rule/field
 import { DateFormatComponent } from "./components/map/transformation/rule/date-format.component";
 
 // project
-import { ProjOverviewComponent } from "./components/project/proj-overview.component";
+import { ProjectOverviewComponent } from "./components/project/project-overview.component";
 import { ProjectEditComponent } from "./components/project/project-edit.component";
 
 // ui elements
@@ -80,21 +82,22 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         HomeComponent,
         ClientEditComponent,
         ClientListComponent,
-        SrcComponent,
+        SrcOverviewComponent,
         SrcEditComponent,
         SrcListComponent,
         SrcFldEditComponent,
         SrcListSelectComponent,
         SrcFldListComponent,
         SrcFldSelectComponent,
-        TgtComponent,
+        SrcDualSelectComponent,
+        TgtOverviewComponent,
         TgtEditComponent,
         TgtListComponent,
         TgtListSelectComponent,
         TgtFldEditComponent,
         TgtFldListComponent,
         TgtFldSelectComponent,
-        MapComponent,
+        MapOverviewComponent,
         MapEditComponent,
         MapListComponent,
         RunMapComponent,
@@ -104,7 +107,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         ConditionEditComponent,
         RuleEditComponent,
         RuleSrcFldEditComponent,
-        ProjOverviewComponent,
+        ProjectOverviewComponent,
         ProjectEditComponent,
         UserEditComponent,
         FieldFormatComponent,
@@ -122,14 +125,14 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         FileUploadModule,
         RouterModule.forRoot([
             { path: "", redirectTo: "proj-overview", pathMatch: "full" },
-            { path: "home", component: ProjOverviewComponent },
+            { path: "home", component: ProjectOverviewComponent },
             { path: "client", component: ClientEditComponent },
             { path: "src-edit", component: SrcEditComponent },
             { path: "tgt-edit", component: TgtEditComponent },
             { path: "map-edit", component: MapEditComponent },
             { path: "project-edit", component: ProjectEditComponent }, 
             { path: "user-edit", component: UserEditComponent }, 
-            { path: "proj-overview", component: ProjOverviewComponent },
+            { path: "proj-overview", component: ProjectOverviewComponent },
             { path: "run-map", component: RunMapComponent },
             { path: "**", redirectTo: "proj-overview" }
         ])
@@ -140,6 +143,7 @@ import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
         MapService,
         TargetService,
         SourceService,
+        ProjectService,
         ClientService,
         UserService
     ]

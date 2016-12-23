@@ -31,7 +31,8 @@ class BasicList {
 
 @Component({
     selector: 'dual-list',
-    template: require("./dual-listbox.component.html")
+    template: require("./dual-listbox.component.html"),
+    styles: [require("./dual-listbox.component.css")]
 })
 
 export class DualListComponent implements DoCheck, OnChanges {

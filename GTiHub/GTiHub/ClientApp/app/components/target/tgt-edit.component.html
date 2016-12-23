@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
     <h2>Add / Edit Targets</h2>
     <hr />
-    <form [formGroup]="tgtForm" novalidate (ngSubmit)="onSubmit(tgtForm)">
+    <form [formGroup]="tgtForm" novalidate (ngSubmit)="onSubmit(tgtForm.value)">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

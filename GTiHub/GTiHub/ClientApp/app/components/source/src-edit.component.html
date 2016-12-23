@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
     <h2>Add / Edit Sources</h2>
     <hr />
-    <form [formGroup]="srcForm" novalidate (ngSubmit)="onSubmit(srcForm)">
+    <form [formGroup]="srcForm" novalidate (ngSubmit)="onSubmit(srcForm.value)">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
