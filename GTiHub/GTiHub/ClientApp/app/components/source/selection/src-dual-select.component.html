@@ -1,7 +1,10 @@
-﻿<h3>Add Sources</h3>
-<hr /> 
-<div *ngIf="sources.length > 0">
-    <dual-list [sort]="true" [source]="sources" key="sourceId" display="name" [(destination)]="selectedSources" height="265px"></dual-list>
+﻿<div>
+    <h3>Add Sources</h3>
+    <hr />
+    <div *ngIf="sources.length > 0">
+        <dual-list [sort]="true" [source]="sources" key="sourceId" display="name" [(destination)]="selectedSources" height="265px"></dual-list>
+    </div>
+    <div *ngIf="sources.length == 0">No Sources to Add</div>
+    <hr />
 </div>
-<div *ngIf="sources.length == 0">No Sources to Add</div>
-<hr />
+
