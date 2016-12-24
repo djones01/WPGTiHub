@@ -6,13 +6,14 @@ import { UniversalModule } from "angular2-universal";
 import { AppRoutingModule } from "./app-routing.module";
 
 // third-party imports
-import { Ng2PaginationModule } from "ng2-pagination";
 import { FileUploadModule  } from "ng2-file-upload";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { TextMaskModule } from 'angular2-text-mask';
+import { PanelMenuModule, MenuItem } from 'primeng/primeng';
 
 // feature module imports
 import { ProjectModule } from "./components/project/project.module";
+import { ClientModule } from "./components/client/client.module";
 
 // service imports
 import { DataService } from "./services/data/data.service";
@@ -23,31 +24,24 @@ import { AppComponent } from "./components/app/app.component";
 import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { HomeComponent } from "./components/home/home.component";
 
-// ui elements
-import { DualListComponent } from "./components/ui/dual-listbox.component";
-
-// pipes imports
-import { ExtractFileNamePipe } from "./pipes/extract-file-name.pipe";
-
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
         AppComponent,
         NavMenuComponent,
-        HomeComponent,
-        DualListComponent,
-        ExtractFileNamePipe
+        HomeComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         FormsModule,
         ProjectModule,
+        ClientModule,
         ReactiveFormsModule,
         TextMaskModule,
-        Ng2PaginationModule,
         NgbModalModule.forRoot(),
         FileUploadModule,
-        AppRoutingModule
+        AppRoutingModule,
+        PanelMenuModule
     ],
     providers: [
         DataService,

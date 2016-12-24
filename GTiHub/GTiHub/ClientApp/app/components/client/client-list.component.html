@@ -1,30 +1,28 @@
-﻿<div *ngIf="clients.length > 0" class="panel panel-default">
-    <div class="panel-heading">Existing Clients</div>
-    <ul class="list-group">
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-2">Name</div>
-                <div class="col-md-2">Industry</div>
-                <div class="col-md-2">Created By</div>
-                <div class="col-md-1">Created On</div>
-                <div class="col-md-2">Last Modified By</div>
-                <div class="col-md-1">Modified On</div>
-                <div class="col-md-2"></div>
+﻿<div class="container-fluid">
+    <h4>All Clients</h4>
+    <hr />
+    <p-dataTable [value]="clients" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true" 
+                 [stacked]="stacked" [(selection)]="selectedClients" 
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column field="name" header="Name" [sortable]="true"></p-column>
+        <p-column field="industry" header="Industry" [sortable]="true"></p-column>
+        <p-column field="created_By" header="Created By" [sortable]="true"></p-column>
+        <p-column field="creation_Date" header="Creation Date" [sortable]="true"></p-column>
+        <p-column field="modified_By" header="Modified By" [sortable]="true"></p-column>
+        <p-column field="date_Modified" header="Date Modified" [sortable]="true"></p-column>
+        <footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <div style="float:left">
+                    <button type="button" pButton icon="fa-plus" (click)="showEditingDialog()" label="Add Client"></button>
+                    <button type="button" pButton icon="fa-remove" (click)="deleteClients()" [disabled]="!canDelete" label="Delete Client(s)"></button>
+                    <button type="button" pButton icon="fa-edit" (click)="editClient()" [disabled]="!canEdit" label="Edit Client"></button>
+                </div>               
             </div>
-        </li>
-        <li class="list-group-item" *ngFor="let client  of clients | paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
-            <div class="row">
-                <div class="col-md-2">{{client.name}}</div>
-                <div class="col-md-2">{{client.industry}}</div>
-                <div class="col-md-2">{{client.created_By}}</div>
-                <div class="col-md-1">{{client.creation_Date | date: 'MM/dd/yyyy'}}</div>
-                <div class="col-md-2">{{client.modified_By}}</div>
-                <div class="col-md-1">{{client.date_Modified | date: 'MM/dd/yyyy'}}</div>
-                <div class="col-md-2">
-                    <button class="btn btn-default" (click)="edit(client)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button class="btn btn-default" (click)="delete(client.clientId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>      
+        </footer>
+    </p-dataTable>
+</div>  
+<p-dialog header="Add New Client" [modal]="true" [responsive]="true" [(visible)]="showDialog">
+    <client-edit></client-edit>
+</p-dialog>
+<p-confirmDialog header="Confirm Deleting Client(s)" icon="fa fa-question-circle" width="425"></p-confirmDialog>

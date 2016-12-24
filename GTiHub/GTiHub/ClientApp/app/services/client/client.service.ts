@@ -38,7 +38,7 @@ export class ClientService {
         return new Client('', '');
     }
 
-    submit(client) {
+    submit(client: Client) {
         if (this.editing) {
             this.update(client);
         }
@@ -56,7 +56,7 @@ export class ClientService {
     }
 
     update(client: Client) {
-        this._dataService.Update('Clients', client.clientId, client).subscribe((client: Client) => {
+        this._dataService.Update('Clients', client.clientId, client).subscribe(response => {
             this.dataStore.clients.forEach((m, i) => {
                 if (m.clientId === client.clientId) { this.dataStore.clients[i] = client; }
             });
@@ -74,6 +74,7 @@ export class ClientService {
     }
 
     constructor(private _dataService: DataService) {
+        this.initEditClient();
         this.dataStore = { clients: [] };
         // Get the list of clients
         this.loadall();

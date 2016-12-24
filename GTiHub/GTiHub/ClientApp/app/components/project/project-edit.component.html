@@ -1,24 +1,29 @@
-﻿<div class="container-fluid">
-    <h2>Add / Edit Projects</h2>
-    <hr />
-    <form [formGroup]="projForm" novalidate (ngSubmit)="onSubmit(projForm.value)">
-        <div class="form-group">
-            <label for="name">Project Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Project Name" formControlName="name">
-        </div>
-        <div class="form-group">
-            <label for="description">First Name</label>
-            <textarea class="form-control" id="description" placeholder="Description" formControlName="description"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="project_Type">Project Type</label>
-            <select id="project_Type" formControlName="project_Type" class="form-control">
-                <option value="" selected disabled>Select Project Type</option>
-                <option *ngFor="let project_Type of project_Types" [value]="project_Type.value">
-                    {{project_Type.display}}
-                </option>
-            </select>
-        </div>
-        <src-dual-select></src-dual-select>
-    </form>
-</div>
+﻿<form [formGroup]="projectForm" novalidate (ngSubmit)="onSubmit(projectForm.value)">
+    <div class="form-group">
+        <label for="name">Project Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Project Name" formControlName="name">
+        <small *ngIf="!projectForm.controls.name.valid" class="text-danger">
+            Name is required
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="description">First Name</label>
+        <textarea class="form-control" id="description" placeholder="Description" formControlName="description"></textarea>
+        <small *ngIf="!projectForm.controls.description.valid" class="text-danger">
+            Description is required
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="project_Type">Project Type</label>
+        <select id="project_Type" formControlName="project_Type" class="form-control">
+            <option value="" selected disabled>Select Project Type</option>
+            <option *ngFor="let project_Type of project_Types" [value]="project_Type.value">
+                {{project_Type.display}}
+            </option>
+        </select>
+        <small *ngIf="!projectForm.controls.project_Type.valid" class="text-danger">
+            Project Type is required
+        </small>
+    </div>
+    <src-dual-select></src-dual-select>
+</form>

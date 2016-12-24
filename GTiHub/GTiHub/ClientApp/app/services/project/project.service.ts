@@ -35,7 +35,7 @@ export class ProjectService {
     }
 
     newProject() {
-        return new Project('', '');
+        return new Project('', '', '', null);
     }
 
     submit(project: Project) {
@@ -74,6 +74,7 @@ export class ProjectService {
     }
 
     constructor(private _dataService: DataService) {
+        this.initEditProject();
         this.dataStore = { projects: [] };
         // Get the list of projects
         this.loadall();

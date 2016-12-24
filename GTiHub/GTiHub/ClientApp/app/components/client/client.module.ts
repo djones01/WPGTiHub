@@ -3,6 +3,10 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { UniversalModule } from "angular2-universal";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ClientRoutingModule } from "./client-routing.module";
+
+// third party imports
+import { DataTableModule, SharedModule, ButtonModule, DialogModule, ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 
 // components
 import { ClientEditComponent } from "./client-edit.component";
@@ -18,14 +22,22 @@ import { ClientService } from "../../services/client/client.service";
     ],
     imports: [
         UniversalModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule,
+        ClientRoutingModule,        
+        DataTableModule,
+        SharedModule,
+        ButtonModule,
+        DialogModule,
+        ConfirmDialogModule
     ],
     exports: [
         ClientEditComponent,
         ClientListComponent
     ],
     providers: [
-        ClientService
+        ClientService,
+        ConfirmationService
     ]
 })
 export class ClientModule {

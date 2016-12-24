@@ -14,7 +14,7 @@ var sharedConfig = {
     },
     module: {
         loaders: [
-            { test: /\.ts$/, include: /ClientApp/, loader: 'ts', query: { silent: true } },
+            { test: /\.ts$/, include: /ClientApp/, loader: 'ts', query: { silent: true }, loaders: ["angular2-load-children-loader"] },
             { test: /\.html$/, loader: 'raw' },
             { test: /\.css$/, loader: 'to-string!css' },
             { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url', query: { limit: 25000 } }

@@ -1,0 +1,27 @@
+﻿<div class="container-fluid">
+    <h4>All Projects</h4>
+    <hr />
+    <p-dataTable [value]="projects" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                 [stacked]="stacked" [(selection)]="selectedProjects"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column field="name" header="Name" [sortable]="true"></p-column>
+        <p-column field="industry" header="Industry" [sortable]="true"></p-column>
+        <p-column field="created_By" header="Created By" [sortable]="true"></p-column>
+        <p-column field="creation_Date" header="Creation Date" [sortable]="true"></p-column>
+        <p-column field="modified_By" header="Modified By" [sortable]="true"></p-column>
+        <p-column field="date_Modified" header="Date Modified" [sortable]="true"></p-column>
+        <footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <div style="float:left">
+                    <button type="button" pButton icon="fa-plus" (click)="showEditingDialog()" label="Add Project"></button>
+                    <button type="button" pButton icon="fa-remove" (click)="deleteProjects()" [disabled]="!canDelete" label="Delete Project(s)"></button>
+                    <button type="button" pButton icon="fa-edit" (click)="editProject()" [disabled]="!canEdit" label="Edit Project"></button>
+                </div>
+            </div>
+        </footer>
+    </p-dataTable>
+</div>
+<p-dialog header="Add New Project" [modal]="true" [responsive]="true" [(visible)]="showDialog">
+    <project-edit></project-edit>
+</p-dialog>

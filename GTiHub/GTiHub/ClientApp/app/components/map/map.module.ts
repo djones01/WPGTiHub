@@ -4,6 +4,15 @@ import { RouterModule } from "@angular/router";
 import { UniversalModule } from "angular2-universal";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+// feature modules
+import { PipesModule } from "../../pipes/pipes.module";
+import { SourceModule } from "../source/source.module";
+import { TargetModule } from "../target/target.module";
+
+// third-party modules
+import { FileUploadModule } from "ng2-file-upload";
+import { Ng2PaginationModule } from "ng2-pagination";
+
 // components
 import { MapOverviewComponent } from "./map-overview.component";
 import { MapEditComponent } from "./map-edit.component";
@@ -32,12 +41,20 @@ import { MapService } from "../../services/map/map.service";
         TransformationEditComponent,
         ConditionEditComponent,
         RuleEditComponent,
-        RuleSrcFldEditComponent
+        RuleSrcFldEditComponent,
+        FieldFormatComponent,
+        DateFormatComponent
     ],
     imports: [
         UniversalModule,
         FormsModule,
-        ReactiveFormsModule
+        RouterModule,
+        ReactiveFormsModule,
+        SourceModule,
+        TargetModule,
+        FileUploadModule,
+        Ng2PaginationModule,
+        PipesModule
     ],
     exports: [
         MapOverviewComponent,

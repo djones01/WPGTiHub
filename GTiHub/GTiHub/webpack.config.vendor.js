@@ -39,9 +39,9 @@ module.exports = {
             'ng2-bootstrap',
             'angular2-text-mask',
             'primeng/primeng',
+            'font-awesome/css/font-awesome.css',
             'primeng/resources/primeng.css',
-            'primeng/resources/themes/bootstrap/theme.css',
-            'font-awesome/css/font-awesome.css'
+            'primeng/resources/themes/bootstrap/theme.css'
         ]
     },
     output: {

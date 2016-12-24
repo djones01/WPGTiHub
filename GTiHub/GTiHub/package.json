@@ -47,5 +47,8 @@
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.14.1",
     "zone.js": "^0.6.21"
+  },
+  "devDependencies": {
+    "angular2-load-children-loader": "0.1.3"
   }
 }

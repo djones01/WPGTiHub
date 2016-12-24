@@ -4,6 +4,13 @@ import { RouterModule } from "@angular/router";
 import { UniversalModule } from "angular2-universal";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+// feature modules
+import { PipesModule } from "../../pipes/pipes.module";
+
+// third-party modules
+import { FileUploadModule } from "ng2-file-upload";
+import { Ng2PaginationModule } from "ng2-pagination";
+
 // target
 import { TgtOverviewComponent } from "./tgt-overview.component";
 import { TgtEditComponent } from "./tgt-edit.component";
@@ -29,12 +36,17 @@ import { TargetService } from "../../services/target/target.service";
     imports: [
         UniversalModule,
         FormsModule,
-        ReactiveFormsModule
+        RouterModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        Ng2PaginationModule,
+        PipesModule
     ],
     exports: [
         TgtOverviewComponent,
         TgtEditComponent,
-        TgtListComponent
+        TgtListComponent,
+        TgtFldSelectComponent
     ],
     providers: [
         TargetService

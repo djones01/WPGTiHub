@@ -1,55 +1,39 @@
-﻿<div class="container-fluid">
-    <h2>Add / Edit Clients</h2>
-    <hr />
-    <form *ngIf="active" #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm.value)">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name"
-                           [(ngModel)]="client.name" name="name"
-                           #name="ngModel"
-                           required>
-                    <small [hidden]="name.valid || name.pristine" class="text-danger">
-                        Name is required
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label for="industry">Industry</label>
-                    <select class="form-control" id="industry"
-                            [(ngModel)]="client.industry" name="industry"
-                            #industry="ngModel"
-                            required>
-                        <option value="" selected disabled>Select Industry</option>
-                        <option>Agriculture, Forestry and Fishing</option>
-                        <option>Mining</option>
-                        <option>Construction</option>
-                        <option>Manufacturing</option>
-                        <option>Transportation</option>
-                        <option>Communication</option>
-                        <option>Electric</option>
-                        <option>Oil and Natural Gas</option>
-                        <option>Sanitation</option>
-                        <option>Wholesale Trade</option>
-                        <option>Retail Trade</option>
-                        <option>Finance</option>
-                        <option>Insurance</option>
-                        <option>Real Estate</option>
-                        <option>Services</option>
-                        <option>Public Administration</option>
-                        <option>Nonclassifiable</option>
-                    </select>
-                    <small [hidden]="industry.valid || industry.pristine" class="text-danger">
-                        Industry is required.
-                    </small>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default" [disabled]="!clientForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>
-                    <button type="button" class="btn btn-default" (click)="reset()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
-                </div>
-            </div>
-        </div>
-    </form>
-    <hr>
-    <client-list></client-list>
-</div>
+﻿<form [formGroup]="clientForm" novalidate (ngSubmit)="onSubmit(clientForm.value)">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+        <small *ngIf="!clientForm.controls.name.valid" class="text-danger">
+            Name is required
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="industry">Industry</label>
+        <select class="form-control" id="industry" formControlName="industry">
+            <option value="" selected disabled>Select Industry</option>
+            <option>Agriculture, Forestry and Fishing</option>
+            <option>Mining</option>
+            <option>Construction</option>
+            <option>Manufacturing</option>
+            <option>Transportation</option>
+            <option>Communication</option>
+            <option>Electric</option>
+            <option>Oil and Natural Gas</option>
+            <option>Sanitation</option>
+            <option>Wholesale Trade</option>
+            <option>Retail Trade</option>
+            <option>Finance</option>
+            <option>Insurance</option>
+            <option>Real Estate</option>
+            <option>Services</option>
+            <option>Public Administration</option>
+            <option>Nonclassifiable</option>
+        </select>
+        <small *ngIf="!clientForm.controls.industry.valid" class="text-danger">
+            Industry is required
+        </small>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default" [disabled]="!clientForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>
+        <button type="button" class="btn btn-default" (click)="reset()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
+    </div>
+</form>
