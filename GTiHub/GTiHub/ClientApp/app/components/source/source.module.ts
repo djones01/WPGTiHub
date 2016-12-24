@@ -12,10 +12,9 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { FileUploadModule } from "ng2-file-upload";
 import { Ng2PaginationModule } from "ng2-pagination";
 
-import { CalendarModule } from 'primeng/components/calendar/calendar';
+import { DataTableModule, SharedModule, ButtonModule, DialogModule, ConfirmDialogModule, ConfirmationService, CalendarModule } from 'primeng/primeng';
 
 // source
-import { SrcOverviewComponent } from "./src-overview.component";
 import { SrcEditComponent } from "./src-edit.component";
 import { SrcListComponent } from "./src-list.component";
 import { SrcFldEditComponent } from "./srcfld-edit.component";
@@ -32,7 +31,6 @@ import { SourceService } from "../../services/source/source.service";
 
 @NgModule({
     declarations: [
-        SrcOverviewComponent,
         SrcEditComponent,
         SrcListComponent,
         SrcFldEditComponent,
@@ -47,14 +45,18 @@ import { SourceService } from "../../services/source/source.service";
         FormsModule,
         RouterModule,
         ReactiveFormsModule,
+        SrcRoutingModule,
         FileUploadModule,
         Ng2PaginationModule,
         PipesModule,
         CalendarModule,
-        SrcRoutingModule
+        DataTableModule,
+        SharedModule,
+        ButtonModule,
+        DialogModule,
+        ConfirmDialogModule
     ],
     exports: [
-        SrcOverviewComponent,
         SrcEditComponent,
         SrcListComponent,
         SrcDualSelectComponent,

@@ -1,52 +1,28 @@
-﻿<div class="panel-default">
-    <div class="panel-heading">
-        <span>Sources in Project</span><span class="glyphicon glyphicon-import pull-right"></span>
-    </div>
-    <ul *ngIf="sources.length > 0" class="list-group">
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-3">
-                    Name
-                </div>
-                <div class="col-md-3">
-                    Description
-                </div>
-                <div class="col-md-2">
-                    Effective Date
-                </div>
-                <div class="col-md-1">
-                    Active
-                </div>
-                <div class="col-md-3">
-                </div>
-            </div>
-        </li>
-        <li *ngFor="let source of sources" class="list-group-item">
-            <div class="row">
-                <div class="col-md-3">
-                    {{source.name}}
-                </div>
-                <div class="col-md-3">
-                    {{source.description}}
-                </div>
-                <div class="col-md-2">
-                    {{source.effective_Date | date}}
-                </div>
-                <div class="col-md-1">
-                    <span *ngIf="source.active" class="glyphicon glyphicon-ok"></span>
-                    <span *ngIf="!source.active" class="glyphicon glyphicon-remove"></span>
-                </div>
-                <div class="col-md-3 text-right">
-                    <button type="button" class="btn btn-default" (click)="edit(source)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button type="button" class="btn btn-default" (click)="delete(source.sourceId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+﻿<div class="container-fluid">
+    <h4>All Sources</h4>
+    <hr />
+    <p-dataTable [value]="sources" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                 [stacked]="stacked" [(selection)]="selectedSources"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column field="name" header="Name" [sortable]="true"></p-column>
+        <p-column field="industry" header="Industry" [sortable]="true"></p-column>
+        <p-column field="created_By" header="Created By" [sortable]="true"></p-column>
+        <p-column field="creation_Date" header="Creation Date" [sortable]="true"></p-column>
+        <p-column field="modified_By" header="Modified By" [sortable]="true"></p-column>
+        <p-column field="date_Modified" header="Date Modified" [sortable]="true"></p-column>
+        <footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <div style="float:left">
+                    <button type="button" pButton icon="fa-plus" (click)="showEditingDialog()" label="Add Source"></button>
+                    <button type="button" pButton icon="fa-remove" (click)="deleteSources()" [disabled]="!canDelete" label="Delete Source(s)"></button>
+                    <button type="button" pButton icon="fa-edit" (click)="editSource()" [disabled]="!canEdit" label="Edit Source"></button>
                 </div>
             </div>
-        </li>
-    </ul>
-    <div *ngIf="sources.length == 0" class="panel-body">
-        No Sources to show
-    </div>
+        </footer>
+    </p-dataTable>
 </div>
+<p-confirmDialog header="Confirm Deleting Source(s)" icon="fa fa-question-circle" width="425"></p-confirmDialog>
 
 
 

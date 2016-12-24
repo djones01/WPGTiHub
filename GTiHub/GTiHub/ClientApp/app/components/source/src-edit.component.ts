@@ -44,7 +44,7 @@ export class SrcEditComponent implements OnInit {
 
     back() {
         this.sourceService.clearEditSource();
-        this.router.navigate(['/proj-overview']);
+        this.router.navigateByUrl('/proj-overview');
     }
 
     constructor(private _fb: FormBuilder, private router: Router, private sourceService: SourceService) { }

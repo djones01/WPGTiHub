@@ -14,29 +14,32 @@ export class UserEditComponent implements OnInit {
     user: User;
 
     onSubmit(user: User) {
+        Object.assign(this.user, user);
         this.userService.submit(user);
         this.reset();
     }
 
     initUserForm() {
         this.userForm = this._fb.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            title: ['', Validators.required],
-            phone: ['', Validators.required],
-            email: ['', Validators.required]
+            firstName: [this.user.firstName, Validators.required],
+            lastName: [this.user.lastName, Validators.required],
+            title: [this.user.title],
+            phone: [this.user.phone],
+            email: [this.user.email, Validators.required]
         });
     }
 
     reset() {
-        this.userService.initEditUser();
+        this.userForm.reset();
     }
 
     constructor(private _fb: FormBuilder, private userService: UserService) {
     }
 
-    ngOnInit(): void {
-        this.initUserForm();
-        this.userService.editUser.subscribe(user => this.user = user);
+    ngOnInit(): void {        
+        this.userService.editUser.subscribe(user => {
+            this.user = user;  
+            this.initUserForm();
+        });     
     }
 }

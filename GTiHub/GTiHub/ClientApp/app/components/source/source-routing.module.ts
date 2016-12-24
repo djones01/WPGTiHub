@@ -2,9 +2,11 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { SrcEditComponent } from "./src-edit.component";
+import { SrcListComponent } from "./src-list.component";
 
 export const routes: Routes = [
-    { path: "source-edit", component: SrcEditComponent }
+    { path: "src-list", component: SrcListComponent },
+    { path: "src-edit", component: SrcEditComponent }
 ];
 
 @NgModule({

@@ -27,6 +27,34 @@ export class NavMenuComponent implements OnInit {
                 ]
             },
             {
+                label: "Sources",
+                items: [
+                    {
+                        label: "View All",
+                        icon: "fa-binoculars",
+                        routerLink: ["/src-list"]
+                    },
+                    {
+                        label: "New",
+                        icon: "fa-plus",
+                    }
+                ]
+            },
+            {
+                label: "Targets",
+                items: [
+                    {
+                        label: "View All",
+                        icon: "fa-binoculars",
+                        routerLink: ["/tgt-list"]
+                    },
+                    {
+                        label: "New",
+                        icon: "fa-plus",
+                    }
+                ]
+            },
+            {
                 label: "Admin Tools",
                 icon: "fa-cog",
                 items: [
@@ -36,7 +64,8 @@ export class NavMenuComponent implements OnInit {
                         items: [
                             {
                                 label: "View All",
-                                icon: "fa-binoculars"
+                                icon: "fa-binoculars",
+                                routerLink: ["/user-list"]
                             },
                             {
                                 label: "New",

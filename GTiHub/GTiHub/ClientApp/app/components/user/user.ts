@@ -2,8 +2,8 @@
     userId?: number;
     firstName: string;
     lastName: string;
-    title: string;
-    phone: string;
+    title?: string;
+    phone?: string;
     email: string;
     created_By?: string;
     creation_Date?: Date;
@@ -15,10 +15,10 @@
 export class User implements IUser {
     constructor(
         public firstName: string,
-        public lastName: string,
-        public title: string,
-        public phone: string,
+        public lastName: string,     
         public email: string,
+        public title?: string,
+        public phone?: string,
         public userId?: number,
         public created_By?: string,
         public creation_Date?: Date,

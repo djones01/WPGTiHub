@@ -14,6 +14,8 @@ import { PanelMenuModule, MenuItem } from 'primeng/primeng';
 // feature module imports
 import { ProjectModule } from "./components/project/project.module";
 import { ClientModule } from "./components/client/client.module";
+import { UserModule } from "./components/user/user.module";
+import { SourceModule } from "./components/source/source.module";
 
 // service imports
 import { DataService } from "./services/data/data.service";
@@ -34,9 +36,11 @@ import { HomeComponent } from "./components/home/home.component";
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         FormsModule,
+        ReactiveFormsModule,
         ProjectModule,
         ClientModule,
-        ReactiveFormsModule,
+        UserModule,  
+        SourceModule,  
         TextMaskModule,
         NgbModalModule.forRoot(),
         FileUploadModule,

@@ -1,0 +1,28 @@
+﻿<div class="container-fluid">
+    <h4>All Users</h4>
+    <hr />
+    <p-dataTable [value]="users" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                 [stacked]="stacked" [(selection)]="selectedUsers"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <header>
+            <div style="text-align:left">
+                <p-multiSelect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+            </div>
+        </header>
+        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="true"></p-column>
+        <footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <div style="float:left">
+                    <button type="button" pButton icon="fa-plus" (click)="showEditingDialog()" label="Add User"></button>
+                    <button type="button" pButton icon="fa-remove" (click)="deleteUsers()" [disabled]="!canDelete" label="Delete User(s)"></button>
+                    <button type="button" pButton icon="fa-edit" (click)="editUser()" [disabled]="!canEdit" label="Edit User"></button>
+                </div>
+            </div>
+        </footer>
+    </p-dataTable>
+</div>
+<p-dialog header="Add New User" [modal]="true" [responsive]="true" [(visible)]="showDialog">
+    <user-edit></user-edit>
+</p-dialog>
+<p-confirmDialog header="Confirm Deleting User(s)" icon="fa fa-question-circle" width="425"></p-confirmDialog>

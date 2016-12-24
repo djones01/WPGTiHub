@@ -31,8 +31,11 @@ export class ClientListComponent implements OnInit {
                 this.selectedClients.forEach((c, i) => {
                     this.clientService.delete(c.clientId);
                 });  
+                this.selectedClients = [];
             }
-        });     
+        });
+        this.canDelete = false;
+        this.canEdit = false;     
     }
 
     //Update the state of the delete and edit buttons based on row selection
@@ -46,6 +49,9 @@ export class ClientListComponent implements OnInit {
         }
     }
     onRowUnselect(event) {
+        if (this.selectedClients.length == 1) {
+            this.canEdit = true;
+        }
         if (this.selectedClients.length == 0) {
             this.canDelete = false;
             this.canEdit = false;

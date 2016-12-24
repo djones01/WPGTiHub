@@ -74,6 +74,7 @@ export class UserService {
     }
 
     constructor(private _dataService: DataService) {
+        this.initEditUser();
         this.dataStore = { users: [] };
         // Get the list of users
         this.loadall();
