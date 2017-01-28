@@ -67,7 +67,7 @@
 
             this._dbContext.Sources.Add(source);
             this._dbContext.SaveChanges();
-            return this.CreatedAtRoute("GetSource", new { id = source.SourceId }, source);
+            return this.CreatedAtRoute("GetSource", new { id = source.SourceId }, this._dbContext.Sources.Find(source.SourceId));
         }
 
         // PUT api/Sources/5

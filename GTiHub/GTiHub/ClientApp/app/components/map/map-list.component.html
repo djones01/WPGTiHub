@@ -1,33 +1,42 @@
-﻿<div class="panel-default">
-    <div class="panel-heading">
-        <span>Maps in Project</span> <span class='glyphicon glyphicon-random pull-right'></span> 
-    </div>      
-    <ul *ngIf="maps.length > 0" class="list-group">
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-6">
-                    Description
-                </div>
-                <div class="col-md-6">
+﻿<div class="container-fluid">
+    <h4>All Maps</h4>
+    <hr />
+    <p-dataTable [value]="maps" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                 [stacked]="stacked" [(selection)]="selectedMaps"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column field="description" header="Description" [sortable]="true"></p-column>
+        <p-column field="active" header="Active" [sortable]="true"></p-column>
+        <p-column field="effective_Date" header="Effective Date" [sortable]="true">
+            <template let-map="rowData" pTemplate type="body">
+                {{map.effective_Date | date}}
+            </template>
+        </p-column>
+        <p-column field="created_By" header="Created By" [sortable]="true"></p-column>
+        <p-column field="creation_Date" header="Creation Date" [sortable]="true">
+            <template let-map="rowData" pTemplate type="body">
+                {{map.creation_Date | date}}
+            </template>
+        </p-column>
+        <p-column field="modified_By" header="Modified By" [sortable]="true"></p-column>
+        <p-column field="date_Modified" header="Date Modified" [sortable]="true">
+            <template let-map="rowData" pTemplate type="body">
+                {{map.date_Modified | date}}
+            </template>
+        </p-column>
+        <footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <div style="float:left">
+                    <button type="button" pButton icon="fa-plus" routerLink="/map-edit" label="Add Map"></button>
+                    <button type="button" pButton icon="fa-remove" (click)="deleteMaps()" [disabled]="!canDelete" label="Delete Map(s)"></button>
+                    <button type="button" pButton icon="fa-edit" (click)="editMap()" [disabled]="!canEdit" label="Edit Map"></button>
                 </div>
             </div>
-        </li>
-        <li *ngFor="let map of maps" class="list-group-item">
-            <div class="row">
-                <div class="col-md-6">
-                    {{map.description}}
-                </div>
-                <div class="col-md-6 text-right">
-                    <button type="button" class="btn btn-default" (click)="editMap(map)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button type="button" class="btn btn-default" (click)="deleteMap(map.mapId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <div *ngIf="maps.length == 0" class="panel-body">
-        No Maps to show
-    </div>
+        </footer>
+    </p-dataTable>
+    <button type="button" pButton routerLink="/home" label="Back" style="margin-top: 10px"></button>
 </div>
+<p-confirmDialog header="Confirm Deleting Map(s)" icon="fa fa-question-circle" width="425"></p-confirmDialog>
 
 
 

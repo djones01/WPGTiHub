@@ -29,6 +29,7 @@ export class MapFileSelectComponent implements OnInit {
         this.primarySourceChanged.emit({
             value: sourceId
         });
+        this.fileForm.get('filePackages').clearValidators();
     }
 
     constructor(private runMapService: RunMapService) {}

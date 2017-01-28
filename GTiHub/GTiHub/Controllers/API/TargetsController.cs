@@ -65,7 +65,7 @@
 
             this._dbContext.Targets.Add(target);
             this._dbContext.SaveChanges();
-            return this.CreatedAtRoute("GetTarget", new { id = target.TargetId }, target);
+            return this.CreatedAtRoute("GetTarget", new { id = target.TargetId }, this._dbContext.Targets.Find(target.TargetId));
         }
 
         // PUT api/Targets/5

@@ -42,14 +42,14 @@ export class TargetService {
     }
 
     add(target: Target) {
-        this._dataService.Add('Targets', target).subscribe(target => {
-            this.dataStore.targets.push(target);
+        this._dataService.Add('Targets', target).subscribe(newTarget => {
+            this.dataStore.targets.push(newTarget);
             this._targets.next(this.dataStore.targets);
         }, error => console.log(error));
     }
 
     update(target: Target) {
-        this._dataService.Update('Targets', target.targetId, target).subscribe((target: Target) => {
+        this._dataService.Update('Targets', target.targetId, target).subscribe((updatedTarget: Target) => {
             this.dataStore.targets.forEach((m, i) => {
                 if (m.targetId === target.targetId) { this.dataStore.targets[i] = target; }
             });

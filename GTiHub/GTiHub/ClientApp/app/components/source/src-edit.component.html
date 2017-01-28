@@ -1,4 +1,4 @@
-﻿<div class="container-fluid">
+﻿<div class="container-fluid" style="margin-bottom: 20px">
     <h2>Add / Edit Sources</h2>
     <hr />
     <form [formGroup]="srcForm" novalidate (ngSubmit)="onSubmit(srcForm.value)">
@@ -35,6 +35,6 @@
         <srcfld-edit [group]="srcForm"></srcfld-edit>
         <button type="button" class="btn btn-default" (click)="back()">Back to Overview</button>
         <button type="button" class="btn btn-default" (click)="newSource()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
-        <button type="submit" class="btn btn-primary" [disabled]="srcForm.controls.sourceFields.controls.length == 0  || !srcForm.valid" (click)="onSubmit(srcForm.value)"><span class="glyphicon glyphicon-plus"></span> Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="srcForm.controls.sourceFields.controls.length == 0  || !srcForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>
     </form>
 </div>  

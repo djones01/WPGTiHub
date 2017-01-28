@@ -7,16 +7,15 @@ import { DateFormatComponent } from "./date-format.component";
     template: require("./field-format.component.html")
 })
 export class FieldFormatComponent implements OnInit {
+    private display: boolean = false;
     @Input()
     fieldDataType: string;
 
-    //Modal Functions
-    openCustomFormat(content) {
-        this.modalService.open(content, { size: "lg" })
-            .result.then((result) => {
-
-                },
-                (reason) => {});
+    showDialog() {
+        this.display = !this.display;
+    }
+    selectFormat() {
+        this.showDialog();
     }
 
     constructor(private modalService: NgbModal) {}

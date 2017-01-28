@@ -1,4 +1,4 @@
-﻿<div class="container-fluid">
+﻿<div class="container-fluid" style="margin-bottom: 20px;">
     <h2>Add / Edit Targets</h2>
     <hr />
     <form [formGroup]="tgtForm" novalidate (ngSubmit)="onSubmit(tgtForm.value)">
@@ -20,7 +20,8 @@
                 </div>
                 <div class="form-group">
                     <label>Effective Date</label>
-                    <input type="date" class="form-control" formControlName="effective_Date" />
+                    <!-- <input type="date" class="form-control" formControlName="effective_Date" /> -->
+                    <p-calendar formControlName="effective_Date"></p-calendar>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
@@ -32,8 +33,8 @@
             </div>
         </div>
         <tgtfld-edit [group]="tgtForm"></tgtfld-edit>
-        <button type="button" class="btn btn-default" (click)="back()">Back to Overview</button>      
+        <button type="button" class="btn btn-default" (click)="back()">Back to Overview</button>
         <button type="button" class="btn btn-default" (click)="newTarget()"><span class="glyphicon glyphicon-repeat"></span> Clear</button>
-        <button type="submit" class="btn btn-primary" [disabled]="tgtForm.controls.targetFields.controls.length == 0  || !tgtForm.valid" (click)="onSubmit(tgtForm.value)"><span class="glyphicon glyphicon-plus"></span> Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="tgtForm.controls.targetFields.controls.length == 0  || !tgtForm.valid"><span class="glyphicon glyphicon-plus"></span> Submit</button>
     </form>
 </div>  

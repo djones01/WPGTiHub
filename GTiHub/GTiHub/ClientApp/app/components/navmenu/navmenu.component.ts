@@ -12,21 +12,6 @@ export class NavMenuComponent implements OnInit {
     ngOnInit() {
         this.menuItems = [
             {
-                label: "Projects",
-                icon: "fa-dashboard",
-                items: [
-                    {
-                        label: "View All",
-                        icon: "fa-binoculars",
-                        routerLink: ["/project-list"]
-                    },
-                    {
-                        label: "New",
-                        icon: "fa-plus",
-                    }
-                ]
-            },
-            {
                 label: "Sources",
                 items: [
                     {
@@ -37,6 +22,7 @@ export class NavMenuComponent implements OnInit {
                     {
                         label: "New",
                         icon: "fa-plus",
+                        routerLink: ["/src-edit"]
                     }
                 ]
             },
@@ -51,42 +37,22 @@ export class NavMenuComponent implements OnInit {
                     {
                         label: "New",
                         icon: "fa-plus",
+                        routerLink: ["/tgt-edit"]
                     }
                 ]
             },
             {
-                label: "Admin Tools",
-                icon: "fa-cog",
+                label: "Maps",
                 items: [
                     {
-                        label: "Users",
-                        icon: "fa-users",
-                        items: [
-                            {
-                                label: "View All",
-                                icon: "fa-binoculars",
-                                routerLink: ["/user-list"]
-                            },
-                            {
-                                label: "New",
-                                icon: "fa-user-plus",
-                            }
-                        ]
+                        label: "View All",
+                        icon: "fa-binoculars",
+                        routerLink: ["/map-list"]
                     },
                     {
-                        label: "Clients",
-                        icon: "fa-user",
-                        items: [
-                            {
-                                label: "View All",
-                                icon: "fa-binoculars",
-                                routerLink: ["/client-list"]
-                            },
-                            {
-                                label: "New",
-                                icon: "fa-user-plus",
-                            }
-                        ]
+                        label: "New",
+                        icon: "fa-plus",
+                        routerLink: ["/map-edit"]
                     }
                 ]
             }

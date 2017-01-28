@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { UniversalModule } from "angular2-universal";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { TgtRoutingModule } from "./target-routing.module";
 
 // feature modules
 import { PipesModule } from "../../pipes/pipes.module";
@@ -11,13 +12,12 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { FileUploadModule } from "ng2-file-upload";
 import { Ng2PaginationModule } from "ng2-pagination";
 
+import { DataTableModule, SharedModule, ButtonModule, DialogModule, ConfirmDialogModule, ConfirmationService, CalendarModule } from 'primeng/primeng';
+
 // target
-import { TgtOverviewComponent } from "./tgt-overview.component";
 import { TgtEditComponent } from "./tgt-edit.component";
 import { TgtListComponent } from "./tgt-list.component";
 import { TgtFldEditComponent } from "./tgtfld-edit.component";
-import { TgtListSelectComponent } from "./selection/tgt-list-select.component";
-import { TgtFldListComponent } from "./selection/tgtfld-list.component";
 import { TgtFldSelectComponent } from "./selection/tgtfld-select.component";
 
 // services
@@ -25,12 +25,9 @@ import { TargetService } from "../../services/target/target.service";
 
 @NgModule({
     declarations: [
-        TgtOverviewComponent,
         TgtEditComponent,
         TgtListComponent,
         TgtFldEditComponent,
-        TgtListSelectComponent,
-        TgtFldListComponent,
         TgtFldSelectComponent
     ],
     imports: [
@@ -38,18 +35,25 @@ import { TargetService } from "../../services/target/target.service";
         FormsModule,
         RouterModule,
         ReactiveFormsModule,
+        TgtRoutingModule,
         FileUploadModule,
         Ng2PaginationModule,
-        PipesModule
+        PipesModule,
+        CalendarModule,
+        DataTableModule,
+        SharedModule,
+        ButtonModule,
+        DialogModule,
+        ConfirmDialogModule
     ],
     exports: [
-        TgtOverviewComponent,
         TgtEditComponent,
         TgtListComponent,
         TgtFldSelectComponent
     ],
     providers: [
-        TargetService
+        TargetService,
+        ConfirmationService
     ]
 })
 export class TargetModule {

@@ -10,6 +10,8 @@
 
     public class SourceField : BaseEntity
     {
+        public SourceField() { }
+
         public SourceField(string name, string datatype, bool active, int seqnum)
         {
             this.Name = name;

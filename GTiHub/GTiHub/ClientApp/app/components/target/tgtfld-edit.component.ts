@@ -24,8 +24,7 @@ export class TgtFldEditComponent implements OnInit{
     }
 
     resetTgtFlds() {
-        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
-        control.reset([]);
+        this.tgtFldsForm.setControl('targetFields', new FormArray([]));
     }
 
     removeTgtFld(i: number) {
@@ -64,19 +63,14 @@ export class TgtFldEditComponent implements OnInit{
         this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
             .subscribe((targetFields: Object[]) => {
                 if (targetFields) {
-                    const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
-                    this.resetTgtFlds();
-                    for (let i = 0; i < targetFields.length; i++) {
-                        this.addTgtFld();
-                        control.at(i).patchValue(targetFields[i]);
-                    }
+                    this.setTargetFields(targetFields);
                 }
             });
     }
 
-    setTargetFields(targetFields: Object[]) {
-        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
+    setTargetFields(targetFields: Object[]) {   
         this.resetTgtFlds();
+        const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
         for (let i = 0; i < targetFields.length; i++) {
             this.addTgtFld();
             control.at(i).patchValue(targetFields[i]);

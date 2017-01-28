@@ -47,8 +47,8 @@ export class MapService {
     }
 
     add(map: Map) {
-        this._dataService.Add('Maps', map).subscribe(map => {
-            this.dataStore.maps.push(map);
+        this._dataService.Add('Maps', map).subscribe(newMap => {
+            this.dataStore.maps.push(newMap);
             this._maps.next(this.dataStore.maps);
         }, error => console.log(error));
     }
@@ -66,7 +66,7 @@ export class MapService {
         this.initEditMap();
     }
 
-    deleteMap(mapId: number) {
+    delete(mapId: number) {
         this._dataService.Delete('Maps', mapId).subscribe(response => {
             this.dataStore.maps.forEach((m, i) => {
                 if (m.mapId === mapId) { this.dataStore.maps.splice(i, 1); }

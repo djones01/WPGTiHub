@@ -9,7 +9,7 @@ export class DataService {
     private headers: Headers;
 
     constructor(private _http: Http) {
-        this.actionUrl = "http://localhost:50709/api/";
+        this.actionUrl = "/api/";
         this.headers = new Headers();
         this.headers.append("Content-Type", "application/json");
         this.headers.append("Accept", "application/json");

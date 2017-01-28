@@ -5,22 +5,38 @@
                  [stacked]="stacked" [(selection)]="selectedSources"
                  (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
         <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column [style]="{'width':'38px'}" selectionMode="single"></p-column>
         <p-column field="name" header="Name" [sortable]="true"></p-column>
-        <p-column field="industry" header="Industry" [sortable]="true"></p-column>
+        <p-column field="description" header="Description" [sortable]="true"></p-column>
+        <p-column field="active" header="Active" [sortable]="true"></p-column>
+        <p-column field="effective_Date" header="Effective Date" [sortable]="true">
+            <template let-source="rowData" pTemplate type="body">
+                {{source.effective_Date | date}}
+            </template>
+        </p-column>
         <p-column field="created_By" header="Created By" [sortable]="true"></p-column>
-        <p-column field="creation_Date" header="Creation Date" [sortable]="true"></p-column>
+        <p-column field="creation_Date" header="Creation Date" [sortable]="true">
+            <template let-source="rowData" pTemplate type="body">
+                {{source.creation_Date | date}}
+            </template>
+        </p-column>
         <p-column field="modified_By" header="Modified By" [sortable]="true"></p-column>
-        <p-column field="date_Modified" header="Date Modified" [sortable]="true"></p-column>
+        <p-column field="date_Modified" header="Date Modified" [sortable]="true">
+            <template let-source="rowData" pTemplate type="body">
+                {{source.date_Modified | date}}
+            </template>
+        </p-column>
         <footer>
             <div class="ui-helper-clearfix" style="width:100%">
                 <div style="float:left">
-                    <button type="button" pButton icon="fa-plus" (click)="showEditingDialog()" label="Add Source"></button>
+                    <button type="button" pButton icon="fa-plus" routerLink="/src-edit" label="Add Source"></button>
                     <button type="button" pButton icon="fa-remove" (click)="deleteSources()" [disabled]="!canDelete" label="Delete Source(s)"></button>
                     <button type="button" pButton icon="fa-edit" (click)="editSource()" [disabled]="!canEdit" label="Edit Source"></button>
                 </div>
             </div>
         </footer>
     </p-dataTable>
+    <button type="button" pButton routerLink="/home" label="Back" style="margin-top: 10px"></button>
 </div>
 <p-confirmDialog header="Confirm Deleting Source(s)" icon="fa fa-question-circle" width="425"></p-confirmDialog>
 

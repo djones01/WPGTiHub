@@ -43,10 +43,12 @@
     "typescript": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
+    "webpack-node-externals": "^1.4.3",
     "webpack-externals-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.14.1",
-    "zone.js": "^0.6.21"
+    "zone.js": "^0.6.21",
+    "dateformat": "2.0.0"
   },
   "devDependencies": {
     "angular2-load-children-loader": "0.1.3"

@@ -1,52 +1,43 @@
-﻿<div class="panel-default">
-    <div class="panel-heading">
-        <span>Targets in Project</span><span class="glyphicon glyphicon-export pull-right"></span>
-    </div>      
-    <ul *ngIf="targets.length > 0" class="list-group">
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-3">
-                    Name
-                </div>
-                <div class="col-md-3">
-                    Description
-                </div>
-                <div class="col-md-2">
-                    Effective Date
-                </div>
-                <div class="col-md-1">
-                    Active
-                </div>
-                <div class="col-md-3">
-                </div>
-            </div>
-        </li>
-        <li *ngFor="let target of targets" class="list-group-item">
-            <div class="row">
-                <div class="col-md-3">
-                    {{target.name}}
-                </div>
-                <div class="col-md-3">
-                    {{target.description}}
-                </div>
-                <div class="col-md-2">
-                    {{target.effective_Date | date}}
-                </div>
-                <div class="col-md-1">
-                    <span *ngIf="target.active" class="glyphicon glyphicon-ok"></span>
-                    <span *ngIf="!target.active" class="glyphicon glyphicon-remove"></span>
-                </div>
-                <div class="col-md-3 text-right">
-                    <button type="button" class="btn btn-default" (click)="editTarget(target)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button type="button" class="btn btn-default" (click)="delete(target.targetId)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+﻿<div class="container-fluid">
+    <h4>All Targets</h4>
+    <hr />
+    <p-dataTable [value]="targets" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                 [stacked]="stacked" [(selection)]="selectedTargets"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+        <p-column field="name" header="Name" [sortable]="true"></p-column>
+        <p-column field="description" header="Description" [sortable]="true"></p-column>
+        <p-column field="active" header="Active" [sortable]="true"></p-column>
+        <p-column field="effective_Date" header="Effective Date" [sortable]="true">
+            <template let-target="rowData" pTemplate type="body">
+                {{target.effective_Date | date}}
+            </template>
+        </p-column>
+        <p-column field="created_By" header="Created By" [sortable]="true"></p-column>
+        <p-column field="creation_Date" header="Creation Date" [sortable]="true">
+            <template let-target="rowData" pTemplate type="body">
+                {{target.creation_Date | date}}
+            </template>
+        </p-column>
+        <p-column field="modified_By" header="Modified By" [sortable]="true"></p-column>
+        <p-column field="date_Modified" header="Date Modified" [sortable]="true">
+            <template let-target="rowData" pTemplate type="body">
+                {{target.date_Modified | date}}
+            </template>
+        </p-column>
+        <footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <div style="float:left">
+                    <button type="button" pButton icon="fa-plus" routerLink="/tgt-edit" label="Add Target"></button>
+                    <button type="button" pButton icon="fa-remove" (click)="deleteTargets()" [disabled]="!canDelete" label="Delete Target(s)"></button>
+                    <button type="button" pButton icon="fa-edit" (click)="editTarget()" [disabled]="!canEdit" label="Edit Target"></button>
                 </div>
             </div>
-        </li>
-    </ul>
-    <div *ngIf="targets.length == 0" class="panel-body">
-        No Targets to show
-    </div>
+        </footer>
+    </p-dataTable>
+    <button type="button" pButton routerLink="/home" label="Back" style="margin-top: 10px"></button>
 </div>
+<p-confirmDialog header="Confirm Deleting Target(s)" icon="fa fa-question-circle" width="425"></p-confirmDialog>
 
 
 

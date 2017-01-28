@@ -1,30 +1,41 @@
 ﻿<div class="input-group">
     <span class="input-group-btn">
-        <button class="btn btn-default" type="button" (click)="openSourceSelect(content)"><span class="glyphicon glyphicon-search"></span></button>
+        <button class="btn btn-default" type="button" (click)="showDialog()"><span class="glyphicon glyphicon-search"></span></button>
     </span>
     <label *ngIf="selectedSourceField != null" class="form-control hide-overflow">{{selectedSourceField.name}}</label>
     <label *ngIf="selectedSourceField == null" class="form-control hide-overflow">Source Field</label>
 </div>
 <!-- Modal to contain Source Field Selection component -->
-<template ngbModalContainer #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Select a Source Field</h4>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-6">
-                <src-list-select [sources]="sources" (onSelectSource)="onSelectSource($event)"></src-list-select>
-            </div>
-            <div class="col-sm-6">
-                <sourcefield-list [filteredSourceFields]="filteredSourceFields" (onFieldSelect)="onFieldSelect($event)"></sourcefield-list>
-            </div>
+<p-dialog header="Select Source Field" [(visible)]="display">
+    <div style="width: 800px; height: 500px; padding: 15px;">
+        <div style="margin-bottom: 15px;">
+            <p-dataTable [value]="sources" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                         [stacked]="stacked" [(selection)]="selectedSource"
+                         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                <p-column [style]="{'width':'38px'}" selectionMode="single"></p-column>
+                <p-column field="name" header="Name" [sortable]="true"></p-column>
+                <p-column field="description" header="Description" [sortable]="true"></p-column>
+                <p-column field="active" header="Active" [sortable]="true"></p-column>
+                <p-column field="effective_Date" header="Effective Date" [sortable]="true">
+                    <template let-source="rowData" pTemplate type="body">
+                        {{source.effective_Date | date}}
+                    </template>
+                </p-column>
+            </p-dataTable>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <p-dataTable [value]="filteredSourceFields" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" resizableColumns="true" [responsive]="true"
+                         [stacked]="stacked" [(selection)]="selectedSourceField">
+                <p-column [style]="{'width':'38px'}" selectionMode="single"></p-column>
+                <p-column field="seqNum" header="Sequence Number" [sortable]="true"></p-column>
+                <p-column field="name" header="Name" [sortable]="true"></p-column>
+                <p-column field="datatype" header="Description" [sortable]="true"></p-column>
+                <p-column field="active" header="Active" [sortable]="true"></p-column>
+            </p-dataTable>
+        </div> 
+        <div style="margin-bottom: 15px;">
+            <button type="button" class="btn btn-primary" (click)="selectSourceField()" [disabled]="!selectedSourceField">Select Source Field</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelSelect()">Close</button>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="c('Select SField')" [disabled]="!selectedSourceField">Select Source Field</button>
-        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    </div>
-</template>
+</p-dialog>

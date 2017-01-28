@@ -1,9 +1,6 @@
 ﻿import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import { TgtFldListComponent } from "./tgtfld-list.component";
-import { TgtListSelectComponent } from "./tgt-list-select.component";
 import { TFieldSelectService } from "../../../services/target/tgtfld-select.service";
-import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
@@ -16,22 +13,25 @@ import { Subscription } from "rxjs/Subscription";
     ]
 })
 export class TgtFldSelectComponent implements ControlValueAccessor, OnInit {
+    private display: boolean = false;
     propagateChange: any = () => { };
     validateFn: any = () => { };
     @Input('selectedTargetField') _selectedTargetField: any;
     private targets = [];
     private filteredTargetFields = [];
+    private selectedTarget: any;
 
-    // Modal Functions
-    openTargetSelect(content) {
-        this.modalService.open(content, { size: "lg", backdrop: "static" })
-            .result.then((result) => {
-                //User selected target field in modal
-                if (result != "Select TField") {
-                    
-                }
-            },
-            (reason) => { });
+    showDialog() {
+        this.display = !this.display;
+    }
+
+    selectTargetField() {
+        this.showDialog();
+    }
+
+    cancelSelect() {
+        this.selectedTargetField = null;
+        this.showDialog();
     }
 
     registerOnChange(fn) {
@@ -60,14 +60,15 @@ export class TgtFldSelectComponent implements ControlValueAccessor, OnInit {
     }
 
     //Child component events
-    onSelectTarget() {
+    onRowSelect() {
+        this.selectService.filterTgtFlds(this.selectedTarget.targetId);
         this.selectedTargetField = null;
     }
-    onFieldSelect(targetField: any) {
-        this.selectedTargetField = targetField;
+    onRowUnselect() {
+        this.filteredTargetFields = [];
     }
 
-    constructor(private modalService: NgbModal, private selectService: TFieldSelectService) { }
+    constructor(private selectService: TFieldSelectService) { }
 
     ngOnInit() {
         this.selectService.targets.subscribe(targets => this.targets = targets);

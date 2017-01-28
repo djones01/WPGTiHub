@@ -42,14 +42,14 @@ export class SourceService {
     }
 
     add(source: Source) {
-        this._dataService.Add('Sources', source).subscribe(source => {
-            this.dataStore.sources.push(source);
+        this._dataService.Add('Sources', source).subscribe(newSource => {
+            this.dataStore.sources.push(newSource);
             this._sources.next(this.dataStore.sources);
         }, error => console.log(error));
     }
 
     update(source: Source) {
-        this._dataService.Update('Sources', source.sourceId, source).subscribe((source: Source) => {
+        this._dataService.Update('Sources', source.sourceId, source).subscribe((updatedSource: Source) => {
             this.dataStore.sources.forEach((m, i) => {
                 if (m.sourceId === source.sourceId) { this.dataStore.sources[i] = source; }
             });

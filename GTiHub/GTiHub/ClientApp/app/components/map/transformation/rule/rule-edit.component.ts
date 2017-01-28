@@ -17,7 +17,6 @@ export class RuleEditComponent implements OnInit {
 
     rule_Operations = [
         { value: "sfield", display: "Source Field(s)" },
-        { value: "assign", display: "Automatic / System Generated" },
         { value: "text", display: "Text" }
     ];
 

@@ -126,7 +126,7 @@
 
             this._dbContext.Maps.Add(map);
             this._dbContext.SaveChanges();
-            return this.CreatedAtRoute("GetMap", new { id = map.MapId }, map);
+            return this.CreatedAtRoute("GetMap", new { id = map.MapId }, this._dbContext.Maps.Find(map.MapId));
         }
 
         // PUT api/Maps/5

@@ -44,8 +44,11 @@ namespace GTiHub
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            var connection = @"Server=DJ-PC;Database=ihubdb;Trusted_Connection=True;";
-            services.AddDbContext<GTiHubContext>(options => options.UseSqlServer(connection));
+            var connection = Configuration.GetConnectionString("DeployConnection");
+
+            services.AddEntityFrameworkSqlServer().AddDbContext<GTiHubContext>(options => {
+                options.UseSqlServer(connection);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

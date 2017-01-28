@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TgtFldEditComponent } from "./tgtfld-edit.component";
 import { TargetService } from "../../services/target/target.service";
 import { Target } from "./target";
-import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
+import { DatePickerComponent } from 'ng2-bootstrap/datepicker';
 
 @Component({
     selector: "tgt-edit",
@@ -24,6 +24,7 @@ export class TgtEditComponent implements OnInit {
         }
         else {
             this.targetService.add(target);
+            this.router.navigateByUrl('/tgt-list');
         }
     }
 
@@ -44,19 +45,19 @@ export class TgtEditComponent implements OnInit {
 
     back() {
         this.targetService.clearEditTarget();
-        this.router.navigate(['/proj-overview']);
+        this.router.navigateByUrl('/src-list');
     }
 
     constructor(private _fb: FormBuilder, private router: Router, private targetService: TargetService) { }
 
     ngOnInit() {
         this.initTgtForm();
-        this.targetService.editTarget.subscribe(editTarget => {
-            if (editTarget) {
+        this.targetService.editTarget.subscribe(edit => {
+            if (edit) {
                 this.editing = true;
-                this.tgtForm.patchValue(editTarget);
+                this.tgtForm.patchValue(edit);
             }
         });
-        
+
     }
 }

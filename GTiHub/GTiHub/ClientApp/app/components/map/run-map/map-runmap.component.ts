@@ -83,7 +83,7 @@ export class RunMapComponent implements OnInit {
     initFilePackageGroup() {
         return this._fb.group({
             sourceId: [null],
-            isPrimarySource: [false],
+            isPrimarySource: [false, Validators.required],
             firstRowHeader: [true],
             altHeadRow: [''],
             delimiter: ['', Validators.required],

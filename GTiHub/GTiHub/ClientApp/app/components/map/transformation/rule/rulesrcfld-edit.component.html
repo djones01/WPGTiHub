@@ -12,10 +12,6 @@
         <div class="col-md-3">
             <input type="text" class="form-control" placeholder="Append Value" formControlName="append" />
         </div>
-        <div *ngIf="ruleSrcFldForm.controls.sourceField.value != null" class="col-md-3">
-            <field-format [fieldDataType]="ruleSrcFldForm.controls.sourceField.value.datatype"></field-format>
-            <!-- <input class="form-control" type="text" [(ngModel)]="ruleSourceField.custom_Format" name="custom_Format" #custom_Format="ngModel" placeholder="Custom Format" /> -->
-        </div>
     </div>
 </form>
 

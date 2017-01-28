@@ -24,8 +24,7 @@ export class SrcFldEditComponent implements OnInit {
     }
 
     resetSrcFlds() {
-        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
-        control.reset([]);
+        this.srcFldsForm.setControl('sourceFields', new FormArray([]));
     }
 
     removeSrcFld(i: number) {
@@ -64,19 +63,14 @@ export class SrcFldEditComponent implements OnInit {
         this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
             .subscribe((sourceFields: Object[]) => {
                 if (sourceFields) {
-                    const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
-                    this.resetSrcFlds();
-                    for (let i = 0; i < sourceFields.length; i++) {
-                        this.addSrcFld();
-                        control.at(i).patchValue(sourceFields[i]);
-                    }
+                    this.setSourceFields(sourceFields);
                 }
             });
     }
 
     setSourceFields(sourceFields: Object[]) {
-        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
         this.resetSrcFlds();
+        const control = <FormArray>this.srcFldsForm.controls['sourceFields'];
         for (let i = 0; i < sourceFields.length; i++) {
             this.addSrcFld();
             control.at(i).patchValue(sourceFields[i]);

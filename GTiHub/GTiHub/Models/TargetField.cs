@@ -10,6 +10,8 @@
 
     public class TargetField : BaseEntity
     {
+        public TargetField() { }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TargetFieldId { get; set; }

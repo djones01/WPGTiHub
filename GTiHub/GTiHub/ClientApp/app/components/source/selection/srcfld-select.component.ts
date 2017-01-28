@@ -1,9 +1,6 @@
 ﻿import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import { SrcFldListComponent } from "./srcfld-list.component";
-import { SrcListSelectComponent } from "./src-list-select.component";
 import { SFieldSelectService } from "../../../services/source/srcfld-select.service";
-import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
@@ -16,22 +13,25 @@ import { Subscription } from "rxjs/Subscription";
     ]
 })
 export class SrcFldSelectComponent implements ControlValueAccessor, OnInit {
+    private display: boolean = false;
     propagateChange: any = () => { };
     validateFn: any = () => { };
     @Input('selectedSourceField') _selectedSourceField: any;
     private sources = [];
     private filteredSourceFields = [];
+    private selectedSource: any;
 
-    // Modal Functions
-    openSourceSelect(content) {
-        this.modalService.open(content, { size: "lg", backdrop: "static" })
-            .result.then((result) => {
-                //User selected source field in modal
-                if (result != "Select SField") {
-                    
-                }
-            },
-            (reason) => { });
+    showDialog() {
+        this.display = !this.display;
+    }
+
+    selectSourceField() {
+        this.showDialog();
+    }
+
+    cancelSelect() {
+        this.selectedSourceField = null;
+        this.showDialog();
     }
 
     registerOnChange(fn) {
@@ -60,14 +60,15 @@ export class SrcFldSelectComponent implements ControlValueAccessor, OnInit {
     }
 
     //Child component events
-    onSelectSource() {
+    onRowSelect() {
+        this.selectService.filterSrcFlds(this.selectedSource.sourceId);
         this.selectedSourceField = null;
     }
-    onFieldSelect(sourceField: any) {
-        this.selectedSourceField = sourceField;
+    onRowUnselect() {
+        this.filteredSourceFields = [];
     }
 
-    constructor(private modalService: NgbModal, private selectService: SFieldSelectService) { }
+    constructor(private selectService: SFieldSelectService) { }
 
     ngOnInit() {
         this.selectService.sources.subscribe(sources => this.sources = sources);

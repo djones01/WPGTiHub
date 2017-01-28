@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { SrcFldEditComponent } from "./srcfld-edit.component";
 import { SourceService } from "../../services/source/source.service";
 import { Source } from "./source";
-import { DatePickerComponent } from 'ng2-bootstrap/components/datepicker';
+import { DatePickerComponent } from 'ng2-bootstrap/datepicker';
 
 @Component({
     selector: "src-edit",
@@ -24,6 +24,7 @@ export class SrcEditComponent implements OnInit {
         }
         else {
             this.sourceService.add(source);
+            this.router.navigateByUrl('/src-list');
         }
     }
 
@@ -44,7 +45,7 @@ export class SrcEditComponent implements OnInit {
 
     back() {
         this.sourceService.clearEditSource();
-        this.router.navigateByUrl('/proj-overview');
+        this.router.navigateByUrl('/src-list');
     }
 
     constructor(private _fb: FormBuilder, private router: Router, private sourceService: SourceService) { }

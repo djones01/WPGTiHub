@@ -1,6 +1,9 @@
 ﻿<div class="form pad-row" [formGroup]="fileForm">
     <div *ngIf="filePackageCount > 1" class="col-md-1">
         <input type="radio" (click)="onPrimarySourceChange()" [checked]="fileForm.controls.isPrimarySource.value == true" value="true" formControlName="isPrimarySource" />
+        <small *ngIf="!fileForm.controls.isPrimarySource.valid" class="text-danger">
+            Select one primary Source
+        </small>
     </div>
     <div class="col-md-2">
         {{sourceName}}

@@ -7,15 +7,13 @@ import { AppRoutingModule } from "./app-routing.module";
 
 // third-party imports
 import { FileUploadModule  } from "ng2-file-upload";
-import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { TextMaskModule } from 'angular2-text-mask';
 import { PanelMenuModule, MenuItem } from 'primeng/primeng';
 
 // feature module imports
-import { ProjectModule } from "./components/project/project.module";
-import { ClientModule } from "./components/client/client.module";
-import { UserModule } from "./components/user/user.module";
 import { SourceModule } from "./components/source/source.module";
+import { TargetModule } from "./components/target/target.module";
+import { MapModule } from "./components/map/map.module";
 
 // service imports
 import { DataService } from "./services/data/data.service";
@@ -36,20 +34,18 @@ import { HomeComponent } from "./components/home/home.component";
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         FormsModule,
-        ReactiveFormsModule,
-        ProjectModule,
-        ClientModule,
-        UserModule,  
+        ReactiveFormsModule, 
         SourceModule,  
+        TargetModule,
+        MapModule,
         TextMaskModule,
-        NgbModalModule.forRoot(),
         FileUploadModule,
         AppRoutingModule,
         PanelMenuModule
     ],
     providers: [
         DataService,
-        UploadService
+        UploadService,
     ]
 })
 export class AppModule {

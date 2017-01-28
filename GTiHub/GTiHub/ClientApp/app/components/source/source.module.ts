@@ -18,13 +18,7 @@ import { DataTableModule, SharedModule, ButtonModule, DialogModule, ConfirmDialo
 import { SrcEditComponent } from "./src-edit.component";
 import { SrcListComponent } from "./src-list.component";
 import { SrcFldEditComponent } from "./srcfld-edit.component";
-import { SrcListSelectComponent } from "./selection/src-list-select.component";
-import { SrcFldListComponent } from "./selection/srcfld-list.component";
 import { SrcFldSelectComponent } from "./selection/srcfld-select.component";
-import { SrcDualSelectComponent } from "./selection/src-dual-select.component";  
-
-// ui elements
-import { DualListComponent } from "../ui/dual-listbox.component";
 
 // services
 import { SourceService } from "../../services/source/source.service";
@@ -34,11 +28,7 @@ import { SourceService } from "../../services/source/source.service";
         SrcEditComponent,
         SrcListComponent,
         SrcFldEditComponent,
-        SrcListSelectComponent,
-        SrcFldListComponent,
-        SrcFldSelectComponent,
-        SrcDualSelectComponent,
-        DualListComponent
+        SrcFldSelectComponent
     ],
     imports: [
         UniversalModule,
@@ -59,11 +49,11 @@ import { SourceService } from "../../services/source/source.service";
     exports: [
         SrcEditComponent,
         SrcListComponent,
-        SrcDualSelectComponent,
         SrcFldSelectComponent
     ],
     providers: [
-        SourceService
+        SourceService,
+        ConfirmationService
     ]
 })
 export class SourceModule {
