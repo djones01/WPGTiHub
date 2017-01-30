@@ -20,6 +20,7 @@
     using NCalc;
 
     using Serilog;
+    using Controllers.API.Files;
 
     #endregion
 
@@ -35,7 +36,8 @@
             int primarySourceId,
             int lineCount,
             int primaryFieldCount,
-            int targetId);
+            int targetId,
+            bool checkTypes);
 
         void ApplyTransformations(
             ref Dictionary<int, SourceInfo> sourceTables,
@@ -45,7 +47,8 @@
             int lineCount,
             int primaryFieldCount,
             int targetId,
-            bool applyConditions);
+            bool applyConditions,
+            bool checkTypes);
 
         bool ComparePrimSourceTarget(int primarySourceId, int targetId);
 
@@ -77,7 +80,8 @@
             int lineCount,
             int primaryFieldCount,
             int targetId,
-            bool applyConditions);
+            bool applyConditions,
+            bool checkTypes);
     }
 
     /// <summary>
@@ -108,7 +112,8 @@
             int primarySourceId,
             int lineCount,
             int primaryFieldCount,
-            int targetId)
+            int targetId,
+            bool checkTypes)
         {
             Log.Information(
                 "Begin searching for fallbacks in Primary Source: {PrimarySourceId} for unpopulated Target fields in Target: {TargetId}",
@@ -168,7 +173,8 @@
             int lineCount,
             int primaryFieldCount,
             int targetId,
-            bool applyConditions)
+            bool applyConditions,
+            bool checkTypes)
         {
             Log.Information(
                 "Begin applying Transformations with Primary Source: {PrimarySourceId} and Target: {TargetId}",
@@ -222,6 +228,7 @@
 
                                     // Loop through all lines in the source array corresponding to the rule field's sourcefield and prepend, append, and format as needed, then add to output table
                                     for (var i = 0; i < lineCount; i++)
+                                    { 
                                         if (applyConditions && transform.Conditions.Count > 0)
                                         {
                                             // Get parameters from all of the source tables
@@ -257,6 +264,7 @@
                                             targetTables[targetId].TargetVals[i][targetFieldIndex] =
                                                 targetTables[targetId].TargetVals[i][targetFieldIndex] + resultString;
                                         }
+                                    }
 
                                     // Set the column to populated
                                     targetTables[targetId].TargetFields[targetFieldName].Populated = true;
@@ -581,7 +589,8 @@
             int lineCount,
             int primaryFieldCount,
             int targetId,
-            bool applyConditions)
+            bool applyConditions,
+            bool checkTypes)
         {
             // Apply all transformations
             this.ApplyTransformations(
@@ -592,7 +601,8 @@
                 lineCount,
                 primaryFieldCount,
                 targetId,
-                applyConditions);
+                applyConditions,
+                checkTypes);
 
             // Copy over fields from primary source to target which are not covered by rules
             this.ApplyFallbacks(
@@ -602,7 +612,8 @@
                 primarySourceId,
                 lineCount,
                 primaryFieldCount,
-                targetId);
+                targetId,
+                checkTypes);
 
             return true;
         }

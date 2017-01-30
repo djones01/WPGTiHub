@@ -51,13 +51,20 @@ export class MapEditComponent implements OnInit {
     constructor(private _fb: FormBuilder, private router: Router, private mapService: MapService, private mapBuilderService: MapBuilderService) { }
 
     ngOnInit() {
-        this.mapService.editMap.subscribe(editMap => {
-            if (this.mapService.editing) {
-                this.mapForm = this.mapBuilderService.buildEditMapForm(editMap);    
-            }
-            else {
-                this.initMapForm();
-            }
-        });  
+        if (this.mapService.editing) {
+            this.mapService.editMap.subscribe(editMap => {
+                let mapForm = this.mapBuilderService.buildEditMapForm(editMap);
+                if (mapForm != null) {
+                    this.mapForm = mapForm;
+                }
+                else {
+                    this.initMapForm();
+                }
+            });
+        }
+        else {
+            this.initMapForm();
+        }
+        
     }
 }

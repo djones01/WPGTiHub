@@ -13,6 +13,7 @@ export class SrcFldEditComponent implements OnInit {
     sopt = true;
     seqNumCount: number = 1;
     private delimiter: string = "";
+    private fieldRow: number = 1;
     uploader: FileUploader;
 
     @Input('group')
@@ -60,7 +61,7 @@ export class SrcFldEditComponent implements OnInit {
     ];
 
     extractFile() {
-        this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
+        this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter", "fieldRow"], [this.delimiter, this.fieldRow.toString()], [this.uploader.queue[0]._file])
             .subscribe((sourceFields: Object[]) => {
                 if (sourceFields) {
                     this.setSourceFields(sourceFields);

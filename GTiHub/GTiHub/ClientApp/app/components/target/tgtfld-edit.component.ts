@@ -8,11 +8,12 @@ import { TargetService } from "../../services/target/target.service";
     selector: "tgtfld-edit",
     template: require('./tgtfld-edit.component.html')
 })
-export class TgtFldEditComponent implements OnInit{
+export class TgtFldEditComponent implements OnInit {
     //Control the template / manual header boxes
     sopt = true;
     seqNumCount: number = 1;
     private delimiter: string = "";
+    private fieldRow: number = 1;
     uploader: FileUploader;
 
     @Input('group')
@@ -60,7 +61,7 @@ export class TgtFldEditComponent implements OnInit{
     ];
 
     extractFile() {
-        this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter"], [this.delimiter], [this.uploader.queue[0]._file])
+        this.uploadService.makeFileRequest("File/ExtractHeaders", ["delimiter", "fieldRow"], [this.delimiter, this.fieldRow.toString()], [this.uploader.queue[0]._file])
             .subscribe((targetFields: Object[]) => {
                 if (targetFields) {
                     this.setTargetFields(targetFields);
@@ -68,7 +69,7 @@ export class TgtFldEditComponent implements OnInit{
             });
     }
 
-    setTargetFields(targetFields: Object[]) {   
+    setTargetFields(targetFields: Object[]) {
         this.resetTgtFlds();
         const control = <FormArray>this.tgtFldsForm.controls['targetFields'];
         for (let i = 0; i < targetFields.length; i++) {
@@ -86,6 +87,6 @@ export class TgtFldEditComponent implements OnInit{
             if (editTarget && editTarget.targetFields) {
                 this.setTargetFields(editTarget.targetFields);
             }
-        });    
+        });
     }
 }

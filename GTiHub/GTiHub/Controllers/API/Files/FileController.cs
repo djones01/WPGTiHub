@@ -40,12 +40,19 @@
 
             var sfields = new List<SourceField>();
             var sfieldSeqCount = 1;
+            var fieldRow = Convert.ToInt32(form["fieldRow"]);
 
             try
             {
+                var i = 0;
                 using (var reader = new StreamReader(file.OpenReadStream()))
                 {
-                    var line = await reader.ReadLineAsync();
+                    var line = "";
+                    while(i < fieldRow)
+                    {
+                        line = await reader.ReadLineAsync();
+                        i++;
+                    }                   
 
                     var delimiter = Convert.ToChar(form["delimiter"]);
 
@@ -72,6 +79,7 @@
                 var mapId = Convert.ToInt32(form["mapId"]);
                 var evalConditions = Convert.ToBoolean(form["evalConditions"]);
                 var outputDelimiter = form["outputDelimiter"];
+                var checkTypes = Convert.ToBoolean(form["checkTypes"]);
 
                 var success = false;
 
@@ -116,7 +124,8 @@
                                     lineCount,
                                     primaryFieldCount,
                                     targetId,
-                                    evalConditions));
+                                    evalConditions,
+                                    checkTypes));
 
                 // Create new memory stream to return
                 bytes = this._helpers.GetTargetBytes(ref targetTables, targetId, outputDelimiter);

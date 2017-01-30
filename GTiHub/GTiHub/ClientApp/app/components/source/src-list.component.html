@@ -5,7 +5,6 @@
                  [stacked]="stacked" [(selection)]="selectedSources"
                  (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
         <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
-        <p-column [style]="{'width':'38px'}" selectionMode="single"></p-column>
         <p-column field="name" header="Name" [sortable]="true"></p-column>
         <p-column field="description" header="Description" [sortable]="true"></p-column>
         <p-column field="active" header="Active" [sortable]="true"></p-column>

@@ -55,20 +55,20 @@ export class MapBuilderService {
     }
 
     buildEditMapForm(editMap: Map) {
-        if (editMap != null) {
+        if (editMap != null && editMap.transformations != null) {
             this.mapForm = this.buildMap();
-            if (editMap.transformations.length > 0) {
+            if (editMap.transformations && editMap.transformations.length > 0) {
                 let transformsControl = <FormArray>this.mapForm.controls['transformations'];
                 editMap.transformations.forEach((transform, i) => {
                     let transformControl = this.buildTransform();
                     transformsControl.push(transformControl);
-                    if (transform.conditions != undefined && transform.conditions.length > 0) {
+                    if (transform.conditions && transform.conditions.length > 0) {
                         let condsControl = <FormArray>transformControl.controls['conditions'];
                         transform.conditions.forEach((cond, i) => {                       
                             condsControl.push(this.buildCondition());
                         });        
                     }
-                    if (transform.rule.ruleSourceFields != undefined && transform.rule.ruleSourceFields.length > 0) {
+                    if (transform.rule && transform.rule.ruleSourceFields && transform.rule.ruleSourceFields.length > 0) {
                         let ruleSrcFldsControl = <FormArray>(<FormGroup>transformControl.controls['rule']).controls['ruleSourceFields'];
                         transform.rule.ruleSourceFields.forEach((ruleSrcFld, i) => {                           
                             ruleSrcFldsControl.push(this.buildRuleSrcFld());
@@ -77,8 +77,9 @@ export class MapBuilderService {
                 });
             }
             this.mapForm.patchValue(editMap);
+            return this.mapForm;
         }
-        return this.mapForm;
+        return null;
     }
 
     constructor(private _fb: FormBuilder) { }
